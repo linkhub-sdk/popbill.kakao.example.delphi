@@ -3,7 +3,9 @@ unit Example;
 interface
 
 uses
-  Windows, Messages, SysUtils, Classes, Graphics, Controls, Forms, Dialogs;
+  Windows, Messages, SysUtils, Classes, Graphics, Controls, Forms, Dialogs,
+  StdCtrls, TypInfo,
+  Popbill, PopbillKakao, ExtCtrls;
 
 type
   TForm1 = class(TForm)

@@ -2,7 +2,10 @@ program prjKakaoExample;
 
 uses
   Forms,
-  Example in 'Example.pas' {Form1};
+  Example in 'Example.pas' {Form1},
+  PopbillKakao in 'PopbillKakao\PopbillKakao.pas',
+  Popbill in 'Popbill\Popbill.pas',
+  Linkhub in 'Linkhub\Linkhub.pas';
 
 {$R *.RES}
 
