@@ -1,6 +1,6 @@
 object frmExample: TfrmExample
-  Left = 414
-  Top = 271
+  Left = 329
+  Top = 274
   Width = 1305
   Height = 675
   Caption = 'ÆËºô Ä«Ä«¿ÀÅå API SDK Delphi Example'
@@ -12,6 +12,8 @@ object frmExample: TfrmExample
   Font.Style = []
   OldCreateOrder = False
   Position = poScreenCenter
+  OnClose = FormClose
+  OnCreate = FormCreate
   PixelsPerInch = 96
   TextHeight = 13
 end
