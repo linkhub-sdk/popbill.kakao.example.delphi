@@ -90,7 +90,7 @@ type
     GroupBox10: TGroupBox;
     btnGetURL_SENDER: TButton;
     btnGetSenderNumberList: TButton;
-    Button7: TButton;
+    btnGetMessages: TButton;
     btnGetURL_BOX: TButton;
     btnSearch: TButton;
     StringGrid1: TStringGrid;
@@ -133,6 +133,7 @@ type
     procedure btnCancelReserveClick(Sender: TObject);
     procedure btnGetURL_BOXClick(Sender: TObject);
     procedure btnSearchClick(Sender: TObject);
+    procedure btnGetMessagesClick(Sender: TObject);
 
   private
     kakaoService : TKakaoService;
@@ -158,21 +159,21 @@ begin
         stringgrid1.Cells[1,0] := 'sendDT';
         stringgrid1.Cells[2,0] := 'result';
         stringgrid1.Cells[3,0] := 'resultDT';
-        stringgrid1.Cells[4,0] := 'contentType';
-        stringgrid1.Cells[5,0] := 'receiveNum';
-        stringgrid1.Cells[6,0] := 'receiveName';
-        stringgrid1.Cells[7,0] := 'content';
-        stringgrid1.Cells[8,0] := 'altContentType';
-        stringgrid1.Cells[9,0] := 'altSendDT';
-        stringgrid1.Cells[10,0] := 'altResult';
-        stringgrid1.Cells[11,0] := 'altResultDT';
-
+        stringgrid1.Cells[4,0] := 'receiveNum';
+        stringgrid1.Cells[5,0] := 'receiveName';
+        stringgrid1.Cells[6,0] := 'content';
+        stringgrid1.Cells[7,0] := 'altContentType';
+        stringgrid1.Cells[8,0] := 'altSendDT';
+        stringgrid1.Cells[9,0] := 'altResult';
+        stringgrid1.Cells[10,0] := 'altResultDT';
+        stringgrid1.Cells[11,0] := 'contentType';
+        
         stringgrid1.ColWidths[1] := 100;
         stringgrid1.ColWidths[3] := 100;
-        stringgrid1.ColWidths[5] := 100;        
-        stringgrid1.ColWidths[7] := 100;
-        stringgrid1.ColWidths[9] := 100;
-        stringgrid1.ColWidths[11] := 100;                                        
+        stringgrid1.ColWidths[4] := 100;
+        stringgrid1.ColWidths[6] := 100;
+        stringgrid1.ColWidths[8] := 100;
+        stringgrid1.ColWidths[10] := 100;                                        
 end;
 
 procedure TfrmExample.FormClose(Sender: TObject; var Action: TCloseAction);
@@ -1400,33 +1401,103 @@ begin
 
                 stringgrid1.Cells[3,i+1] := SearchInfos.list[i].resultDT;                
 
-                stringgrid1.Cells[4,i+1] := SearchInfos.list[i].contentType;
+                // ????
+                stringgrid1.Cells[4,i+1] := SearchInfos.list[i].receiveNum;
 
                 // ????
-                stringgrid1.Cells[5,i+1] := SearchInfos.list[i].receiveNum;
+                stringgrid1.Cells[5,i+1] := SearchInfos.list[i].receiveName;
 
                 // ????
-                stringgrid1.Cells[6,i+1] := SearchInfos.list[i].receiveName;
+                stringgrid1.Cells[6,i+1] := SearchInfos.list[i].content;
 
                 // ????
-                stringgrid1.Cells[7,i+1] := SearchInfos.list[i].content;
+                stringgrid1.Cells[7,i+1] := IntToStr(SearchInfos.list[i].altContentType);
 
                 // ????
-                stringgrid1.Cells[8,i+1] := IntToStr(SearchInfos.list[i].altContentType);
+                stringgrid1.Cells[8,i+1] := SearchInfos.list[i].altSendDT;
 
                 // ????
-                stringgrid1.Cells[9,i+1] := SearchInfos.list[i].altSendDT;
+                stringgrid1.Cells[9,i+1] := IntToStr(SearchInfos.list[i].altResult);
 
                 // ????
-                stringgrid1.Cells[10,i+1] := IntToStr(SearchInfos.list[i].altResult);
-
-                // ????
-                stringgrid1.Cells[11,i+1] := SearchInfos.list[i].altResultDT;
+                stringgrid1.Cells[10,i+1] := SearchInfos.list[i].altResultDT;
+                
+                stringgrid1.Cells[11,i+1] := SearchInfos.list[i].contentType;
 
         end;
         SearchInfos.Free;
         ShowMessage(tmp);
 
+end;
+
+procedure TfrmExample.btnGetMessagesClick(Sender: TObject);
+var
+        MessageInfo : TSentKakaoInfo;
+        tmp : string;
+        i : integer;
+begin
+        try
+                MessageInfo := kakaoService.GetMessages(txtCorpNum.Text, txtReceiptNum.Text);
+
+        except
+                on le : EPopbillException do begin
+                        ShowMessage('응답코드 : ' + IntToStr(le.code) + #10#13 +'응답메시지 : '+ le.Message);
+                        Exit;
+                end;
+        end;
+
+        tmp := 'contentType (카카오톡 유형) : '+ MessageInfo.contentType + #13;
+        tmp := tmp + 'templateCode (알림톡 템플릿 코드) : '+ MessageInfo.templateCode + #13;
+        tmp := tmp + 'plusFriendID (친구톡 플리스친구 아이디) : '+ MessageInfo.plusFriendID + #13;
+        tmp := tmp + 'sendNum (발신번호) : '+ MessageInfo.sendNum + #13;
+        tmp := tmp + 'altContent (대체문자내용) : '+ MessageInfo.altContent + #13;
+        tmp := tmp + 'altSendType (대체문자유형) : '+ MessageInfo.altSendType + #13;
+        tmp := tmp + 'reserveDT (예약일시) : '+ MessageInfo.reserveDT + #13;
+        tmp := tmp + 'adsYN (광고전송여부) : '+ BoolToStr(MessageInfo.adsYN) + #13;
+        tmp := tmp + 'imageURL (친구톡이미지URL) : '+ MessageInfo.imageURL + #13;
+        tmp := tmp + 'sendCnt (전송건수) : '+ MessageInfo.sendCnt + #13;
+        tmp := tmp + 'successCnt (성공건수) : '+ MessageInfo.successCnt + #13;
+        tmp := tmp + 'failCnt (실패건수) : '+ MessageInfo.failCnt + #13;
+        tmp := tmp + 'altCnt (대체문자 건수) : '+ MessageInfo.altCnt + #13;
+        tmp := tmp + 'cancelCnt (취소건수) : '+ MessageInfo.cancelCnt + #13;
+
+
+        ShowMessage(tmp);
+
+        stringgrid1.RowCount := Length(MessageInfo.msgs) + 1;
+        
+        for i:= 0 to Length(MessageInfo.msgs) -1 do begin
+
+                stringgrid1.Cells[0,i+1] := IntToStr(MessageInfo.msgs[i].state);
+
+                stringgrid1.Cells[1,i+1] := MessageInfo.msgs[i].sendDT;
+
+                stringgrid1.Cells[2,i+1] := IntToStr(MessageInfo.msgs[i].result);
+
+                stringgrid1.Cells[3,i+1] := MessageInfo.msgs[i].resultDT;
+
+                // ????
+                stringgrid1.Cells[4,i+1] := MessageInfo.msgs[i].receiveNum;
+
+                // ????
+                stringgrid1.Cells[5,i+1] := MessageInfo.msgs[i].receiveName;
+
+                // ????
+                stringgrid1.Cells[6,i+1] := MessageInfo.msgs[i].content;
+
+                // ????
+                stringgrid1.Cells[7,i+1] := IntToStr(MessageInfo.msgs[i].altContentType);
+
+                // ????
+                stringgrid1.Cells[8,i+1] := MessageInfo.msgs[i].altSendDT;
+
+                // ????
+                stringgrid1.Cells[9,i+1] := IntToStr(MessageInfo.msgs[i].altResult);
+
+                // ????
+                stringgrid1.Cells[10,i+1] := MessageInfo.msgs[i].altResultDT;
+
+        end;        
 end;
 
 end.

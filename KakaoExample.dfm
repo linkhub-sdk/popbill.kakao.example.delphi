@@ -522,13 +522,14 @@ object frmExample: TfrmExample
         OnClick = btnGetSenderNumberListClick
       end
     end
-    object Button7: TButton
+    object btnGetMessages: TButton
       Left = 320
       Top = 216
       Width = 105
       Height = 33
       Caption = '전송상태 확인'
       TabOrder = 8
+      OnClick = btnGetMessagesClick
     end
   end
   object StringGrid1: TStringGrid
