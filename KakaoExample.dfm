@@ -1,6 +1,6 @@
 object frmExample: TfrmExample
-  Left = -42
-  Top = 167
+  Left = 363
+  Top = 137
   Width = 1309
   Height = 857
   Caption = 'ÆËºô Ä«Ä«¿ÀÅå API SDK Delphi Example'

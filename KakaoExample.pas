@@ -414,7 +414,7 @@ begin
 
         try
                 // 템플릿코드, ListATSTemplate API 반환항목중 templateCode로 확인
-                templateCode := '018002260001';
+                templateCode := '018020000002';
 
                 // 팝빌에 사전 등록된 발신번호
                 senderNum := '07043042993';
@@ -426,7 +426,7 @@ begin
                 receiverName := '수신자명';
 
                 // 알림톡 메시지 내용, 템플릿의 내용과 일치하지 않은 경우 전송실패
-                atsMsg := '알림톡 메시지 내용';
+                atsMsg := '테스트 템플릿 입니다.';
                 
                 // 대체문자 내용
                 atsAltMsg := '대체문자 내용';
@@ -465,13 +465,13 @@ begin
 
         try
                 // 템플릿코드, ListATSTemplate API templateCode로 확인
-                templateCode := '018002260001';
+                templateCode := '018020000002';
 
                 // 팝빌에 사전 등록된 발신번호
                 senderNum := '07043042993';
 
                 // 알림톡 메시지내용, 템플릿의 내용과 일치하지 않은경우 실패처리
-                content := '알림톡 메시지 내용';
+                content := '테스트 템플릿 입니다.';
 
                 // 대체문자 내용
                 altContent := '대체문자 내용';
@@ -485,7 +485,7 @@ begin
                     Receivers[i] := TSendKakaoReceiver.Create;
                     
                     // 수신번호
-                    Receivers[i].rcv := '010111222';
+                    Receivers[i].rcv := '01043245117';
                     
                     // 수신자명
                     Receivers[i].rcvnm := '수신자명';
@@ -521,13 +521,13 @@ begin
 
         try
                 // 템플릿코드, ListATSTemplate API templateCode로 확인
-                templateCode := '018002260001';
+                templateCode := '018020000002';
 
                 // 팝빌에 사전 등록된 발신번호
                 senderNum := '07043042993';
 
                 // [동보] 알림톡 메시지 내용                
-                content := '';
+                content := '테스트 템플릿 입니다.';
 
                 // [동보] 대체문자 메시지 내용
                 altContent := '';
@@ -542,13 +542,13 @@ begin
                         Receivers[i] := TSendKakaoReceiver.Create;
 
                         // 수신번호
-                        Receivers[i].rcv := '010111222';
+                        Receivers[i].rcv := '01043245117';
 
                         // 수신자명
                         Receivers[i].rcvnm := '수신자명';
 
                         // 알림톡 메시지 내용, 템플릿의 내용과 일치 하지 않은경우 전송 실패
-                        Receivers[i].msg := '알림톡 메시지 내용';
+                        Receivers[i].msg := '테스트 템플릿 입니다.';
 
                         // 대체문자 내용
                         Receivers[i].altmsg := '대체문자 내용';
@@ -1501,11 +1501,12 @@ begin
                         Exit;
                 end;
         end;
-        tmp := 'templateCode | templateName | plusFriendID ' + #13;
+        tmp := 'templateCode | template | templateName | plusFriendID ' + #13;
         for i := 0 to Length(InfoList) -1 do
         begin
             tmp := tmp + InfoList[i].templateCode + ' | ';
             tmp := tmp + InfoList[i].templateName + ' | ';
+            tmp := tmp + InfoList[i].template + ' | ';            
             tmp := tmp + InfoList[i].plusFriendID +#13;
         end;
 
@@ -1622,10 +1623,10 @@ begin
         * =================================================================== *)
         
         // 시작일자, 표시형식 (yyyyMMdd)
-        SDate := '20180227';
+        SDate := '20180228';
 
         // 종료일자, 표시형식 (yyyyMMdd)
-        EDate := '20180227';
+        EDate := '20180228';
 
         // 전송상태 배열, 0-대기, 1-전송중, 2-성공, 3-대체, 4-실패, 5-취소
         SetLength(State, 6);
@@ -1652,7 +1653,7 @@ begin
         Page := 1;
 
         // 페이지당 검색개수
-        PerPage := 30;
+        PerPage := 100;
 
         // 정렬방향, D-내림차순, A-오름차순
         Order := 'D';
