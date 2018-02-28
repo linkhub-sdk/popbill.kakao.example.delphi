@@ -3,14 +3,18 @@
 * 팝빌 카카오톡 API Delphi SDK Example
 *
 * - 델파이 SDK 적용방법 안내 : http://blog.linkhub.co.kr/572
-* - 업데이트 일자 : 2018-02-26
+* - 업데이트 일자 : 2018-02-28
 * - 연동 기술지원 연락처 : 1600-9854 / 070-4304-2991
 * - 연동 기술지원 이메일 : code@linkhub.co.kr
 *
 * <테스트 연동개발 준비사항>
+* 1) 플러스친구 계정 등록
+* 2) 발신번호 등록
+* 3) [알림톡 사용시] 템플릿 심사 신청
 *
+* 연동개발 준비사항에 대한 자세한 사항은 [카카오톡 연동 매뉴얼 > 1.2 서비스 이용절차]
+* 를 참고하시기 바랍니다.
 *
-*  
 *=================================================================================
 *)
 
@@ -192,11 +196,17 @@ begin
         if b = false then BoolToStr:='False';
 end;
 
+
+
+
 procedure TfrmExample.btnCheckIsMemberClick(Sender: TObject);
 var
         response : TResponse;
 begin
-
+        (* =====================================================================
+        *  파트너의 연동회원으로 가입된 사업자번호인지 확인한다.
+        * =================================================================== *)
+        
         try
                 response := kakaoService.CheckIsMember(txtCorpNum.text, LinkID);
         except
@@ -213,6 +223,9 @@ procedure TfrmExample.btnCheckIDClick(Sender: TObject);
 var
         response : TResponse;
 begin
+        (* =====================================================================
+        * 팝빌회원 아이디 중복여부를 확인한다.
+        * =================================================================== *)
 
         try
                 response := kakaoService.CheckID(txtUserID.Text);
@@ -231,47 +244,47 @@ var
         response : TResponse;
         joinInfo : TJoinForm;
 begin      
+        (* =====================================================================
+        * 파트너의 연동회원으로 신규가입 처리한다.
+        * =================================================================== *)
 
-        // ?????
+        // 파트너 링크아이디
         joinInfo.LinkID := LinkID;
 
-        // ????? '-' ??, 10??
+        // 연동회원 사업자번호, '-' 제외 10자리
         joinInfo.CorpNum := '0000007777';
 
-        // ?????, ?? 30?
+        // 대표자 성명
         joinInfo.CEOName := '?????';
 
-        // ???, ?? 70?
+        // 상호
         joinInfo.CorpName := '????';
 
-        // ??, ?? 300?
+        // 주소
         joinInfo.Addr := '??';
 
-        // ??, ?? 40?
+        // 업태
         joinInfo.BizType := '??';
 
-        // ??, ?? 40?
+        // 종목
         joinInfo.BizClass := '??';
 
-        // ???, 6??? 20? ??
+        // 팝빌회원 아이디
         joinInfo.ID     := 'userid';
 
-        // ????, 6??? 20? ??
+        // 팝빌회원 비밀번호
         joinInfo.PWD    := 'pwd_must_be_long_enough';
 
-        // ????, ?? 30?
+        // 담당자명
         joinInfo.ContactName := '????';
 
-        // ??? ???, ?? 20?
+        // 담당자 연락처
         joinInfo.ContactTEL :='070-4304-2991';
 
-        // ??? ?????, ?? 20?
+        // 담당자 휴대폰 번호
         joinInfo.ContactHP := '010-000-1111';
 
-        // ??? ????, ?? 20?
-        joinInfo.ContactFAX := '02-6442-9700';
-
-        // ??? ??, ?? 70?
+        // 담당자 메일주소
         joinInfo.ContactEmail := 'code@linkhub.co.kr';
 
         try
@@ -292,6 +305,11 @@ var
         chargeInfo : TKakaoChargeInfo;
         tmp : String;
 begin
+        (* =====================================================================
+        * 연동회원의 서비스별 과금정보를 확인한다.
+        * ATS - 알림톡, FTS - 친구톡 텍스트, FMS - 친구톡 이미지
+        * =================================================================== *)
+        
         try
                 chargeInfo := kakaoService.GetChargeInfo(txtCorpNum.text, ATS);
         except
@@ -313,6 +331,11 @@ var
         chargeInfo : TKakaoChargeInfo;
         tmp : String;
 begin
+        (* =====================================================================
+        * 연동회원의 서비스별 과금정보를 확인한다.
+        * ATS - 알림톡, FTS - 친구톡 텍스트, FMS - 친구톡 이미지
+        * =================================================================== *)
+        
         try
                 chargeInfo := kakaoService.GetChargeInfo(txtCorpNum.text, FTS);
         except
@@ -335,6 +358,11 @@ var
         chargeInfo : TKakaoChargeInfo;
         tmp : String;
 begin
+        (* =====================================================================
+        * 연동회원의 서비스별 과금정보를 확인한다.
+        * ATS - 알림톡, FTS - 친구톡 텍스트, FMS - 친구톡 이미지
+        * =================================================================== *)
+        
         try
                 chargeInfo := kakaoService.GetChargeInfo(txtCorpNum.text, FMS);
         except
@@ -355,6 +383,11 @@ procedure TfrmExample.btnGetUnitCost_ATSClick(Sender: TObject);
 var
         unitcost : Single;
 begin
+        (* =====================================================================
+        * 연동회원의 서비스별  전송단가를 확인한다.
+        * ATS - 알림톡, FTS - 친구톡 텍스트, FMS - 친구톡 이미지
+        * =================================================================== *)
+        
         try
                 unitcost := kakaoService.GetUnitCost(txtCorpNum.text, ATS);
         except
@@ -373,20 +406,33 @@ var
         receiptNum, templateCode, senderNum, altSendType, receiverNum,
         receiverName, atsMsg, atsAltMsg : String;
 begin
+        (* =====================================================================
+        * 알림톡 전송을 요청한다. (단건)
+        * - 사전에 승인된 템플릿의 내용과 알림톡 전송내용(altMsg)이 다를 경우
+        * 전송실패 처리된다.
+        * =================================================================== *)
+
         try
+                // 템플릿코드, ListATSTemplate API 반환항목중 templateCode로 확인
                 templateCode := '018002260001';
 
+                // 팝빌에 사전 등록된 발신번호
                 senderNum := '07043042993';
 
-                altSendType := 'A';
-
+                // 수신번호
                 receiverNum := '01043245117';
 
+                // 수신자명
                 receiverName := '수신자명';
 
+                // 알림톡 메시지 내용, 템플릿의 내용과 일치하지 않은 경우 전송실패
                 atsMsg := '알림톡 메시지 내용';
-
+                
+                // 대체문자 내용
                 atsAltMsg := '대체문자 내용';
+                
+                // 대체문자 전송유형, 공백-미전송, C-알림톡전송, A-대체문자 전송
+                altSendType := 'A';
 
                 receiptNum := kakaoService.SendATS(txtCorpNum.Text, templateCode, senderNum,
                         altSendType, txtReserveDT.Text, receiverNum, receiverName, atsMsg, atsAltMsg);
@@ -411,22 +457,37 @@ var
         Receivers : TSendKakaoReceiverList;
         i : Integer;
 begin
+        (* =====================================================================
+        * 알림톡 전송을 요청한다. (동일내용 대량전송)
+        * - 사전에 승인된 템플릿의 내용과 알림톡 전송내용(altMsg)이 다를 경우
+        * 전송실패 처리된다.
+        * =================================================================== *)
+
         try
+                // 템플릿코드, ListATSTemplate API templateCode로 확인
                 templateCode := '018002260001';
 
+                // 팝빌에 사전 등록된 발신번호
                 senderNum := '07043042993';
-                
+
+                // 알림톡 메시지내용, 템플릿의 내용과 일치하지 않은경우 실패처리
                 content := '알림톡 메시지 내용';
 
+                // 대체문자 내용
                 altContent := '대체문자 내용';
 
+                // 대체문자 전송유형, 공백-미전송, C-알림톡 전송, A-대체문자 전송
                 altSendType := 'A';
 
+                // 수신정보 배열, 최대 1000건
                 SetLength(Receivers, 10);
-
                 for i := 0 to Length(Receivers) -1 do begin
                     Receivers[i] := TSendKakaoReceiver.Create;
+                    
+                    // 수신번호
                     Receivers[i].rcv := '010111222';
+                    
+                    // 수신자명
                     Receivers[i].rcvnm := '수신자명';
                 end;
 
@@ -452,25 +513,45 @@ var
         Receivers : TSendKakaoReceiverList;
         i : Integer;
 begin
+        (* =====================================================================
+        * 알림톡 전송을 요청한다. (개별내용 대량전송)
+        * - 사전에 승인된 템플릿의 내용과 알림톡 전송내용(altMsg)이 다를 경우
+        * 전송실패 처리된다.
+        * =================================================================== *)
+
         try
+                // 템플릿코드, ListATSTemplate API templateCode로 확인
                 templateCode := '018002260001';
 
+                // 팝빌에 사전 등록된 발신번호
                 senderNum := '07043042993';
-                
+
+                // [동보] 알림톡 메시지 내용                
                 content := '';
 
+                // [동보] 대체문자 메시지 내용
                 altContent := '';
 
+                // 대체문자 전송유형, 공백-미전송, C-알림톡 전송, A-대체문자 전송 
                 altSendType := 'A';
 
+                // 수신정보 배열, 최대 1000건
                 SetLength(Receivers, 10);
 
                 for i := 0 to Length(Receivers) -1 do begin
-                    Receivers[i] := TSendKakaoReceiver.Create;
-                    Receivers[i].rcv := '010111222';
-                    Receivers[i].rcvnm := '수신자명';
-                    Receivers[i].msg := '알림톡 메시지 내용';
-                    Receivers[i].altmsg := '대체문자 내용';
+                        Receivers[i] := TSendKakaoReceiver.Create;
+
+                        // 수신번호
+                        Receivers[i].rcv := '010111222';
+
+                        // 수신자명
+                        Receivers[i].rcvnm := '수신자명';
+
+                        // 알림톡 메시지 내용, 템플릿의 내용과 일치 하지 않은경우 전송 실패
+                        Receivers[i].msg := '알림톡 메시지 내용';
+
+                        // 대체문자 내용
+                        Receivers[i].altmsg := '대체문자 내용';
                 end;
 
                 receiptNum := kakaoService.SendATS(txtCorpNum.Text, templateCode, senderNum,
@@ -496,29 +577,50 @@ var
         adsYN : boolean;
         Buttons : TSendKakaoButtonList;
 begin
+        (* =====================================================================
+        * 친구톡(텍스트) 전송을 요청한다. (단건 전송)
+        * - 친구톡은 심야 전송(20:00~08:00)이 제한된다.
+        * =================================================================== *)
+        
         try
+                // 플러스친구 아이디, ListPlusFriendID API의 plusFriendID 확인 
                 plusFriendID := '@팝빌';
 
+                // 팝빌에 사전 등록된 발신번호
                 senderNum := '07043042993';
 
+                // 대체문자 전송유형, 공백-미전송, C-친구톡전송, A-대체문자전송
                 altSendType := 'C';
 
+                // 광고전송 여부
                 adsYN := True;
 
+                // 수신번호
                 receiverNum := '01043245117';
-
+                
+                // 수신자명
                 receiverName := '수신자명';
 
+                // 친구톡 내용, 최대 1000자
                 ftsMsg := '친구톡 메시지 내용';
 
+                // 대체문자 내용
                 ftsAltMsg := '대체문자 내용';
 
+                // 버튼 배열, 최대 5개
                 SetLength(Buttons, 1);
-
                 Buttons[0] := TSendKakaoButton.Create;
+
+                // 버튼명
                 Buttons[0].buttonName := '버튼명';
+
+                // 버튼타입
                 Buttons[0].buttonType := 'WL';
+
+                // 버튼URL1
                 Buttons[0].buttonURL1 := 'http://www.weblink1.com';
+
+                // 버튼URL2
                 Buttons[0].buttonURL2 := 'http://www.weblink2.com';
 
 
@@ -547,29 +649,45 @@ var
         Buttons : TSendKakaoButtonList;
         i : integer;
 begin
+        (* =====================================================================
+        * 친구톡(텍스트) 전송을 요청한다. (동일내용 대량전송)
+        * - 친구톡은 심야 전송(20:00~08:00)이 제한된다.
+        * =================================================================== *)
+        
         try
+                // 플러스친구 아이디, ListPlusFriendID API의 plusFriendID 확인
                 plusFriendID := '@팝빌';
 
+                // 팝빌에 사전 등록된 발신번호
                 senderNum := '07043042993';
 
+                // 친구톡 내용, 최대 1000자 
                 content := '친구톡 내용';
-                
+
+                // 대체문자 내용
                 altContent := '대체문자 내용';
 
+                // 대체문자 전송유형, 공백-미전송, C-친구톡 전송, A-대체문자 전송
                 altSendType := 'C';
 
+                // 광고전송여부
                 adsYN := True;
 
+
+                // 수신정보 배열, 최대 1000개
                 SetLength(Receivers, 1);
 
                 for i := 0 to Length(Receivers) -1 do begin
                     Receivers[i] := TSendKakaoReceiver.Create;
+
+                    // 수신번호
                     Receivers[i].rcv := '01043245117';
+                    
+                    // 수신자명
                     Receivers[i].rcvnm := '수신자명';
                 end;
 
-
-                
+                // 버튼 배열, 최대 5개
                 SetLength(Buttons, 1);
 
                 Buttons[0] := TSendKakaoButton.Create;
@@ -603,37 +721,65 @@ var
         Buttons : TSendKakaoButtonList;
         i : integer;
 begin
+        (* =====================================================================
+        * 친구톡(텍스트) 전송을 요청한다. (개별내용 대량전송)
+        * - 친구톡은 심야 전송(20:00~08:00)이 제한된다.
+        * =================================================================== *)
+        
         try
+                // 플러스친구 아이디, ListPlusFriendID API의 plusFriendID 확인
                 plusFriendID := '@팝빌';
 
+                // 팝빌에 사전 등록된 발신번호
                 senderNum := '07043042993';
 
+                // [동보] 친구톡 내용
                 content := '';
-                
+
+                // [동보] 대체문자 내용
                 altContent := '';
 
+                // 대체문자 전송유형, 공백-미전송, C-친구톡 전송, A-대체문자 전송
                 altSendType := 'A';
 
+                // 광고전송 여부
                 adsYN := True;
 
+
+                // 수신정보 배열, 최대 1000개
                 SetLength(Receivers, 1);
 
                 for i := 0 to Length(Receivers) -1 do begin
                     Receivers[i] := TSendKakaoReceiver.Create;
+
+                    // 수신번호
                     Receivers[i].rcv := '01043245117';
+
+                    // 수신자명
                     Receivers[i].rcvnm := '수신자명';
+
+                    // 친구톡 내용, 최대 1000자
                     Receivers[i].msg := '친구톡 메시지 내용';
+
+                    // 대체문자 내용
                     Receivers[i].altmsg := '친구톡 대체문자 내용';
                 end;
 
-
-                
+                // 버튼 배열, 최대 5개                
                 SetLength(Buttons, 1);
 
                 Buttons[0] := TSendKakaoButton.Create;
+
+                // 버튼명
                 Buttons[0].buttonName := '버튼명';
+
+                // 버튼타입
                 Buttons[0].buttonType := 'WL';
+
+                // 버튼URL1
                 Buttons[0].buttonURL1 := 'http://www.weblink1.com';
+
+                // 버튼URL2
                 Buttons[0].buttonURL2 := 'http://www.weblink2.com';
 
 
@@ -660,36 +806,60 @@ var
         adsYN : boolean;
         Buttons : TSendKakaoButtonList;
 begin
+        (* =====================================================================
+        * 친구톡(이미지) 전송을 요청한다. (단건전송)
+        * - 친구톡은 심야 전송(20:00~08:00)이 제한된다.
+        * - 이미지 전송규격 / jpg 포맷, 용량 최대 500KByte, 가로/세로 1.5 미만
+        * =================================================================== *)
+        
         try
                 if OpenDialog1.Execute then begin
                       filePath := OpenDialog1.FileName;
                 end else begin
                         Exit;
                 end;
-
+                
+                // 플러스친구 아이디, ListPlusFriendID API의 plusFriendID 확인 
                 plusFriendID := '@팝빌';
 
+                // 팝빌에 사전 등록된 발신번호
                 senderNum := '07043042993';
 
+                // 대체문자 전송유형, 공백-미전송, C-친구톡 전송, A-대체문자 전송
                 altSendType := 'A';
 
+                // 광고전송여부
                 adsYN := True;
 
+                // 수신번호
                 receiverNum := '01043245117';
 
+                // 수신자명
                 receiverName := '수신자명';
 
+                // 친구톡 메시지 내용, 최대 400자
                 ftsMsg := '친구톡 메시지 내용';
 
+                // 대체문자 내용
                 ftsAltMsg := '친구톡 대체문자 내용';
 
+                // 첨부 이미지 링크 URL
                 imageURL := 'http://www.popbill.com';
 
+                // 버튼 배열, 최대 5개
                 SetLength(Buttons, 2);
                 Buttons[0] := TSendKakaoButton.Create;
+
+                // 버튼명
                 Buttons[0].buttonName := '버튼명';
+
+                // 버튼타입
                 Buttons[0].buttonType := 'WL';
+
+                // 버튼 URL1
                 Buttons[0].buttonURL1 := 'http://www.weblink1.com';
+
+                // 버튼 URL2
                 Buttons[0].buttonURL2 := 'http://www.weblink2.com';
 
                 Buttons[1] := TSendKakaoButton.Create;
@@ -723,6 +893,12 @@ var
         Receivers : TSendKakaoReceiverList;
         i : integer;
 begin
+        (* =====================================================================
+        * 친구톡(이미지) 전송을 요청한다. (동일내용 대량전송)
+        * - 친구톡은 심야 전송(20:00~08:00)이 제한된다.
+        * - 이미지 전송규격 / jpg 포맷, 용량 최대 500KByte, 가로/세로 1.5 미만
+        * =================================================================== *)
+        
         try
                 if OpenDialog1.Execute then begin
                       filePath := OpenDialog1.FileName;
@@ -730,22 +906,31 @@ begin
                         Exit;
                 end;
 
+                // 플러스친구 아이디, ListPlusFriendID API의 plusFriendID 확인
                 plusFriendID := '@팝빌';
 
+                // 팝빌에 사전 등록된 발신번호
                 senderNum := '07043042993';
 
+                // 대체문자 전송유형, 공백-미전송, C-친구톡전송, A-대체문자전송
                 altSendType := 'C';
 
+                // 광고전송여부
                 adsYN := True;
 
+                // 수신번호
                 receiverNum := '01043245117';
 
+                // 수신자명
                 receiverName := '수신자명';
 
+                // 친구톡 내용, 최대 400자
                 content := '친구톡 메시지 내용';
 
+                // 대체문자 내용
                 altContent := '대체문자 내용';
 
+                // 첨부 이미지 링크 URL
                 imageURL := 'http://www.popbill.com';
 
                 SetLength(Receivers, 10);
@@ -798,48 +983,73 @@ var
         Receivers : TSendKakaoReceiverList;
         i : integer;
 begin
+        (* =====================================================================
+        * 친구톡(이미지) 전송을 요청한다. (개별내용 대량전송)
+        * - 친구톡은 심야 전송(20:00~08:00)이 제한된다.
+        * - 이미지 전송규격 / jpg 포맷, 용량 최대 500KByte, 가로/세로 1.5 미만
+        * =================================================================== *)
+        
         try
                 if OpenDialog1.Execute then begin
                       filePath := OpenDialog1.FileName;
                 end else begin
                         Exit;
                 end;
-
+                
+                // 플러스친구 아이디, ListPlusFriendID API의 plusFriendID 확인
                 plusFriendID := '@팝빌';
 
+                // 팝빌에 사전 등록된 발신번호                
                 senderNum := '07043042993';
 
+                // 대체문자 전송유형, 공백-미전송, C-친구톡전송, A-대체문자전송                
                 altSendType := 'C';
 
+                // 광고전송여부
                 adsYN := True;
 
+                // 수신번호
                 receiverNum := '01043245117';
 
+                // 수신자명
                 receiverName := '수신자명';
 
+                // 친구톡 내용, 최대 400자                
                 content := '친구톡 메시지 내용';
-
+                
+                // 대체문자 내용
                 altContent := '대체문자 내용';
 
+                // 첨부 이미지 링크 URL                
                 imageURL := 'http://www.popbill.com';
 
+
+                // 수신정보 배열, 최대 1000건
                 SetLength(Receivers, 10);
 
                 for i := 0 to Length(Receivers) -1 do begin
                     Receivers[i] := TSendKakaoReceiver.Create;
+                    // 수신번호
                     Receivers[i].rcv := '01043245117';
+                    // 수신자명 
                     Receivers[i].rcvnm := '수신자명';
+                    // 친구톡 내용, 최대 400자
                     Receivers[i].msg := '개별메시지 내용';
+                    // 대체문자 내용
                     Receivers[i].altmsg := '개별 대체문자 내용';
                 end;
 
-
+                // 버튼 배열, 최대 5개
                 SetLength(Buttons, 2);
 
                 Buttons[0] := TSendKakaoButton.Create;
+                // 버튼명
                 Buttons[0].buttonName := '버튼명';
+                // 버튼유형
                 Buttons[0].buttonType := 'WL';
+                // 버튼 URL1
                 Buttons[0].buttonURL1 := 'http://www.weblink1.com';
+                // 버튼 URL2
                 Buttons[0].buttonURL2 := 'http://www.weblink2.com';
 
                 Buttons[1] := TSendKakaoButton.Create;
@@ -870,6 +1080,10 @@ procedure TfrmExample.btnGetPopBillURL_LOGINClick(Sender: TObject);
 var
         resultURL : String;
 begin
+        (* =====================================================================
+        * 팝빌 로그인 URL을 반환한다.
+        * - 보안정책으로 인해 반환된 URL의 유효시간은 30초이다.
+        * =================================================================== *)
         try
                 resultURL := kakaoService.getPopbillURL(txtCorpNum.Text, 'LOGIN');
         except
@@ -886,6 +1100,9 @@ procedure TfrmExample.btnGetPartnerBalanceClick(Sender: TObject);
 var
         balance : Double;
 begin
+        (* =====================================================================
+        * 파트너 잔여포인트를 확인한다.
+        * =================================================================== *)
         try
                 balance := kakaoService.GetPartnerBalance(txtCorpNum.text);
         except
@@ -902,6 +1119,11 @@ procedure TfrmExample.btnGetPartnerURL_CHRGClick(Sender: TObject);
 var
         resultURL : String;
 begin
+        (* =====================================================================
+        * 파트너 포인트 충전 팝업 URL을 반환한다.
+        * - 보안정책으로 인해 반환된 URL의 유효시간은 30초이다.
+        * =================================================================== *)
+        
         try
                 resultURL := kakaoService.getPartnerURL(txtCorpNum.Text, 'CHRG');
         except
@@ -918,6 +1140,10 @@ procedure TfrmExample.btnGetBalanceClick(Sender: TObject);
 var
         balance : Double;
 begin
+        (* =====================================================================
+        * 연동회원 잔여포인트를 확인한다.
+        * =================================================================== *)
+        
         try
                 balance := kakaoService.GetBalance(txtCorpNum.text);
         except
@@ -934,6 +1160,11 @@ procedure TfrmExample.btnGetPopbillURL_CHRGClick(Sender: TObject);
 var
         resultURL : String;
 begin
+        (* =====================================================================
+        * 연동회원 포인트 충전 팝업 URL을 반환한다.
+        * - 보안정책으로 인해 반환된 URL의 유효시간은 30초이다.
+        * =================================================================== *)
+
         try
                 resultURL := kakaoService.getPopbillURL(txtCorpNum.Text, 'CHRG');
         except
@@ -950,6 +1181,11 @@ procedure TfrmExample.btnGetUnitCost_FTSClick(Sender: TObject);
 var
         unitcost : Single;
 begin
+        (* =====================================================================
+        * 연동회원의 서비스별  전송단가를 확인한다.
+        * ATS - 알림톡, FTS - 친구톡 텍스트, FMS - 친구톡 이미지
+        * =================================================================== *)
+        
         try
                 unitcost := kakaoService.GetUnitCost(txtCorpNum.text, FTS);
         except
@@ -967,6 +1203,11 @@ procedure TfrmExample.btnGetUnitCost_FMSClick(Sender: TObject);
 var
         unitcost : Single;
 begin
+        (* =====================================================================
+        * 연동회원의 서비스별  전송단가를 확인한다.
+        * ATS - 알림톡, FTS - 친구톡 텍스트, FMS - 친구톡 이미지
+        * =================================================================== *)
+        
         try
                 unitcost := kakaoService.GetUnitCost(txtCorpNum.text, FMS);
         except
@@ -985,33 +1226,31 @@ var
         response : TResponse;
         joinInfo : TJoinContact;
 begin
+        (* =====================================================================
+        * 연동회원의 담당자를 추가등록한다.
+        * =================================================================== *)
 
-
+        // 연동회원 아이디
         joinInfo.id := 'test_201509173';
 
-
+        // 연동회원 비밀번호
         joinInfo.pwd := 'thisispassword';
 
+        // 담당자명
+        joinInfo.personName := '담당자명';
 
-        joinInfo.personName := '?????';
-
-
+        // 연락처
         joinInfo.tel := '070-4304-2991';
 
-
+        // 휴대폰번호
         joinInfo.hp := '010-1111-2222';
 
-
-        joinInfo.fax := '02-6442-9700';
-
-
+        // 메일주소
         joinInfo.email := 'test@test.com';
 
-
+        // 전체조회 여부
         joinInfo.searchAllAllowYN := false;
 
-
-        joinInfo.mgrYN := false;
 
         try
                 response := kakaoService.RegistContact(txtCorpNum.text, joinInfo);
@@ -1031,7 +1270,10 @@ var
         tmp : string;
         i : Integer;
 begin
-        
+        (* =====================================================================
+        * 연동회원의 담당자 정보 목록을 조회한다.
+        * =================================================================== *)
+                
         try
                 InfoList := kakaoService.ListContact(txtCorpNum.text);
         except
@@ -1063,32 +1305,29 @@ var
         contactInfo : TContactInfo;
         response : TResponse;
 begin
+        (* =====================================================================
+        * 연동회원의 담당자 정보를 수정한다.
+        * =================================================================== *)
                
         contactInfo := TContactInfo.Create;
         
-        // ??? ???
+        // 수정할 연동회원 아이디
         contactInfo.id := 'testkorea';
 
-        // ????
+        // 담당자명
         contactInfo.personName := '담당자 명';
 
-        // ???
+        // 연락처
         contactInfo.tel := '070-4304-2991';
 
-        // ?????
+        // 휴대폰번호
         contactInfo.hp := '010-000-111';
 
-        // ??? ??
+        // 메일주소
         contactInfo.email := 'test@test.com';
         
-        // ????
-        contactInfo.fax := '02-6442-9799';
-
-        // ????, true(????), false(????)
+        // 전체조회 여부
         contactInfo.searchAllAllowYN := true;
-
-        // ????? ????
-        contactInfo.mgrYN := false;
         
         try
                 response := kakaoService.UpdateContact(txtCorpNum.text, contactInfo, txtUserID.Text);
@@ -1108,6 +1347,10 @@ var
         corpInfo : TCorpInfo;
         tmp : string;
 begin
+        (* =====================================================================
+        * 연동회원의 회사정보를 조회한다.
+        * =================================================================== *)
+        
         try
                 corpInfo := kakaoService.GetCorpInfo(txtCorpNum.text);
         except
@@ -1131,21 +1374,25 @@ var
         corpInfo : TCorpInfo;
         response : TResponse;
 begin
+        (* =====================================================================
+        * 연동회원의 회사정보를 수정한다.
+        * =================================================================== *)
+        
         corpInfo := TCorpInfo.Create;
 
-        // ????, ?? 30?
+        // 대표자명
         corpInfo.ceoname := '대표자명';
 
-        // ??, ?? 70?
+        // 상호
         corpInfo.corpName := '상호';
 
-        // ??, ?? 40?
+        // 업태
         corpInfo.bizType := '업태';
 
-        // ??, ?? 40?
+        // 종목
         corpInfo.bizClass := '종목';
 
-        // ??, ?? 300?
+        // 주소
         corpInfo.addr := '주소';
         
         try
@@ -1166,6 +1413,11 @@ procedure TfrmExample.btnGetURL_PLUSFRIENDClick(Sender: TObject);
 var
         resultURL : String;
 begin
+        (* =====================================================================
+        * 카카오톡 플러스친구 계정관리 팝업 URL을 반환한다.
+        * - 보안정책으로 인해 반환된 URL의 유효시간은 30초이다.
+        * =================================================================== *)
+
         try
                 resultURL := kakaoService.getURL(txtCorpNum.Text, 'PLUSFRIEND');
         except
@@ -1185,6 +1437,9 @@ var
         tmp : string;
         i : Integer;
 begin
+        (* =====================================================================
+        * 팝빌에 등록된 플러스친구 계정 목록을 반환한다.
+        * =================================================================== *)
 
         try
                 InfoList := kakaoService.ListPlusFriendID(txtCorpNum.text);
@@ -1211,6 +1466,11 @@ procedure TfrmExample.btnGetURL_TEMPLATEClick(Sender: TObject);
 var
         resultURL : String;
 begin
+        (* =====================================================================
+        * 알림톡 템플릿 관리 팝업 URL을 반환한다.
+        * - 보안정책으로 인해 반환된 URL의 유효시간은 30초이다.
+        * =================================================================== *)
+        
         try
                 resultURL := kakaoService.getURL(txtCorpNum.Text, 'TEMPLATE');
         except
@@ -1229,7 +1489,10 @@ var
         tmp : string;
         i : Integer;
 begin
-
+        (* =====================================================================
+        * (주)카카오로부터 심사후 승인된 알림톡 템플릿 목록을 반환한다.
+        * =================================================================== *)
+        
         try
                 InfoList := kakaoService.ListATSTemplate(txtCorpNum.text);
         except
@@ -1256,7 +1519,10 @@ var
         tmp : string;
         i : Integer;
 begin
-
+        (* =====================================================================
+        * 팝빌에 등록된 발신번호 목록을 반환한다.
+        * =================================================================== *)
+        
         try
                 InfoList := kakaoService.GetSenderNumberList(txtCorpNum.text);
         except
@@ -1280,6 +1546,11 @@ procedure TfrmExample.btnGetURL_SENDERClick(Sender: TObject);
 var
         resultURL : String;
 begin
+        (* =====================================================================
+        * 팝빌 발신번호 관리 팝업 URL을 반환한다.
+        * - 보안정책으로 인해 반환된 URL의 유효시간은 30초이다.
+        * =================================================================== *)
+        
         try
                 resultURL := kakaoService.getURL(txtCorpNum.Text, 'SENDER');
         except
@@ -1296,7 +1567,11 @@ procedure TfrmExample.btnCancelReserveClick(Sender: TObject);
 var
         response : TResponse;
 begin
-        
+        (* =====================================================================
+        * 알림톡/친구톡 예약전송건을 취소한다.
+        * - 예약전송 취소는 예약시간 10분전까지만 가능하다.
+        * =================================================================== *)
+                
         try
                 response := kakaoService.CancelReserve(txtCorpNum.Text, txtReceiptNum.Text);
         except
@@ -1314,6 +1589,11 @@ procedure TfrmExample.btnGetURL_BOXClick(Sender: TObject);
 var
         resultURL : String;
 begin
+        (* =====================================================================
+        * 카카오톡 전송내역 팝업 URL을 반환한다.
+        * - 보안정책으로 인해 반환된 URL의 유효시간은 30초이다.
+        * =================================================================== *)
+        
         try
                 resultURL := kakaoService.getURL(txtCorpNum.Text, 'BOX');
         except
@@ -1336,13 +1616,18 @@ var
         SearchInfos : TKakaoSearchList;
         i : integer;
 begin
-        // ???? ????, ???? yyyyMMdd
+        (* =====================================================================
+        * 카카오톡 전송내역 목록을 조회한다.
+        * - 전송한 메시지의 버튼정보는 GetMessage API 를 사용해 확인할 수 있다.
+        * =================================================================== *)
+        
+        // 시작일자, 표시형식 (yyyyMMdd)
         SDate := '20180227';
 
-        // ???? ????, ???? yyyyMMdd
+        // 종료일자, 표시형식 (yyyyMMdd)
         EDate := '20180227';
 
-        //????? ????? ??, 1:??, 2:??, 3:??, 4:??
+        // 전송상태 배열, 0-대기, 1-전송중, 2-성공, 3-대체, 4-실패, 5-취소
         SetLength(State, 6);
         State[0] := '0';
         State[1] := '1';
@@ -1351,25 +1636,25 @@ begin
         State[4] := '4';
         State[5] := '5';
 
-        // ???? ??, SMS, LMS, MMS ex) Item=SMS,MMS
+        // 전송유형 배열, ATS-알림톡, FTS-친구톡 텍스트, FMS-친구톡 이미지
         SetLength(Item, 3);
         Item[0] := 'ATS';
         Item[1] := 'FTS';
         Item[2] := 'FMS';
 
-        // ???? ????, true(????? ??), false(????? ??)
+        // 예약여부, 1-예약전송 조회, 0-일반전송 조회, 공백-전체
         ReserveYN := '';
 
-        // ??????, true(????), false(????).
+        // 개인조회여부, false-전체조회 1-개인조회
         SenderYN := false;
         
-        // ??? ??, ??? 1
+        // 페이지 번호
         Page := 1;
 
-        // ???? ????, ??? 500
+        // 페이지당 검색개수
         PerPage := 30;
 
-        // ????, 'D' : ???? , 'A' : ????
+        // 정렬방향, D-내림차순, A-오름차순
         Order := 'D';
 
         try
@@ -1392,36 +1677,29 @@ begin
         stringgrid1.RowCount := Length(SearchInfos.list) + 1;
         
         for i:= 0 to Length(SearchInfos.list) -1 do begin
-
+                // 전송상태 코드, 0-대기, 1-전송중, 2-성공, 3-대체, 4-실패, 5-취소
                 stringgrid1.Cells[0,i+1] := IntToStr(SearchInfos.list[i].state);
-
+                // 전송일시
                 stringgrid1.Cells[1,i+1] := SearchInfos.list[i].sendDT;
-
+                // 전송결과 코드 
                 stringgrid1.Cells[2,i+1] := IntToStr(SearchInfos.list[i].result);
-
-                stringgrid1.Cells[3,i+1] := SearchInfos.list[i].resultDT;                
-
-                // ????
+                // 전송결과 수신일시
+                stringgrid1.Cells[3,i+1] := SearchInfos.list[i].resultDT;
+                // 수신번호
                 stringgrid1.Cells[4,i+1] := SearchInfos.list[i].receiveNum;
-
-                // ????
+                // 수신자명
                 stringgrid1.Cells[5,i+1] := SearchInfos.list[i].receiveName;
-
-                // ????
+                // 알림톡/친구톡 내용
                 stringgrid1.Cells[6,i+1] := SearchInfos.list[i].content;
-
-                // ????
+                // 대체문자 전송유형
                 stringgrid1.Cells[7,i+1] := IntToStr(SearchInfos.list[i].altContentType);
-
-                // ????
+                // 대체문자 전송일시
                 stringgrid1.Cells[8,i+1] := SearchInfos.list[i].altSendDT;
-
-                // ????
+                // 대체문자 전송결과 코드
                 stringgrid1.Cells[9,i+1] := IntToStr(SearchInfos.list[i].altResult);
-
-                // ????
+                // 대체문자 전송결과 수신일시
                 stringgrid1.Cells[10,i+1] := SearchInfos.list[i].altResultDT;
-                
+                // 대체문자 전송타입, 4-단문, 6-장문
                 stringgrid1.Cells[11,i+1] := SearchInfos.list[i].contentType;
 
         end;
@@ -1436,6 +1714,10 @@ var
         tmp : string;
         i : integer;
 begin
+        (* =====================================================================
+        * 알림톡/친구톡 전송내역 및 전송상태를 확인한다.
+        * =================================================================== *)
+        
         try
                 MessageInfo := kakaoService.GetMessages(txtCorpNum.Text, txtReceiptNum.Text);
 
@@ -1467,36 +1749,28 @@ begin
         stringgrid1.RowCount := Length(MessageInfo.msgs) + 1;
         
         for i:= 0 to Length(MessageInfo.msgs) -1 do begin
-
+                // 전송상태 코드, 0-대기, 1-전송중, 2-성공, 3-대체, 4-실패, 5-취소
                 stringgrid1.Cells[0,i+1] := IntToStr(MessageInfo.msgs[i].state);
-
+                // 전송일시
                 stringgrid1.Cells[1,i+1] := MessageInfo.msgs[i].sendDT;
-
+                // 전송결과 코드
                 stringgrid1.Cells[2,i+1] := IntToStr(MessageInfo.msgs[i].result);
-
+                // 전송결과 수신일시
                 stringgrid1.Cells[3,i+1] := MessageInfo.msgs[i].resultDT;
-
-                // ????
+                // 수신번호
                 stringgrid1.Cells[4,i+1] := MessageInfo.msgs[i].receiveNum;
-
-                // ????
+                // 수신자명
                 stringgrid1.Cells[5,i+1] := MessageInfo.msgs[i].receiveName;
-
-                // ????
+                // 알림톡/친구톡 전송내용
                 stringgrid1.Cells[6,i+1] := MessageInfo.msgs[i].content;
-
-                // ????
+                // 대체문자 전송유형 4-단문, 6-장문
                 stringgrid1.Cells[7,i+1] := IntToStr(MessageInfo.msgs[i].altContentType);
-
-                // ????
+                // 대체문자 전송일시
                 stringgrid1.Cells[8,i+1] := MessageInfo.msgs[i].altSendDT;
-
-                // ????
+                // 대체문자 전송결과 코드
                 stringgrid1.Cells[9,i+1] := IntToStr(MessageInfo.msgs[i].altResult);
-
-                // ????
+                // 대체문자 전송결과 수신일시
                 stringgrid1.Cells[10,i+1] := MessageInfo.msgs[i].altResultDT;
-
         end;        
 end;
 
