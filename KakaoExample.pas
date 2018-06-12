@@ -61,12 +61,6 @@ type
     GroupBox7: TGroupBox;
     btnGetCorpInfo: TButton;
     btnUpdateCorpInfo: TButton;
-    GroupBox14: TGroupBox;
-    btnGetBalance: TButton;
-    btnGetPopbillURL_CHRG: TButton;
-    GroupBox15: TGroupBox;
-    btnGetPartnerBalance: TButton;
-    btnGetPartnerURL_CHRG: TButton;
     GroupBox1: TGroupBox;
     Label3: TLabel;
     txtReserveDT: TEdit;
@@ -74,7 +68,6 @@ type
     btnSendATS_one: TButton;
     btnSendATS_same: TButton;
     btnSendATS_multi: TButton;
-    txtReceiptNum: TEdit;
     GroupBox3: TGroupBox;
     GroupBox5: TGroupBox;
     btnSendFTS_one: TButton;
@@ -84,20 +77,33 @@ type
     btnSendFMS_one: TButton;
     btnSendFMS_Same: TButton;
     btnSendFMS_Multi: TButton;
-    Label4: TLabel;
     GroupBox6: TGroupBox;
     btnGetURL_PLUSFRIEND: TButton;
     btnGetURL_TEMPLATE: TButton;
     btnListPlusFriendID: TButton;
     btnListATSTemplate: TButton;
-    btnCancelReserve: TButton;
     GroupBox10: TGroupBox;
     btnGetURL_SENDER: TButton;
     btnGetSenderNumberList: TButton;
-    btnGetMessages: TButton;
     btnGetURL_BOX: TButton;
     btnSearch: TButton;
     StringGrid1: TStringGrid;
+    GroupBox15: TGroupBox;
+    btnGetPartnerBalance: TButton;
+    btnGetPartnerURL_CHRG: TButton;
+    GroupBox14: TGroupBox;
+    btnGetBalance: TButton;
+    btnGetPopbillURL_CHRG: TButton;
+    GroupBox13: TGroupBox;
+    GroupBox16: TGroupBox;
+    Label4: TLabel;
+    txtReceiptNum: TEdit;
+    btnCancelReserve: TButton;
+    btnGetMessages: TButton;
+    Label5: TLabel;
+    txtRequestNum: TEdit;
+    btnGetMessagesRN: TButton;
+    btnCancelReserveRN: TButton;
     procedure FormCreate(Sender: TObject);
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
     procedure btnCheckIsMemberClick(Sender: TObject);
@@ -138,6 +144,8 @@ type
     procedure btnGetURL_BOXClick(Sender: TObject);
     procedure btnSearchClick(Sender: TObject);
     procedure btnGetMessagesClick(Sender: TObject);
+    procedure btnGetMessagesRNClick(Sender: TObject);
+    procedure btnCancelReserveRNClick(Sender: TObject);
 
   private
     kakaoService : TKakaoService;
@@ -420,22 +428,26 @@ begin
                 senderNum := '07043042993';
 
                 // 수신번호
-                receiverNum := '01043245117';
+                receiverNum := '010111222';
 
                 // 수신자명
                 receiverName := '수신자명';
 
                 // 알림톡 메시지 내용, 템플릿의 내용과 일치하지 않은 경우 전송실패
                 atsMsg := '테스트 템플릿 입니다.';
-                
+
                 // 대체문자 내용
                 atsAltMsg := '대체문자 내용';
                 
                 // 대체문자 전송유형, 공백-미전송, C-알림톡전송, A-대체문자 전송
                 altSendType := 'A';
 
-                receiptNum := kakaoService.SendATS(txtCorpNum.Text, templateCode, senderNum,
-                        altSendType, txtReserveDT.Text, receiverNum, receiverName, atsMsg, atsAltMsg);
+                receiptNum := kakaoService.SendATS(txtCorpNum.Text, templateCode,
+                                                   senderNum, altSendType,
+                                                   txtReserveDT.Text, receiverNum,
+                                                   receiverName, atsMsg,
+                                                   atsAltMsg, txtUserID.text,
+                                                   txtRequestNum.text);
 
         except
                 on le : EPopbillException do begin
@@ -483,16 +495,19 @@ begin
                 SetLength(Receivers, 10);
                 for i := 0 to Length(Receivers) -1 do begin
                     Receivers[i] := TSendKakaoReceiver.Create;
-                    
+
                     // 수신번호
-                    Receivers[i].rcv := '01043245117';
-                    
+                    Receivers[i].rcv := '010111222';
+
                     // 수신자명
                     Receivers[i].rcvnm := '수신자명';
                 end;
 
-                receiptNum := kakaoService.SendATS(txtCorpNum.Text, templateCode, senderNum,
-                        content, altContent, altSendType, txtReserveDT.Text, Receivers);
+                receiptNum := kakaoService.SendATS(txtCorpNum.Text, templateCode,
+                                                   senderNum, content,
+                                                   altContent, altSendType,
+                                                   txtReserveDT.Text, Receivers,
+                                                   txtUserID.text, txtRequestNum.text);
 
         except
                 on le : EPopbillException do begin
@@ -526,13 +541,13 @@ begin
                 // 팝빌에 사전 등록된 발신번호
                 senderNum := '07043042993';
 
-                // [동보] 알림톡 메시지 내용                
+                // [동보] 알림톡 메시지 내용
                 content := '테스트 템플릿 입니다.';
 
                 // [동보] 대체문자 메시지 내용
                 altContent := '';
 
-                // 대체문자 전송유형, 공백-미전송, C-알림톡 전송, A-대체문자 전송 
+                // 대체문자 전송유형, 공백-미전송, C-알림톡 전송, A-대체문자 전송
                 altSendType := 'A';
 
                 // 수신정보 배열, 최대 1000건
@@ -542,7 +557,7 @@ begin
                         Receivers[i] := TSendKakaoReceiver.Create;
 
                         // 수신번호
-                        Receivers[i].rcv := '01043245117';
+                        Receivers[i].rcv := '010111222';
 
                         // 수신자명
                         Receivers[i].rcvnm := '수신자명';
@@ -554,8 +569,11 @@ begin
                         Receivers[i].altmsg := '대체문자 내용';
                 end;
 
-                receiptNum := kakaoService.SendATS(txtCorpNum.Text, templateCode, senderNum,
-                        content, altContent, altSendType, txtReserveDT.Text, Receivers);
+                receiptNum := kakaoService.SendATS(txtCorpNum.Text, templateCode,
+                                                   senderNum, content,
+                                                   altContent, altSendType,
+                                                   txtReserveDT.Text, Receivers,
+                                                   txtUserID.text, txtRequestNum.text);
 
         except
                 on le : EPopbillException do begin
@@ -596,8 +614,8 @@ begin
                 adsYN := True;
 
                 // 수신번호
-                receiverNum := '01043245117';
-                
+                receiverNum := '010111222';
+
                 // 수신자명
                 receiverName := '수신자명';
 
@@ -624,8 +642,13 @@ begin
                 Buttons[0].buttonURL2 := 'http://www.weblink2.com';
 
 
-                receiptNum := kakaoService.SendFTS(txtCorpNum.Text, plusFriendID, senderNum,
-                        altSendType, txtReserveDT.Text, adsYN, receiverNum, receiverName, ftsMsg, ftsAltMsg, Buttons);
+                receiptNum := kakaoService.SendFTS(txtCorpNum.Text, plusFriendID,
+                                                   senderNum, altSendType,
+                                                   txtReserveDT.Text, adsYN,
+                                                   receiverNum, receiverName,
+                                                   ftsMsg, ftsAltMsg,
+                                                   Buttons, txtUserID.text,
+                                                   txtRequestNum.text);
 
         except
                 on le : EPopbillException do begin
@@ -661,7 +684,7 @@ begin
                 // 팝빌에 사전 등록된 발신번호
                 senderNum := '07043042993';
 
-                // 친구톡 내용, 최대 1000자 
+                // 친구톡 내용, 최대 1000자
                 content := '친구톡 내용';
 
                 // 대체문자 내용
@@ -675,14 +698,14 @@ begin
 
 
                 // 수신정보 배열, 최대 1000개
-                SetLength(Receivers, 1);
+                SetLength(Receivers, 10);
 
                 for i := 0 to Length(Receivers) -1 do begin
                     Receivers[i] := TSendKakaoReceiver.Create;
 
                     // 수신번호
-                    Receivers[i].rcv := '01043245117';
-                    
+                    Receivers[i].rcv := '010111222';
+
                     // 수신자명
                     Receivers[i].rcvnm := '수신자명';
                 end;
@@ -697,8 +720,12 @@ begin
                 Buttons[0].buttonURL2 := 'http://www.weblink2.com';
 
 
-                receiptNum := kakaoService.SendFTS(txtCorpNum.Text, plusFriendID, senderNum, content, altContent,
-                        altSendType, txtReserveDT.Text, adsYN, Receivers, Buttons);
+                receiptNum := kakaoService.SendFTS(txtCorpNum.Text, plusFriendID,
+                                                   senderNum, content,
+                                                   altContent, altSendType,
+                                                   txtReserveDT.Text, adsYN,
+                                                   Receivers, Buttons,
+                                                   txtUserID.text, txtRequestNum.text);
 
         except
                 on le : EPopbillException do begin
@@ -747,13 +774,13 @@ begin
 
 
                 // 수신정보 배열, 최대 1000개
-                SetLength(Receivers, 1);
+                SetLength(Receivers, 10);
 
                 for i := 0 to Length(Receivers) -1 do begin
                     Receivers[i] := TSendKakaoReceiver.Create;
 
                     // 수신번호
-                    Receivers[i].rcv := '01043245117';
+                    Receivers[i].rcv := '010111222';
 
                     // 수신자명
                     Receivers[i].rcvnm := '수신자명';
@@ -783,8 +810,12 @@ begin
                 Buttons[0].buttonURL2 := 'http://www.weblink2.com';
 
 
-                receiptNum := kakaoService.SendFTS(txtCorpNum.Text, plusFriendID, senderNum, content, altContent,
-                        altSendType, txtReserveDT.Text, adsYN, Receivers, Buttons);
+                receiptNum := kakaoService.SendFTS(txtCorpNum.Text, plusFriendID,
+                                                   senderNum, content,
+                                                   altContent, altSendType,
+                                                   txtReserveDT.Text, adsYN,
+                                                   Receivers, Buttons,
+                                                   txtUserID.text, txtRequestNum.text);
 
         except
                 on le : EPopbillException do begin
@@ -832,7 +863,7 @@ begin
                 adsYN := True;
 
                 // 수신번호
-                receiverNum := '01043245117';
+                receiverNum := '010111222';
 
                 // 수신자명
                 receiverName := '수신자명';
@@ -869,8 +900,14 @@ begin
                 Buttons[1].buttonURL2 := 'http://www.weblink2.com';
 
 
-                receiptNum := kakaoService.SendFMS(txtCorpNum.Text, plusFriendID, senderNum,
-                        altSendType, txtReserveDT.Text, adsYN, receiverNum, receiverName, ftsMsg, ftsAltMsg, filePath, imageURl, Buttons);
+                receiptNum := kakaoService.SendFMS(txtCorpNum.Text, plusFriendID,
+                                                   senderNum, altSendType,
+                                                   txtReserveDT.Text, adsYN,
+                                                   receiverNum, receiverName,
+                                                   ftsMsg, ftsAltMsg,
+                                                   filePath, imageURl,
+                                                   Buttons, txtUserID.text,
+                                                   txtRequestNum.text);
 
         except
                 on le : EPopbillException do begin
@@ -919,7 +956,7 @@ begin
                 adsYN := True;
 
                 // 수신번호
-                receiverNum := '01043245117';
+                receiverNum := '010111222';
 
                 // 수신자명
                 receiverName := '수신자명';
@@ -937,7 +974,7 @@ begin
 
                 for i := 0 to Length(Receivers) -1 do begin
                     Receivers[i] := TSendKakaoReceiver.Create;
-                    Receivers[i].rcv := '01043245117';
+                    Receivers[i].rcv := '010111222';
                     Receivers[i].rcvnm := '수신자명';
                 end;
 
@@ -958,8 +995,13 @@ begin
 
 
 
-                receiptNum := kakaoService.SendFMS(txtCorpNum.Text, plusFriendID, senderNum, content, altContent,
-                        altSendType, txtReserveDT.Text, adsYN, Receivers, filePath, imageURl, Buttons);
+                receiptNum := kakaoService.SendFMS(txtCorpNum.Text, plusFriendID,
+                                                   senderNum, content,
+                                                   altContent, altSendType,
+                                                   txtReserveDT.Text, adsYN,
+                                                   Receivers, filePath,
+                                                   imageURl, Buttons,
+                                                   txtUserID.text, txtRequestNum.text);
 
         except
                 on le : EPopbillException do begin
@@ -999,17 +1041,17 @@ begin
                 // 플러스친구 아이디, ListPlusFriendID API의 plusFriendID 확인
                 plusFriendID := '@팝빌';
 
-                // 팝빌에 사전 등록된 발신번호                
+                // 팝빌에 사전 등록된 발신번호
                 senderNum := '07043042993';
 
-                // 대체문자 전송유형, 공백-미전송, C-친구톡전송, A-대체문자전송                
+                // 대체문자 전송유형, 공백-미전송, C-친구톡전송, A-대체문자전송
                 altSendType := 'C';
 
                 // 광고전송여부
                 adsYN := True;
 
                 // 수신번호
-                receiverNum := '01043245117';
+                receiverNum := '010111222';
 
                 // 수신자명
                 receiverName := '수신자명';
@@ -1030,8 +1072,8 @@ begin
                 for i := 0 to Length(Receivers) -1 do begin
                     Receivers[i] := TSendKakaoReceiver.Create;
                     // 수신번호
-                    Receivers[i].rcv := '01043245117';
-                    // 수신자명 
+                    Receivers[i].rcv := '010111222';
+                    // 수신자명
                     Receivers[i].rcvnm := '수신자명';
                     // 친구톡 내용, 최대 400자
                     Receivers[i].msg := '개별메시지 내용';
@@ -1060,8 +1102,13 @@ begin
 
 
 
-                receiptNum := kakaoService.SendFMS(txtCorpNum.Text, plusFriendID, senderNum, content, altContent,
-                        altSendType, txtReserveDT.Text, adsYN, Receivers, filePath, imageURl, Buttons);
+                receiptNum := kakaoService.SendFMS(txtCorpNum.Text, plusFriendID,
+                                                   senderNum, content,
+                                                   altContent, altSendType,
+                                                   txtReserveDT.Text, adsYN,
+                                                   Receivers, filePath,
+                                                   imageURl, Buttons,
+                                                   txtUserID.text, txtRequestNum.text);
 
         except
                 on le : EPopbillException do begin
@@ -1572,7 +1619,7 @@ begin
         * 알림톡/친구톡 예약전송건을 취소한다.
         * - 예약전송 취소는 예약시간 10분전까지만 가능하다.
         * =================================================================== *)
-                
+
         try
                 response := kakaoService.CancelReserve(txtCorpNum.Text, txtReceiptNum.Text);
         except
@@ -1748,7 +1795,7 @@ begin
         ShowMessage(tmp);
 
         stringgrid1.RowCount := Length(MessageInfo.msgs) + 1;
-        
+
         for i:= 0 to Length(MessageInfo.msgs) -1 do begin
                 // 전송상태 코드, 0-대기, 1-전송중, 2-성공, 3-대체, 4-실패, 5-취소
                 stringgrid1.Cells[0,i+1] := IntToStr(MessageInfo.msgs[i].state);
@@ -1772,11 +1819,97 @@ begin
                 stringgrid1.Cells[9,i+1] := IntToStr(MessageInfo.msgs[i].altResult);
                 // 대체문자 전송결과 수신일시
                 stringgrid1.Cells[10,i+1] := MessageInfo.msgs[i].altResultDT;
-        end;        
+        end;
 end;
 
+procedure TfrmExample.btnGetMessagesRNClick(Sender: TObject);
+var
+        MessageInfo : TSentKakaoInfo;
+        tmp : string;
+        i : integer;
+begin
+        (* =====================================================================
+        * 알림톡/친구톡 전송내역 및 전송상태를 확인한다.
+        * =================================================================== *)
+        
+        try
+                MessageInfo := kakaoService.GetMessagesRN(txtCorpNum.Text, txtRequestNum.Text);
+
+        except
+                on le : EPopbillException do begin
+                        ShowMessage('응답코드 : ' + IntToStr(le.code) + #10#13 +'응답메시지 : '+ le.Message);
+                        Exit;
+                end;
+        end;
+
+        tmp := 'contentType (카카오톡 유형) : '+ MessageInfo.contentType + #13;
+        tmp := tmp + 'templateCode (알림톡 템플릿 코드) : '+ MessageInfo.templateCode + #13;
+        tmp := tmp + 'plusFriendID (친구톡 플리스친구 아이디) : '+ MessageInfo.plusFriendID + #13;
+        tmp := tmp + 'sendNum (발신번호) : '+ MessageInfo.sendNum + #13;
+        tmp := tmp + 'altContent (대체문자내용) : '+ MessageInfo.altContent + #13;
+        tmp := tmp + 'altSendType (대체문자유형) : '+ MessageInfo.altSendType + #13;
+        tmp := tmp + 'reserveDT (예약일시) : '+ MessageInfo.reserveDT + #13;
+        tmp := tmp + 'adsYN (광고전송여부) : '+ BoolToStr(MessageInfo.adsYN) + #13;
+        tmp := tmp + 'imageURL (친구톡이미지URL) : '+ MessageInfo.imageURL + #13;
+        tmp := tmp + 'sendCnt (전송건수) : '+ MessageInfo.sendCnt + #13;
+        tmp := tmp + 'successCnt (성공건수) : '+ MessageInfo.successCnt + #13;
+        tmp := tmp + 'failCnt (실패건수) : '+ MessageInfo.failCnt + #13;
+        tmp := tmp + 'altCnt (대체문자 건수) : '+ MessageInfo.altCnt + #13;
+        tmp := tmp + 'cancelCnt (취소건수) : '+ MessageInfo.cancelCnt + #13;
+
+
+        ShowMessage(tmp);
+
+        stringgrid1.RowCount := Length(MessageInfo.msgs) + 1;
+
+        for i:= 0 to Length(MessageInfo.msgs) -1 do begin
+                // 전송상태 코드, 0-대기, 1-전송중, 2-성공, 3-대체, 4-실패, 5-취소
+                stringgrid1.Cells[0,i+1] := IntToStr(MessageInfo.msgs[i].state);
+                // 전송일시
+                stringgrid1.Cells[1,i+1] := MessageInfo.msgs[i].sendDT;
+                // 전송결과 코드
+                stringgrid1.Cells[2,i+1] := IntToStr(MessageInfo.msgs[i].result);
+                // 전송결과 수신일시
+                stringgrid1.Cells[3,i+1] := MessageInfo.msgs[i].resultDT;
+                // 수신번호
+                stringgrid1.Cells[4,i+1] := MessageInfo.msgs[i].receiveNum;
+                // 수신자명
+                stringgrid1.Cells[5,i+1] := MessageInfo.msgs[i].receiveName;
+                // 알림톡/친구톡 전송내용
+                stringgrid1.Cells[6,i+1] := MessageInfo.msgs[i].content;
+                // 대체문자 전송유형 4-단문, 6-장문
+                stringgrid1.Cells[7,i+1] := IntToStr(MessageInfo.msgs[i].altContentType);
+                // 대체문자 전송일시
+                stringgrid1.Cells[8,i+1] := MessageInfo.msgs[i].altSendDT;
+                // 대체문자 전송결과 코드
+                stringgrid1.Cells[9,i+1] := IntToStr(MessageInfo.msgs[i].altResult);
+                // 대체문자 전송결과 수신일시
+                stringgrid1.Cells[10,i+1] := MessageInfo.msgs[i].altResultDT;
+        end;
+end;
+
+procedure TfrmExample.btnCancelReserveRNClick(Sender: TObject);
+var
+        response : TResponse;
+begin
+        (* =====================================================================
+        * 알림톡/친구톡 예약전송건을 취소한다.
+        * - 예약전송 취소는 예약시간 10분전까지만 가능하다.
+        * =================================================================== *)
+
+        try
+                response := kakaoService.CancelReserveRN(txtCorpNum.Text, txtRequestNum.Text);
+        except
+                on le : EPopbillException do begin
+                        ShowMessage('응답코드 : ' + IntToStr(le.code) + #10#13 +'응답메시지 : '+ le.Message);
+                        Exit;
+                end;
+        end;
+
+        ShowMessage('응답코드 : ' + IntToStr(response.code) + #10#13 + '응답메지시 : '+ response.Message);
+end;
+
+
+
 end.
-
-
-
 
