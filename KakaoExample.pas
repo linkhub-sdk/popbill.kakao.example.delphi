@@ -1842,7 +1842,7 @@ begin
                         ShowMessage('응답코드 : ' + IntToStr(le.code) + #10#13 +'응답메시지 : '+ le.Message);
                         Exit;
                 end;
-        end;
+        end;             
 
         tmp := 'contentType (카카오톡 유형) : '+ MessageInfo.contentType + #13;
         tmp := tmp + 'templateCode (알림톡 템플릿 코드) : '+ MessageInfo.templateCode + #13;
