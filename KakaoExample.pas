@@ -422,10 +422,10 @@ begin
 
         try
                 // 템플릿코드, ListATSTemplate API 반환항목중 templateCode로 확인
-                templateCode := '018020000002';
+                templateCode := '018020000010';
 
                 // 팝빌에 사전 등록된 발신번호
-                senderNum := '07043042993';
+                senderNum := '070-4304-2991';
 
                 // 수신번호
                 receiverNum := '010111222';
@@ -434,7 +434,7 @@ begin
                 receiverName := '수신자명';
 
                 // 알림톡 메시지 내용, 템플릿의 내용과 일치하지 않은 경우 전송실패
-                atsMsg := '테스트 템플릿 입니다.';
+                atsMsg := '테스트 알림톡';
 
                 // 대체문자 내용
                 atsAltMsg := '대체문자 내용';
@@ -477,13 +477,13 @@ begin
 
         try
                 // 템플릿코드, ListATSTemplate API templateCode로 확인
-                templateCode := '018020000002';
+                templateCode := '018020000010';
 
                 // 팝빌에 사전 등록된 발신번호
-                senderNum := '07043042993';
+                senderNum := '070-4304-2991';
 
-                // 알림톡 메시지내용, 템플릿의 내용과 일치하지 않은경우 실패처리
-                content := '테스트 템플릿 입니다.';
+                // 알림톡 메시지 내용, 템플릿의 내용과 일치하지 않은 경우 전송실패
+                content := '테스트 템플릿.';
 
                 // 대체문자 내용
                 altContent := '대체문자 내용';
@@ -536,13 +536,13 @@ begin
 
         try
                 // 템플릿코드, ListATSTemplate API templateCode로 확인
-                templateCode := '018020000002';
+                templateCode := '018020000010';
 
                 // 팝빌에 사전 등록된 발신번호
-                senderNum := '07043042993';
+                senderNum := '070-4304-2991';
 
                 // [동보] 알림톡 메시지 내용
-                content := '테스트 템플릿 입니다.';
+                content := '테스트 템플릿';
 
                 // [동보] 대체문자 메시지 내용
                 altContent := '';
@@ -557,7 +557,7 @@ begin
                         Receivers[i] := TSendKakaoReceiver.Create;
 
                         // 수신번호
-                        Receivers[i].rcv := '010111222';
+                        Receivers[i].rcv := '010123111';
 
                         // 수신자명
                         Receivers[i].rcvnm := '수신자명';
@@ -605,7 +605,7 @@ begin
                 plusFriendID := '@팝빌';
 
                 // 팝빌에 사전 등록된 발신번호
-                senderNum := '07043042993';
+                senderNum := '070-4304-2991';
 
                 // 대체문자 전송유형, 공백-미전송, C-친구톡전송, A-대체문자전송
                 altSendType := 'C';
@@ -682,7 +682,7 @@ begin
                 plusFriendID := '@팝빌';
 
                 // 팝빌에 사전 등록된 발신번호
-                senderNum := '07043042993';
+                senderNum := '070-4304-2991';
 
                 // 친구톡 내용, 최대 1000자
                 content := '친구톡 내용';
@@ -758,7 +758,7 @@ begin
                 plusFriendID := '@팝빌';
 
                 // 팝빌에 사전 등록된 발신번호
-                senderNum := '07043042993';
+                senderNum := '070-4304-2991';
 
                 // [동보] 친구톡 내용
                 content := '';
@@ -845,6 +845,7 @@ begin
         
         try
                 if OpenDialog1.Execute then begin
+                
                       filePath := OpenDialog1.FileName;
                 end else begin
                         Exit;
@@ -854,7 +855,7 @@ begin
                 plusFriendID := '@팝빌';
 
                 // 팝빌에 사전 등록된 발신번호
-                senderNum := '07043042993';
+                senderNum := '070-4304-2991';
 
                 // 대체문자 전송유형, 공백-미전송, C-친구톡 전송, A-대체문자 전송
                 altSendType := 'A';
@@ -947,7 +948,7 @@ begin
                 plusFriendID := '@팝빌';
 
                 // 팝빌에 사전 등록된 발신번호
-                senderNum := '07043042993';
+                senderNum := '070-4304-2991';
 
                 // 대체문자 전송유형, 공백-미전송, C-친구톡전송, A-대체문자전송
                 altSendType := 'C';
@@ -1042,7 +1043,7 @@ begin
                 plusFriendID := '@팝빌';
 
                 // 팝빌에 사전 등록된 발신번호
-                senderNum := '07043042993';
+                senderNum := '070-4304-2991';
 
                 // 대체문자 전송유형, 공백-미전송, C-친구톡전송, A-대체문자전송
                 altSendType := 'C';
@@ -1829,9 +1830,10 @@ var
         i : integer;
 begin
         (* =====================================================================
+        * 전송요청번호(RequestNum)를 할당한 
         * 알림톡/친구톡 전송내역 및 전송상태를 확인한다.
         * =================================================================== *)
-        
+
         try
                 MessageInfo := kakaoService.GetMessagesRN(txtCorpNum.Text, txtRequestNum.Text);
 
@@ -1893,7 +1895,7 @@ var
         response : TResponse;
 begin
         (* =====================================================================
-        * 알림톡/친구톡 예약전송건을 취소한다.
+        * 전송요청번호(RequestNum)를 할당한 알림톡/친구톡 예약전송건을 취소한다.
         * - 예약전송 취소는 예약시간 10분전까지만 가능하다.
         * =================================================================== *)
 
