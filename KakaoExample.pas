@@ -412,7 +412,7 @@ end;
 procedure TfrmExample.btnSendATS_oneClick(Sender: TObject);
 var
         receiptNum, templateCode, senderNum, altSendType, receiverNum,
-        receiverName, atsMsg, atsAltMsg : String;
+        receiverName, atsMsg, atsAltMsg, requestNum : String;
 begin
         (* =====================================================================
         * 알림톡 전송을 요청한다. (단건)
@@ -442,12 +442,17 @@ begin
                 // 대체문자 전송유형, 공백-미전송, C-알림톡전송, A-대체문자 전송
                 altSendType := 'A';
 
+                // 전송요청번호
+                // 파트너가 전송 건에 대해 관리번호를 구성하여 관리하는 경우 사용.
+                // 1~36자리로 구성. 영문, 숫자, 하이픈(-), 언더바(_)를 조합하여 팝빌 회원별로 중복되지 않도록 할당.
+                requestNum := txtRequestNum.text;
+
                 receiptNum := kakaoService.SendATS(txtCorpNum.Text, templateCode,
                                                    senderNum, altSendType,
                                                    txtReserveDT.Text, receiverNum,
                                                    receiverName, atsMsg,
                                                    atsAltMsg, txtUserID.text,
-                                                   txtRequestNum.text);
+                                                   requestNum);
 
         except
                 on le : EPopbillException do begin
@@ -465,7 +470,8 @@ end;
 
 procedure TfrmExample.btnSendATS_sameClick(Sender: TObject);
 var
-        receiptNum, templateCode, content, altContent, senderNum, altSendType: String;
+        receiptNum, templateCode, content, altContent, senderNum, altSendType,
+        requestNum : String;
         Receivers : TSendKakaoReceiverList;
         i : Integer;
 begin
@@ -491,6 +497,11 @@ begin
                 // 대체문자 전송유형, 공백-미전송, C-알림톡 전송, A-대체문자 전송
                 altSendType := 'A';
 
+                // 전송요청번호
+                // 파트너가 전송 건에 대해 관리번호를 구성하여 관리하는 경우 사용.
+                // 1~36자리로 구성. 영문, 숫자, 하이픈(-), 언더바(_)를 조합하여 팝빌 회원별로 중복되지 않도록 할당.
+                requestNum := txtRequestNum.text;
+
                 // 수신정보 배열, 최대 1000건
                 SetLength(Receivers, 10);
                 for i := 0 to Length(Receivers) -1 do begin
@@ -507,7 +518,7 @@ begin
                                                    senderNum, content,
                                                    altContent, altSendType,
                                                    txtReserveDT.Text, Receivers,
-                                                   txtUserID.text, txtRequestNum.text);
+                                                   txtUserID.text, requestNum);
 
         except
                 on le : EPopbillException do begin
@@ -524,7 +535,8 @@ end;
 
 procedure TfrmExample.btnSendATS_multiClick(Sender: TObject);
 var
-        receiptNum, templateCode, content, altContent, senderNum, altSendType: String;
+        receiptNum, templateCode, content, altContent, senderNum, altSendType,
+        requestNum : String;
         Receivers : TSendKakaoReceiverList;
         i : Integer;
 begin
@@ -550,6 +562,11 @@ begin
                 // 대체문자 전송유형, 공백-미전송, C-알림톡 전송, A-대체문자 전송
                 altSendType := 'A';
 
+                // 전송요청번호
+                // 파트너가 전송 건에 대해 관리번호를 구성하여 관리하는 경우 사용.
+                // 1~36자리로 구성. 영문, 숫자, 하이픈(-), 언더바(_)를 조합하여 팝빌 회원별로 중복되지 않도록 할당.
+                requestNum := txtRequestNum.text;
+
                 // 수신정보 배열, 최대 1000건
                 SetLength(Receivers, 10);
 
@@ -573,7 +590,7 @@ begin
                                                    senderNum, content,
                                                    altContent, altSendType,
                                                    txtReserveDT.Text, Receivers,
-                                                   txtUserID.text, txtRequestNum.text);
+                                                   txtUserID.text, requestNum);
 
         except
                 on le : EPopbillException do begin
@@ -591,7 +608,7 @@ end;
 procedure TfrmExample.btnSendFTS_oneClick(Sender: TObject);
 var
         receiptNum, plusFriendID, senderNum, altSendType, receiverNum,
-        receiverName, ftsMsg, ftsAltMsg : String;
+        receiverName, ftsMsg, ftsAltMsg, requestNum : String;
         adsYN : boolean;
         Buttons : TSendKakaoButtonList;
 begin
@@ -625,6 +642,11 @@ begin
                 // 대체문자 내용
                 ftsAltMsg := '대체문자 내용';
 
+                // 전송요청번호
+                // 파트너가 전송 건에 대해 관리번호를 구성하여 관리하는 경우 사용.
+                // 1~36자리로 구성. 영문, 숫자, 하이픈(-), 언더바(_)를 조합하여 팝빌 회원별로 중복되지 않도록 할당.
+                requestNum := txtRequestNum.text;
+
                 // 버튼 배열, 최대 5개
                 SetLength(Buttons, 1);
                 Buttons[0] := TSendKakaoButton.Create;
@@ -648,7 +670,7 @@ begin
                                                    receiverNum, receiverName,
                                                    ftsMsg, ftsAltMsg,
                                                    Buttons, txtUserID.text,
-                                                   txtRequestNum.text);
+                                                   requestNum);
 
         except
                 on le : EPopbillException do begin
@@ -666,7 +688,8 @@ end;
 
 procedure TfrmExample.btnSendFTS_SameClick(Sender: TObject);
 var
-        receiptNum, plusFriendID, senderNum, content, altContent, altSendType : String;
+        receiptNum, plusFriendID, senderNum, content, altContent, altSendType,
+        requestNum : String;
         adsYN : boolean;
         Receivers : TSendKakaoReceiverList;
         Buttons : TSendKakaoButtonList;
@@ -692,6 +715,11 @@ begin
 
                 // 대체문자 전송유형, 공백-미전송, C-친구톡 전송, A-대체문자 전송
                 altSendType := 'C';
+
+                // 전송요청번호
+                // 파트너가 전송 건에 대해 관리번호를 구성하여 관리하는 경우 사용.
+                // 1~36자리로 구성. 영문, 숫자, 하이픈(-), 언더바(_)를 조합하여 팝빌 회원별로 중복되지 않도록 할당.
+                requestNum := txtRequestNum.text;
 
                 // 광고전송여부
                 adsYN := True;
@@ -725,7 +753,7 @@ begin
                                                    altContent, altSendType,
                                                    txtReserveDT.Text, adsYN,
                                                    Receivers, Buttons,
-                                                   txtUserID.text, txtRequestNum.text);
+                                                   txtUserID.text, requestNum);
 
         except
                 on le : EPopbillException do begin
@@ -742,7 +770,8 @@ end;
 
 procedure TfrmExample.btnSendFTS_multiClick(Sender: TObject);
 var
-        receiptNum, plusFriendID, senderNum, content, altContent, altSendType : String;
+        receiptNum, plusFriendID, senderNum, content, altContent, altSendType,
+        requestNum : String;
         adsYN : boolean;
         Receivers : TSendKakaoReceiverList;
         Buttons : TSendKakaoButtonList;
@@ -768,6 +797,11 @@ begin
 
                 // 대체문자 전송유형, 공백-미전송, C-친구톡 전송, A-대체문자 전송
                 altSendType := 'A';
+
+                // 전송요청번호
+                // 파트너가 전송 건에 대해 관리번호를 구성하여 관리하는 경우 사용.
+                // 1~36자리로 구성. 영문, 숫자, 하이픈(-), 언더바(_)를 조합하여 팝빌 회원별로 중복되지 않도록 할당.
+                requestNum := txtRequestNum.text;
 
                 // 광고전송 여부
                 adsYN := True;
@@ -815,7 +849,7 @@ begin
                                                    altContent, altSendType,
                                                    txtReserveDT.Text, adsYN,
                                                    Receivers, Buttons,
-                                                   txtUserID.text, txtRequestNum.text);
+                                                   txtUserID.text, requestNum);
 
         except
                 on le : EPopbillException do begin
@@ -833,7 +867,7 @@ end;
 procedure TfrmExample.btnSendFMS_oneClick(Sender: TObject);
 var
         filePath, imageURl, receiptNum, plusFriendID, senderNum, altSendType, receiverNum,
-        receiverName, ftsMsg, ftsAltMsg: String;
+        receiverName, ftsMsg, ftsAltMsg, requestNum : String;
         adsYN : boolean;
         Buttons : TSendKakaoButtonList;
 begin
@@ -878,6 +912,11 @@ begin
                 // 첨부 이미지 링크 URL
                 imageURL := 'http://www.popbill.com';
 
+                // 전송요청번호
+                // 파트너가 전송 건에 대해 관리번호를 구성하여 관리하는 경우 사용.
+                // 1~36자리로 구성. 영문, 숫자, 하이픈(-), 언더바(_)를 조합하여 팝빌 회원별로 중복되지 않도록 할당.
+                requestNum := txtRequestNum.text;
+
                 // 버튼 배열, 최대 5개
                 SetLength(Buttons, 2);
                 Buttons[0] := TSendKakaoButton.Create;
@@ -908,7 +947,7 @@ begin
                                                    ftsMsg, ftsAltMsg,
                                                    filePath, imageURl,
                                                    Buttons, txtUserID.text,
-                                                   txtRequestNum.text);
+                                                   requestNum);
 
         except
                 on le : EPopbillException do begin
@@ -925,7 +964,7 @@ end;
 procedure TfrmExample.btnSendFMS_SameClick(Sender: TObject);
 var
         filePath, imageURl, receiptNum, plusFriendID, senderNum, altSendType, receiverNum,
-        receiverName, content, altContent : String;
+        receiverName, content, altContent, requestNum : String;
         adsYN : boolean;
         Buttons : TSendKakaoButtonList;
         Receivers : TSendKakaoReceiverList;
@@ -971,6 +1010,11 @@ begin
                 // 첨부 이미지 링크 URL
                 imageURL := 'http://www.popbill.com';
 
+                // 전송요청번호
+                // 파트너가 전송 건에 대해 관리번호를 구성하여 관리하는 경우 사용.
+                // 1~36자리로 구성. 영문, 숫자, 하이픈(-), 언더바(_)를 조합하여 팝빌 회원별로 중복되지 않도록 할당.
+                requestNum := txtRequestNum.text;
+
                 SetLength(Receivers, 10);
 
                 for i := 0 to Length(Receivers) -1 do begin
@@ -1002,7 +1046,7 @@ begin
                                                    txtReserveDT.Text, adsYN,
                                                    Receivers, filePath,
                                                    imageURl, Buttons,
-                                                   txtUserID.text, txtRequestNum.text);
+                                                   txtUserID.text, requestNum);
 
         except
                 on le : EPopbillException do begin
@@ -1020,7 +1064,7 @@ end;
 procedure TfrmExample.btnSendFMS_MultiClick(Sender: TObject);
 var
         filePath, imageURl, receiptNum, plusFriendID, senderNum, altSendType, receiverNum,
-        receiverName, content, altContent : String;
+        receiverName, content, altContent, requestNum : String;
         adsYN : boolean;
         Buttons : TSendKakaoButtonList;
         Receivers : TSendKakaoReceiverList;
@@ -1038,7 +1082,7 @@ begin
                 end else begin
                         Exit;
                 end;
-                
+
                 // 플러스친구 아이디, ListPlusFriendID API의 plusFriendID 확인
                 plusFriendID := '@팝빌';
 
@@ -1066,6 +1110,10 @@ begin
                 // 첨부 이미지 링크 URL                
                 imageURL := 'http://www.popbill.com';
 
+                // 전송요청번호
+                // 파트너가 전송 건에 대해 관리번호를 구성하여 관리하는 경우 사용.
+                // 1~36자리로 구성. 영문, 숫자, 하이픈(-), 언더바(_)를 조합하여 팝빌 회원별로 중복되지 않도록 할당.
+                requestNum := txtRequestNum.text;
 
                 // 수신정보 배열, 최대 1000건
                 SetLength(Receivers, 10);
@@ -1109,7 +1157,7 @@ begin
                                                    txtReserveDT.Text, adsYN,
                                                    Receivers, filePath,
                                                    imageURl, Buttons,
-                                                   txtUserID.text, txtRequestNum.text);
+                                                   txtUserID.text, requestNum);
 
         except
                 on le : EPopbillException do begin
@@ -1830,7 +1878,7 @@ var
         i : integer;
 begin
         (* =====================================================================
-        * 전송요청번호(RequestNum)를 할당한 
+        * 전송요청번호(requestNum)를 할당한
         * 알림톡/친구톡 전송내역 및 전송상태를 확인한다.
         * =================================================================== *)
 
@@ -1842,7 +1890,7 @@ begin
                         ShowMessage('응답코드 : ' + IntToStr(le.code) + #10#13 +'응답메시지 : '+ le.Message);
                         Exit;
                 end;
-        end;             
+        end;
 
         tmp := 'contentType (카카오톡 유형) : '+ MessageInfo.contentType + #13;
         tmp := tmp + 'templateCode (알림톡 템플릿 코드) : '+ MessageInfo.templateCode + #13;
@@ -1895,7 +1943,7 @@ var
         response : TResponse;
 begin
         (* =====================================================================
-        * 전송요청번호(RequestNum)를 할당한 알림톡/친구톡 예약전송건을 취소한다.
+        * 전송요청번호(requestNum)를 할당한 알림톡/친구톡 예약전송건을 취소한다.
         * - 예약전송 취소는 예약시간 10분전까지만 가능하다.
         * =================================================================== *)
 
