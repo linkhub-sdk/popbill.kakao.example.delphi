@@ -3,7 +3,7 @@
 * 팝빌 카카오톡 API Delphi SDK Example
 *
 * - 델파이 SDK 적용방법 안내 : http://blog.linkhub.co.kr/572
-* - 업데이트 일자 : 2018-06-15
+* - 업데이트 일자 : 2018-09-18
 * - 연동 기술지원 연락처 : 1600-9854 / 070-4304-2991
 * - 연동 기술지원 이메일 : code@linkhub.co.kr
 *
@@ -167,25 +167,27 @@ begin
         kakaoService.IsThrowException := true;
 
         //그리드 초기화
-        stringgrid1.Cells[0,0] := 'state';
-        stringgrid1.Cells[1,0] := 'sendDT';
-        stringgrid1.Cells[2,0] := 'result';
-        stringgrid1.Cells[3,0] := 'resultDT';
-        stringgrid1.Cells[4,0] := 'receiveNum';
-        stringgrid1.Cells[5,0] := 'receiveName';
-        stringgrid1.Cells[6,0] := 'content';
-        stringgrid1.Cells[7,0] := 'altContentType';
-        stringgrid1.Cells[8,0] := 'altSendDT';
-        stringgrid1.Cells[9,0] := 'altResult';
-        stringgrid1.Cells[10,0] := 'altResultDT';
-        stringgrid1.Cells[11,0] := 'contentType';
-        
+        stringgrid1.Cells[0 ,0] := 'state';
+        stringgrid1.Cells[1 ,0] := 'sendDT';
+        stringgrid1.Cells[2 ,0] := 'result';
+        stringgrid1.Cells[3 ,0] := 'resultDT';
+        stringgrid1.Cells[4 ,0] := 'contentType';
+        stringgrid1.Cells[5 ,0] := 'receiveNum';
+        stringgrid1.Cells[6 ,0] := 'receiveName';
+        stringgrid1.Cells[7 ,0] := 'content';
+        stringgrid1.Cells[8 ,0] := 'altContentType';
+        stringgrid1.Cells[9 ,0] := 'altSendDT';
+        stringgrid1.Cells[10,0] := 'altResult';
+        stringgrid1.Cells[11,0] := 'altResultDT';
+        stringgrid1.Cells[12,0] := 'receiptNum';
+        stringgrid1.Cells[13,0] := 'requestNum';
+
         stringgrid1.ColWidths[1] := 100;
         stringgrid1.ColWidths[3] := 100;
-        stringgrid1.ColWidths[4] := 100;
-        stringgrid1.ColWidths[6] := 100;
-        stringgrid1.ColWidths[8] := 100;
-        stringgrid1.ColWidths[10] := 100;                                        
+        stringgrid1.ColWidths[5] := 100;
+        stringgrid1.ColWidths[7] := 100;
+        stringgrid1.ColWidths[9] := 100;
+        stringgrid1.ColWidths[11] := 100;
 end;
 
 procedure TfrmExample.FormClose(Sender: TObject; var Action: TCloseAction);
@@ -1706,9 +1708,8 @@ end;
 
 procedure TfrmExample.btnSearchClick(Sender: TObject);
 var
-        SDate, EDate, tmp: String;
+        SDate, EDate, tmp, ReserveYN, Order, QString: String;
         Page, PerPage : Integer;
-        ReserveYN, Order : String;
         State, Item : Array Of String;
         SenderYN : boolean;
         SearchInfos : TKakaoSearchList;
@@ -1716,14 +1717,15 @@ var
 begin
         (* =====================================================================
         * 카카오톡 전송내역 목록을 조회한다.
+        * - 최대 검색기간 : 6개월 이내    
         * - 전송한 메시지의 버튼정보는 GetMessage API 를 사용해 확인할 수 있다.
         * =================================================================== *)
-        
+
         // 시작일자, 표시형식 (yyyyMMdd)
-        SDate := '20180228';
+        SDate := '20180901';
 
         // 종료일자, 표시형식 (yyyyMMdd)
-        EDate := '20180228';
+        EDate := '20180920';
 
         // 전송상태 배열, 0-대기, 1-전송중, 2-성공, 3-대체, 4-실패, 5-취소
         SetLength(State, 6);
@@ -1755,9 +1757,12 @@ begin
         // 정렬방향, D-내림차순, A-오름차순
         Order := 'D';
 
+        // 조회 검색어, 수신자명 기재
+        QString := '';
+
         try
                 SearchInfos := kakaoService.search(txtCorpNum.text, SDate, EDate, State,
-                                 Item, ReserveYN, SenderYN, Page, PerPage, Order);
+                                 Item, ReserveYN, SenderYN, Page, PerPage, Order, QString, txtUserID.text);
         except
                 on le : EPopbillException do begin
                         ShowMessage('응답코드 : ' + IntToStr(le.code) + #10#13 +'응답메지시 : '+ le.Message);
@@ -1783,23 +1788,26 @@ begin
                 stringgrid1.Cells[2,i+1] := IntToStr(SearchInfos.list[i].result);
                 // 전송결과 수신일시
                 stringgrid1.Cells[3,i+1] := SearchInfos.list[i].resultDT;
-                // 수신번호
-                stringgrid1.Cells[4,i+1] := SearchInfos.list[i].receiveNum;
-                // 수신자명
-                stringgrid1.Cells[5,i+1] := SearchInfos.list[i].receiveName;
-                // 알림톡/친구톡 내용
-                stringgrid1.Cells[6,i+1] := SearchInfos.list[i].content;
-                // 대체문자 전송유형
-                stringgrid1.Cells[7,i+1] := IntToStr(SearchInfos.list[i].altContentType);
-                // 대체문자 전송일시
-                stringgrid1.Cells[8,i+1] := SearchInfos.list[i].altSendDT;
-                // 대체문자 전송결과 코드
-                stringgrid1.Cells[9,i+1] := IntToStr(SearchInfos.list[i].altResult);
-                // 대체문자 전송결과 수신일시
-                stringgrid1.Cells[10,i+1] := SearchInfos.list[i].altResultDT;
                 // 대체문자 전송타입, 4-단문, 6-장문
-                stringgrid1.Cells[11,i+1] := SearchInfos.list[i].contentType;
-
+                stringgrid1.Cells[4,i+1] := SearchInfos.list[i].contentType;
+                // 수신번호
+                stringgrid1.Cells[5,i+1] := SearchInfos.list[i].receiveNum;
+                // 수신자명
+                stringgrid1.Cells[6,i+1] := SearchInfos.list[i].receiveName;
+                // 알림톡/친구톡 내용
+                stringgrid1.Cells[7,i+1] := SearchInfos.list[i].content;
+                // 대체문자 전송유형
+                stringgrid1.Cells[8,i+1] := IntToStr(SearchInfos.list[i].altContentType);
+                // 대체문자 전송일시
+                stringgrid1.Cells[9,i+1] := SearchInfos.list[i].altSendDT;
+                // 대체문자 전송결과 코드
+                stringgrid1.Cells[10,i+1] := IntToStr(SearchInfos.list[i].altResult);
+                // 대체문자 전송결과 수신일시
+                stringgrid1.Cells[11,i+1] := SearchInfos.list[i].altResultDT;
+                // 접수번호
+                stringgrid1.Cells[12,i+1] := SearchInfos.list[i].receiptNum;
+                // 요청번호
+                stringgrid1.Cells[13,i+1] := SearchInfos.list[i].requestNum;
         end;
         SearchInfos.Free;
         ShowMessage(tmp);
@@ -1855,20 +1863,26 @@ begin
                 stringgrid1.Cells[2,i+1] := IntToStr(MessageInfo.msgs[i].result);
                 // 전송결과 수신일시
                 stringgrid1.Cells[3,i+1] := MessageInfo.msgs[i].resultDT;
+                // 대체문자 전송타입, 4-단문, 6-장문
+                stringgrid1.Cells[4,i+1] := MessageInfo.msgs[i].contentType;
                 // 수신번호
-                stringgrid1.Cells[4,i+1] := MessageInfo.msgs[i].receiveNum;
+                stringgrid1.Cells[5,i+1] := MessageInfo.msgs[i].receiveNum;
                 // 수신자명
-                stringgrid1.Cells[5,i+1] := MessageInfo.msgs[i].receiveName;
+                stringgrid1.Cells[6,i+1] := MessageInfo.msgs[i].receiveName;
                 // 알림톡/친구톡 전송내용
-                stringgrid1.Cells[6,i+1] := MessageInfo.msgs[i].content;
+                stringgrid1.Cells[7,i+1] := MessageInfo.msgs[i].content;
                 // 대체문자 전송유형 4-단문, 6-장문
-                stringgrid1.Cells[7,i+1] := IntToStr(MessageInfo.msgs[i].altContentType);
+                stringgrid1.Cells[8,i+1] := IntToStr(MessageInfo.msgs[i].altContentType);
                 // 대체문자 전송일시
-                stringgrid1.Cells[8,i+1] := MessageInfo.msgs[i].altSendDT;
+                stringgrid1.Cells[9,i+1] := MessageInfo.msgs[i].altSendDT;
                 // 대체문자 전송결과 코드
-                stringgrid1.Cells[9,i+1] := IntToStr(MessageInfo.msgs[i].altResult);
+                stringgrid1.Cells[10,i+1] := IntToStr(MessageInfo.msgs[i].altResult);
                 // 대체문자 전송결과 수신일시
-                stringgrid1.Cells[10,i+1] := MessageInfo.msgs[i].altResultDT;
+                stringgrid1.Cells[11,i+1] := MessageInfo.msgs[i].altResultDT;
+                // 접수번호
+                stringgrid1.Cells[12,i+1] := MessageInfo.msgs[i].receiptNum;
+                // 요청번호
+                stringgrid1.Cells[13,i+1] := MessageInfo.msgs[i].requestNum;
         end;
 end;
 
@@ -1922,20 +1936,26 @@ begin
                 stringgrid1.Cells[2,i+1] := IntToStr(MessageInfo.msgs[i].result);
                 // 전송결과 수신일시
                 stringgrid1.Cells[3,i+1] := MessageInfo.msgs[i].resultDT;
+                // 대체문자 전송타입, 4-단문, 6-장문
+                stringgrid1.Cells[4,i+1] := MessageInfo.msgs[i].contentType;
                 // 수신번호
-                stringgrid1.Cells[4,i+1] := MessageInfo.msgs[i].receiveNum;
+                stringgrid1.Cells[5,i+1] := MessageInfo.msgs[i].receiveNum;
                 // 수신자명
-                stringgrid1.Cells[5,i+1] := MessageInfo.msgs[i].receiveName;
+                stringgrid1.Cells[6,i+1] := MessageInfo.msgs[i].receiveName;
                 // 알림톡/친구톡 전송내용
-                stringgrid1.Cells[6,i+1] := MessageInfo.msgs[i].content;
+                stringgrid1.Cells[7,i+1] := MessageInfo.msgs[i].content;
                 // 대체문자 전송유형 4-단문, 6-장문
-                stringgrid1.Cells[7,i+1] := IntToStr(MessageInfo.msgs[i].altContentType);
+                stringgrid1.Cells[8,i+1] := IntToStr(MessageInfo.msgs[i].altContentType);
                 // 대체문자 전송일시
-                stringgrid1.Cells[8,i+1] := MessageInfo.msgs[i].altSendDT;
+                stringgrid1.Cells[9,i+1] := MessageInfo.msgs[i].altSendDT;
                 // 대체문자 전송결과 코드
-                stringgrid1.Cells[9,i+1] := IntToStr(MessageInfo.msgs[i].altResult);
+                stringgrid1.Cells[10,i+1] := IntToStr(MessageInfo.msgs[i].altResult);
                 // 대체문자 전송결과 수신일시
-                stringgrid1.Cells[10,i+1] := MessageInfo.msgs[i].altResultDT;
+                stringgrid1.Cells[11,i+1] := MessageInfo.msgs[i].altResultDT;
+                // 접수번호
+                stringgrid1.Cells[12,i+1] := MessageInfo.msgs[i].receiptNum;
+                // 요청번호
+                stringgrid1.Cells[13,i+1] := MessageInfo.msgs[i].requestNum;
         end;
 end;
 
