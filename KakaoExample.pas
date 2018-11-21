@@ -3,7 +3,7 @@
 * 팝빌 카카오톡 API Delphi SDK Example
 *
 * - 델파이 SDK 적용방법 안내 : http://blog.linkhub.co.kr/572
-* - 업데이트 일자 : 2018-09-18
+* - 업데이트 일자 : 2018-11-21
 * - 연동 기술지원 연락처 : 1600-9854 / 070-4304-2991
 * - 연동 기술지원 이메일 : code@linkhub.co.kr
 *
@@ -53,7 +53,7 @@ type
     btnGetChargeInfo_FTS: TButton;
     btnGetChargeInfo_FMS: TButton;
     GroupBox12: TGroupBox;
-    btnGetPopBillURL_LOGIN: TButton;
+    btnGetAccessURL: TButton;
     GroupBox4: TGroupBox;
     btnRegistContact: TButton;
     btnListContact: TButton;
@@ -78,14 +78,14 @@ type
     btnSendFMS_Same: TButton;
     btnSendFMS_Multi: TButton;
     GroupBox6: TGroupBox;
-    btnGetURL_PLUSFRIEND: TButton;
-    btnGetURL_TEMPLATE: TButton;
+    btnGetPlusFriendMgtURL: TButton;
+    btnGetATSTemplateMgtURL: TButton;
     btnListPlusFriendID: TButton;
     btnListATSTemplate: TButton;
     GroupBox10: TGroupBox;
-    btnGetURL_SENDER: TButton;
+    btnGetSenderNumberMgtURL: TButton;
     btnGetSenderNumberList: TButton;
-    btnGetURL_BOX: TButton;
+    btnGetSentListURL: TButton;
     btnSearch: TButton;
     StringGrid1: TStringGrid;
     GroupBox15: TGroupBox;
@@ -93,7 +93,7 @@ type
     btnGetPartnerURL_CHRG: TButton;
     GroupBox14: TGroupBox;
     btnGetBalance: TButton;
-    btnGetPopbillURL_CHRG: TButton;
+    btnGetChargeURL: TButton;
     GroupBox13: TGroupBox;
     GroupBox16: TGroupBox;
     Label4: TLabel;
@@ -122,11 +122,11 @@ type
     procedure btnSendFMS_oneClick(Sender: TObject);
     procedure btnSendFMS_SameClick(Sender: TObject);
     procedure btnSendFMS_MultiClick(Sender: TObject);
-    procedure btnGetPopBillURL_LOGINClick(Sender: TObject);
+    procedure btnGetAccessURLClick(Sender: TObject);
     procedure btnGetPartnerBalanceClick(Sender: TObject);
     procedure btnGetPartnerURL_CHRGClick(Sender: TObject);
     procedure btnGetBalanceClick(Sender: TObject);
-    procedure btnGetPopbillURL_CHRGClick(Sender: TObject);
+    procedure btnGetChargeURLClick(Sender: TObject);
     procedure btnGetUnitCost_FTSClick(Sender: TObject);
     procedure btnGetUnitCost_FMSClick(Sender: TObject);
     procedure btnRegistContactClick(Sender: TObject);
@@ -134,14 +134,14 @@ type
     procedure btnUpdateContactClick(Sender: TObject);
     procedure btnGetCorpInfoClick(Sender: TObject);
     procedure btnUpdateCorpInfoClick(Sender: TObject);
-    procedure btnGetURL_PLUSFRIENDClick(Sender: TObject);
+    procedure btnGetPlusFriendMgtURLClick(Sender: TObject);
     procedure btnListPlusFriendIDClick(Sender: TObject);
-    procedure btnGetURL_TEMPLATEClick(Sender: TObject);
+    procedure btnGetATSTemplateMgtURLClick(Sender: TObject);
     procedure btnListATSTemplateClick(Sender: TObject);
     procedure btnGetSenderNumberListClick(Sender: TObject);
-    procedure btnGetURL_SENDERClick(Sender: TObject);
+    procedure btnGetSenderNumberMgtURLClick(Sender: TObject);
     procedure btnCancelReserveClick(Sender: TObject);
-    procedure btnGetURL_BOXClick(Sender: TObject);
+    procedure btnGetSentListURLClick(Sender: TObject);
     procedure btnSearchClick(Sender: TObject);
     procedure btnGetMessagesClick(Sender: TObject);
     procedure btnGetMessagesRNClick(Sender: TObject);
@@ -1174,7 +1174,7 @@ begin
 
 end;
 
-procedure TfrmExample.btnGetPopBillURL_LOGINClick(Sender: TObject);
+procedure TfrmExample.btnGetAccessURLClick(Sender: TObject);
 var
         resultURL : String;
 begin
@@ -1183,7 +1183,7 @@ begin
         * - 보안정책으로 인해 반환된 URL의 유효시간은 30초이다.
         * =================================================================== *)
         try
-                resultURL := kakaoService.getPopbillURL(txtCorpNum.Text, 'LOGIN');
+                resultURL := kakaoService.getAccessURL(txtCorpNum.Text, txtUserID.Text);
         except
                 on le : EPopbillException do begin
                         ShowMessage('응답코드 : ' + IntToStr(le.code) + #10#13 +'응답메시지 : '+ le.Message);
@@ -1254,7 +1254,7 @@ begin
         ShowMessage('연동회원 잔여포인트 : ' + FloatToStr(balance));
 end;
 
-procedure TfrmExample.btnGetPopbillURL_CHRGClick(Sender: TObject);
+procedure TfrmExample.btnGetChargeURLClick(Sender: TObject);
 var
         resultURL : String;
 begin
@@ -1264,7 +1264,7 @@ begin
         * =================================================================== *)
 
         try
-                resultURL := kakaoService.getPopbillURL(txtCorpNum.Text, 'CHRG');
+                resultURL := kakaoService.getChargeURL(txtCorpNum.Text, txtUserID.Text);
         except
                 on le : EPopbillException do begin
                         ShowMessage('응답코드 : ' + IntToStr(le.code) + #10#13 +'응답메시지 : '+ le.Message);
@@ -1508,7 +1508,7 @@ begin
 end;
 
 
-procedure TfrmExample.btnGetURL_PLUSFRIENDClick(Sender: TObject);
+procedure TfrmExample.btnGetPlusFriendMgtURLClick(Sender: TObject);
 var
         resultURL : String;
 begin
@@ -1518,7 +1518,7 @@ begin
         * =================================================================== *)
 
         try
-                resultURL := kakaoService.getURL(txtCorpNum.Text, 'PLUSFRIEND');
+                resultURL := kakaoService.getPlusFriendMgtURL(txtCorpNum.Text, txtUserID.Text);
         except
                 on le : EPopbillException do begin
                         ShowMessage('응답코드 : ' + IntToStr(le.code) + #10#13 +'응답메시지 : '+ le.Message);
@@ -1561,7 +1561,7 @@ end;
 
 
 
-procedure TfrmExample.btnGetURL_TEMPLATEClick(Sender: TObject);
+procedure TfrmExample.btnGetATSTemplateMgtURLClick(Sender: TObject);
 var
         resultURL : String;
 begin
@@ -1571,7 +1571,7 @@ begin
         * =================================================================== *)
         
         try
-                resultURL := kakaoService.getURL(txtCorpNum.Text, 'TEMPLATE');
+                resultURL := kakaoService.getATSTemplateMgtURL(txtCorpNum.Text, txtUserID.Text);
         except
                 on le : EPopbillException do begin
                         ShowMessage('응답코드 : ' + IntToStr(le.code) + #10#13 +'응답메시지 : '+ le.Message);
@@ -1642,7 +1642,7 @@ begin
         ShowMessage(tmp);
 end;
 
-procedure TfrmExample.btnGetURL_SENDERClick(Sender: TObject);
+procedure TfrmExample.btnGetSenderNumberMgtURLClick(Sender: TObject);
 var
         resultURL : String;
 begin
@@ -1652,7 +1652,7 @@ begin
         * =================================================================== *)
         
         try
-                resultURL := kakaoService.getURL(txtCorpNum.Text, 'SENDER');
+                resultURL := kakaoService.getSenderNumberMgtURL(txtCorpNum.Text, txtUserID.Text);
         except
                 on le : EPopbillException do begin
                         ShowMessage('응답코드 : ' + IntToStr(le.code) + #10#13 +'응답메시지 : '+ le.Message);
@@ -1685,7 +1685,7 @@ begin
 
 end;
 
-procedure TfrmExample.btnGetURL_BOXClick(Sender: TObject);
+procedure TfrmExample.btnGetSentListURLClick(Sender: TObject);
 var
         resultURL : String;
 begin
@@ -1695,7 +1695,7 @@ begin
         * =================================================================== *)
         
         try
-                resultURL := kakaoService.getURL(txtCorpNum.Text, 'BOX');
+                resultURL := kakaoService.getSentListURL(txtCorpNum.Text, txtUserID.Text);
         except
                 on le : EPopbillException do begin
                         ShowMessage('응답코드 : ' + IntToStr(le.code) + #10#13 +'응답메시지 : '+ le.Message);
