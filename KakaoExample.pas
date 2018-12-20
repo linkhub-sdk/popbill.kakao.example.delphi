@@ -1587,11 +1587,12 @@ var
         InfoList : TATSTemplateList;
         tmp : string;
         i : Integer;
+        j : Integer;
 begin
         (* =====================================================================
         * (주)카카오로부터 심사후 승인된 알림톡 템플릿 목록을 반환한다.
         * =================================================================== *)
-        
+
         try
                 InfoList := kakaoService.ListATSTemplate(txtCorpNum.text);
         except
@@ -1601,12 +1602,22 @@ begin
                 end;
         end;
         tmp := 'templateCode | template | templateName | plusFriendID ' + #13;
+        tmp := tmp + '---------------------------------------------' + #13;
         for i := 0 to Length(InfoList) -1 do
         begin
             tmp := tmp + InfoList[i].templateCode + ' | ';
             tmp := tmp + InfoList[i].templateName + ' | ';
-            tmp := tmp + InfoList[i].template + ' | ';            
-            tmp := tmp + InfoList[i].plusFriendID +#13;
+            tmp := tmp + InfoList[i].template + ' | ';
+            tmp := tmp + InfoList[i].plusFriendID +#13#13;
+
+            for j := 0 to Length(InfoList[i].btns) -1 do begin
+                tmp := tmp + '===버튼정보===' + #13;
+                tmp := tmp + 'n (버튼명) : ' + InfoList[i].btns[j].buttonName + #13;
+                tmp := tmp + 't (버튼유형) : ' + InfoList[i].btns[j].buttonType + #13;
+                tmp := tmp + 'u1 (버튼링크1) : ' + InfoList[i].btns[j].buttonURL1 + #13;
+                tmp := tmp + 'u2 (버튼링크2) : ' + InfoList[i].btns[j].buttonURL2 + #13;
+                tmp := tmp + '---------------------------------------------' + #13;
+            end;
         end;
 
         ShowMessage(tmp);
@@ -1849,6 +1860,13 @@ begin
         tmp := tmp + 'altCnt (대체문자 건수) : '+ MessageInfo.altCnt + #13;
         tmp := tmp + 'cancelCnt (취소건수) : '+ MessageInfo.cancelCnt + #13;
 
+        for i := 0 to Length(MessageInfo.btns) -1 do begin
+                tmp := tmp + '-----버튼정보-----' + #13;
+                tmp := tmp + 'n (버튼명) : ' + MessageInfo.btns[i].buttonName + #13;
+                tmp := tmp + 't (버튼유형) : ' + MessageInfo.btns[i].buttonType + #13;
+                tmp := tmp + 'u1 (버튼링크1) : ' + MessageInfo.btns[i].buttonURL1 + #13;
+                tmp := tmp + 'u2 (버튼링크2) : ' + MessageInfo.btns[i].buttonURL2 + #13;
+        end;
 
         ShowMessage(tmp);
 
@@ -1922,6 +1940,13 @@ begin
         tmp := tmp + 'altCnt (대체문자 건수) : '+ MessageInfo.altCnt + #13;
         tmp := tmp + 'cancelCnt (취소건수) : '+ MessageInfo.cancelCnt + #13;
 
+        for i := 0 to Length(MessageInfo.btns) -1 do begin
+            tmp := tmp + '-----버튼정보-----' + #13;
+            tmp := tmp + 'n (버튼명) : ' + MessageInfo.btns[i].buttonName + #13;
+            tmp := tmp + 't (버튼유형) : ' + MessageInfo.btns[i].buttonType + #13;
+            tmp := tmp + 'u1 (버튼링크1) : ' + MessageInfo.btns[i].buttonURL1 + #13;
+            tmp := tmp + 'u2 (버튼링크2) : ' + MessageInfo.btns[i].buttonURL2 + #13;
+        end;
 
         ShowMessage(tmp);
 
