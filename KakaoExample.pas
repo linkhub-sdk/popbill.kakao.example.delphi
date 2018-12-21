@@ -1602,7 +1602,7 @@ begin
                 end;
         end;
         tmp := 'templateCode | template | templateName | plusFriendID ' + #13;
-        tmp := tmp + '---------------------------------------------' + #13;
+        tmp := tmp + '-----------------------------------------------------' + #13;
         for i := 0 to Length(InfoList) -1 do
         begin
             tmp := tmp + InfoList[i].templateCode + ' | ';
@@ -1611,13 +1611,14 @@ begin
             tmp := tmp + InfoList[i].plusFriendID +#13#13;
 
             for j := 0 to Length(InfoList[i].btns) -1 do begin
-                tmp := tmp + '===버튼정보===' + #13;
+                tmp := tmp + '======버튼정보======' + #13;
                 tmp := tmp + 'n (버튼명) : ' + InfoList[i].btns[j].buttonName + #13;
                 tmp := tmp + 't (버튼유형) : ' + InfoList[i].btns[j].buttonType + #13;
                 tmp := tmp + 'u1 (버튼링크1) : ' + InfoList[i].btns[j].buttonURL1 + #13;
                 tmp := tmp + 'u2 (버튼링크2) : ' + InfoList[i].btns[j].buttonURL2 + #13;
-                tmp := tmp + '---------------------------------------------' + #13;
+
             end;
+            tmp := tmp + '-----------------------------------------------------' + #13;
         end;
 
         ShowMessage(tmp);
