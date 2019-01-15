@@ -1,6 +1,6 @@
 object frmExample: TfrmExample
-  Left = 162
-  Top = 119
+  Left = 329
+  Top = 111
   Width = 1355
   Height = 865
   Caption = '팝빌 카카오톡 API SDK Delphi Example'
@@ -329,7 +329,7 @@ object frmExample: TfrmExample
         Top = 25
         Width = 116
         Height = 25
-        Caption = '대량 1000건 전송'
+        Caption = '동보 1000건 전송'
         TabOrder = 1
         OnClick = btnSendATS_sameClick
       end
@@ -338,7 +338,7 @@ object frmExample: TfrmExample
         Top = 25
         Width = 116
         Height = 25
-        Caption = '개별 1000건 전송'
+        Caption = '대량 1000건 전송'
         TabOrder = 2
         OnClick = btnSendATS_multiClick
       end
@@ -364,7 +364,7 @@ object frmExample: TfrmExample
         Top = 25
         Width = 116
         Height = 25
-        Caption = '대량 1000건 전송'
+        Caption = '동보 1000건 전송'
         TabOrder = 1
         OnClick = btnSendFTS_sameClick
       end
@@ -373,7 +373,7 @@ object frmExample: TfrmExample
         Top = 25
         Width = 116
         Height = 25
-        Caption = '개별 1000건 전송'
+        Caption = '대량 1000건 전송'
         TabOrder = 2
         OnClick = btnSendFTS_multiClick
       end
@@ -399,7 +399,7 @@ object frmExample: TfrmExample
         Top = 25
         Width = 116
         Height = 25
-        Caption = '대량 1000건 전송'
+        Caption = '동보 1000건 전송'
         TabOrder = 1
         OnClick = btnSendFMS_SameClick
       end
@@ -408,7 +408,7 @@ object frmExample: TfrmExample
         Top = 25
         Width = 116
         Height = 25
-        Caption = '개별 1000건 전송'
+        Caption = '대량 1000건 전송'
         TabOrder = 2
         OnClick = btnSendFMS_MultiClick
       end
