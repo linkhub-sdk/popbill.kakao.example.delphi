@@ -1,6 +1,6 @@
 object frmExample: TfrmExample
-  Left = 329
-  Top = 111
+  Left = 363
+  Top = 104
   Width = 1355
   Height = 865
   Caption = '팝빌 카카오톡 API SDK Delphi Example'
@@ -78,7 +78,7 @@ object frmExample: TfrmExample
         Top = 56
         Width = 125
         Height = 25
-        Caption = 'ID 중복 확인'
+        Caption = '아이디 중복 확인'
         TabOrder = 1
         OnClick = btnCheckIDClick
       end
@@ -527,18 +527,18 @@ object frmExample: TfrmExample
       object btnCancelReserve: TButton
         Left = 232
         Top = 64
-        Width = 116
+        Width = 110
         Height = 25
         Caption = '예약전송 취소'
         TabOrder = 1
         OnClick = btnCancelReserveClick
       end
       object btnGetMessages: TButton
-        Left = 104
+        Left = 112
         Top = 64
-        Width = 116
+        Width = 110
         Height = 25
-        Caption = '전송상태 확인'
+        Caption = '전송내역 확인'
         TabOrder = 2
         OnClick = btnGetMessagesClick
       end
@@ -566,18 +566,18 @@ object frmExample: TfrmExample
         TabOrder = 0
       end
       object btnGetMessagesRN: TButton
-        Left = 104
+        Left = 112
         Top = 64
-        Width = 116
+        Width = 110
         Height = 25
-        Caption = '전송상태 확인'
+        Caption = '전송내역 확인'
         TabOrder = 1
         OnClick = btnGetMessagesRNClick
       end
       object btnCancelReserveRN: TButton
         Left = 232
         Top = 64
-        Width = 116
+        Width = 110
         Height = 25
         Caption = '예약전송 취소'
         TabOrder = 2
