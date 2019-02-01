@@ -8,12 +8,13 @@
 { - 연동 기술지원 이메일 : code@linkhub.co.kr
 {
 { <테스트 연동개발 준비사항>
-{ (1)41, 44번 라인에 선언된 링크아이디(LinkID)와 비밀키(SecretKey)를
+{ (1)42, 45번 라인에 선언된 링크아이디(LinkID)와 비밀키(SecretKey)를
 {    링크허브 가입시 메일로 발급받은 인증정보로 수정
 { (2)팝빌 개발용 사이트(test.popbill.com)에 연동회원으로 가입
 { (3)발신번호 사전등록을 합니다.(등록방법은 사이트/API 두가지 방식이 있습니다.
 {    1.팝빌 사이트 로그인 [문자/팩스] > [카카오톡] > [발신번호 사전등록] 에서 등록
 {    2.getSenderNumberMgtURL API를 통해 반환된 URL을 이용하여 발신번호 등록
+{ (4) 플러스친구 등록 및 알림톡 템플릿을 신청합니다.
 {    1. 플러스 친구등록 (등록방법은 사이트/API 두가지 방식이 있습니다.)
 {     - 1. 팝빌 사이트 로그인 [문자/팩스] > [카카오톡] > [카카오톡 관리] > '플러스친구 계정관리' 메뉴에서 등록
 {     - 2. GetPlusFriendMgtURL API 를 통해 반환된 URL을 이용하여 등록
@@ -171,8 +172,13 @@ implementation
 
 procedure TfrmExample.FormCreate(Sender: TObject);
 begin
+        //카카오톡 모듈 초기화
         kakaoService := TKakaoService.Create(LinkID,SecretKey);
+
+        //연동환경 설정값, true-개발용 false-상업용
         kakaoService.IsTest := true;
+
+        //Exception 처리 설정값. 미기재시 true(기본값)
         kakaoService.IsThrowException := true;
 
         //그리드 초기화
@@ -224,7 +230,7 @@ var
 begin
         {**********************************************************************}
         { 파트너의 연동회원으로 가입된 사업자번호인지 확인합니다.
-        { - LinkID는 인증정보에 설정되어 있는 링크아이디 입니다. (41번라인)
+        { - LinkID는 인증정보에 설정되어 있는 링크아이디 입니다. (42번라인)
         {**********************************************************************}
 
         try
@@ -400,7 +406,7 @@ var
         unitcost : Single;
 begin
         {**********************************************************************}
-        { 연동회원의 서비스별 전송단가를 확인한다.
+        { 연동회원의 알림톡 전송단가를 확인합니다.
         { ATS - 알림톡, FTS - 친구톡 텍스트, FMS - 친구톡 이미지
         {**********************************************************************}
 
@@ -412,7 +418,7 @@ begin
                         Exit;
                 end;
         end;
-        ShowMessage('ATS 전송단가 : '+ FloatToStr(unitcost));
+        ShowMessage('알림톡 전송단가 : '+ FloatToStr(unitcost));
 end;
 
 
@@ -428,7 +434,8 @@ begin
         {**********************************************************************}
 
         try
-                // 템플릿코드, ListATSTemplate API 반환항목중 templateCode로 확인
+                // 알림톡 템플릿코드, ListATSTemplate API 반환항목중 templateCode로 확인
+                // GetATSTemplateMgtURL API (알림톡 템플릿 관리 팝업)을 통해서 확인
                 templateCode := '018110000047';
 
                 // 팝빌에 사전 등록된 발신번호
@@ -483,7 +490,8 @@ begin
         {**********************************************************************}
 
         try
-                // 템플릿코드, ListATSTemplate API templateCode로 확인
+                // 알림톡 템플릿코드, ListATSTemplate API 반환항목중 templateCode로 확인
+                // GetATSTemplateMgtURL API (알림톡 템플릿 관리 팝업)을 통해서 확인
                 templateCode := '018110000047';
 
                 // 팝빌에 사전 등록된 발신번호
@@ -541,7 +549,8 @@ begin
         {**********************************************************************}
 
         try
-                // 템플릿코드, ListATSTemplate API templateCode로 확인
+                // 알림톡 템플릿코드, ListATSTemplate API 반환항목중 templateCode로 확인
+                // GetATSTemplateMgtURL API (알림톡 템플릿 관리 팝업)을 통해서 확인
                 templateCode := '018110000047';
 
                 // 팝빌에 사전 등록된 발신번호
@@ -1174,7 +1183,7 @@ var
         unitcost : Single;
 begin
         {**********************************************************************}
-        { 연동회원의 서비스별 전송단가를 확인한다.
+        { 연동회원의 친구톡 텍스트 전송단가를 확인합니다.
         { ATS - 알림톡, FTS - 친구톡 텍스트, FMS - 친구톡 이미지
         {**********************************************************************}
         
@@ -1186,7 +1195,7 @@ begin
                         Exit;
                 end;
         end;
-        ShowMessage('FTS 전송단가 : '+ FloatToStr(unitcost));
+        ShowMessage('친구톡 텍스트 전송단가 : '+ FloatToStr(unitcost));
 end;
 
 procedure TfrmExample.btnGetUnitCost_FMSClick(Sender: TObject);
@@ -1194,7 +1203,7 @@ var
         unitcost : Single;
 begin
         {**********************************************************************}
-        { 연동회원의 서비스별 전송단가를 확인한다.
+        { 연동회원의 친구톡 이미지 전송단가를 확인합니다.
         { ATS - 알림톡, FTS - 친구톡 텍스트, FMS - 친구톡 이미지
         {**********************************************************************}
         
@@ -1206,7 +1215,7 @@ begin
                         Exit;
                 end;
         end;
-        ShowMessage('FMS 전송단가 : '+ FloatToStr(unitcost));
+        ShowMessage('친구톡 이미지 전송단가 : '+ FloatToStr(unitcost));
 end;
 
 procedure TfrmExample.btnRegistContactClick(Sender: TObject);
