@@ -1,31 +1,31 @@
 (*
-{==================================================================================================================
-{ 팝빌 카카오톡 API Delphi SDK Example
-{
-{ - 델파이 SDK 적용방법 안내 : http://blog.linkhub.co.kr/572
-{ - 업데이트 일자 : 2019-01-31
-{ - 연동 기술지원 연락처 : 1600-9854 / 070-4304-2991
-{ - 연동 기술지원 이메일 : code@linkhub.co.kr
-{
-{ <테스트 연동개발 준비사항>
-{ (1)42, 45번 라인에 선언된 링크아이디(LinkID)와 비밀키(SecretKey)를
-{    링크허브 가입시 메일로 발급받은 인증정보로 수정
-{ (2)팝빌 개발용 사이트(test.popbill.com)에 연동회원으로 가입
-{ (3)발신번호 사전등록을 합니다.(등록방법은 사이트/API 두가지 방식이 있습니다.
-{    1.팝빌 사이트 로그인 [문자/팩스] > [카카오톡] > [발신번호 사전등록] 에서 등록
-{    2.getSenderNumberMgtURL API를 통해 반환된 URL을 이용하여 발신번호 등록
-{ (4) 플러스친구 등록 및 알림톡 템플릿을 신청합니다.
-{    1. 플러스 친구등록 (등록방법은 사이트/API 두가지 방식이 있습니다.)
-{     - 1. 팝빌 사이트 로그인 [문자/팩스] > [카카오톡] > [카카오톡 관리] > '플러스친구 계정관리' 메뉴에서 등록
-{     - 2. GetPlusFriendMgtURL API 를 통해 반환된 URL을 이용하여 등록
-{    2. 알림톡 템플릿 신청 (등록방법은 사이트/API 두가지 방식이 있습니다.)
-{     - 1. 팝빌 사이트 로그인 [문자/팩스] > [카카오톡] > [카카오톡 관리] > '알림톡 템플릿 관리' 메뉴에서 등록
-{     - 2. GetATSTemplateMgtURL API 를 통해 URL을 이용하여 등록
-{
-{ 연동개발 준비사항에 대한 자세한 사항은 [카카오톡 연동 매뉴얼 ]
-{ > 1.2 팝빌 카카오톡 서비스 이용절차 를 참고하시기 바랍니다.
-{
-{==================================================================================================================
+{*****************************************************************************************************************}
+{ 팝빌 카카오톡 API Delphi SDK Example                                                                            }
+{                                                                                                                 }
+{ - 델파이 SDK 적용방법 안내 : http://blog.linkhub.co.kr/572                                                      }
+{ - 업데이트 일자 : 2019-02-07                                                                                    }
+{ - 연동 기술지원 연락처 : 1600-9854 / 070-4304-2991                                                              }
+{ - 연동 기술지원 이메일 : code@linkhub.co.kr                                                                     }
+{                                                                                                                 }
+{ <테스트 연동개발 준비사항>                                                                                      }
+{ (1)42, 45번 라인에 선언된 링크아이디(LinkID)와 비밀키(SecretKey)를                                              }
+{    링크허브 가입시 메일로 발급받은 인증정보로 수정                                                              }
+{ (2)팝빌 개발용 사이트(test.popbill.com)에 연동회원으로 가입                                                     }
+{ (3)발신번호 사전등록을 합니다.(등록방법은 사이트/API 두가지 방식이 있습니다.                                    }
+{    1.팝빌 사이트 로그인 [문자/팩스] > [카카오톡] > [발신번호 사전등록] 에서 등록                                }
+{    2.getSenderNumberMgtURL API를 통해 반환된 URL을 이용하여 발신번호 등록                                       }
+{ (4) 플러스친구 등록 및 알림톡 템플릿을 신청합니다.                                                              }
+{    1. 플러스 친구등록 (등록방법은 사이트/API 두가지 방식이 있습니다.)                                           }
+{     - 1. 팝빌 사이트 로그인 [문자/팩스] > [카카오톡] > [카카오톡 관리] > '플러스친구 계정관리' 메뉴에서 등록    }
+{     - 2. GetPlusFriendMgtURL API 를 통해 반환된 URL을 이용하여 등록                                             }
+{    2. 알림톡 템플릿 신청 (등록방법은 사이트/API 두가지 방식이 있습니다.)                                        }
+{     - 1. 팝빌 사이트 로그인 [문자/팩스] > [카카오톡] > [카카오톡 관리] > '알림톡 템플릿 관리' 메뉴에서 등록     }
+{     - 2. GetATSTemplateMgtURL API 를 통해 URL을 이용하여 등록                                                   }
+{                                                                                                                 }
+{ 연동개발 준비사항에 대한 자세한 사항은 [카카오톡 연동 매뉴얼 ]                                                  }
+{ > 1.2 팝빌 카카오톡 서비스 이용절차 를 참고하시기 바랍니다.                                                     }
+{                                                                                                                 }
+{*****************************************************************************************************************}
 *)
 
 unit KakaoExample;
@@ -484,9 +484,9 @@ var
         i : Integer;
 begin
         {**********************************************************************}
-        { [동보전송] 알림톡 전송을 요청합니다.
-        { - 사전에 승인된 템플릿의 내용과 알림톡 전송내용(altMsg)이 다를 경우
-        { 전송실패 처리된다.
+        { [동보전송] 알림톡 전송을 요청합니다.                                 }
+        { - 사전에 승인된 템플릿의 내용과 알림톡 전송내용(content)이 다를 경우 }
+        { 전송실패 처리된다.                                                   }
         {**********************************************************************}
 
         try
@@ -543,9 +543,9 @@ var
         i : Integer;
 begin
         {**********************************************************************}
-        { [대량전송] 알림톡 전송을 요청합니다.
-        { - 사전에 승인된 템플릿의 내용과 알림톡 전송내용(altMsg)이 다를 경우
-        {  전송실패 처리된다.
+        { [대량전송] 알림톡 전송을 요청합니다.                                 }
+        { - 사전에 승인된 템플릿의 내용과 알림톡 전송내용(msg)이 다를 경우     }
+        {  전송실패 처리된다.                                                  }
         {**********************************************************************}
 
         try
@@ -1094,7 +1094,7 @@ begin
                         Exit;
                 end;
         end;
-        ShowMessage('ResultURL is ' + #13 + resultURL);
+        ShowMessage('URL :  ' + #13 + resultURL);
 end;
 
 procedure TfrmExample.btnGetPartnerBalanceClick(Sender: TObject);
@@ -1134,7 +1134,7 @@ begin
                         Exit;
                 end;
         end;
-        ShowMessage('ResultURL is ' + #13 + resultURL);
+        ShowMessage('URL :  ' + #13 + resultURL);
 end;
 
 procedure TfrmExample.btnGetBalanceClick(Sender: TObject);
@@ -1175,7 +1175,7 @@ begin
                         Exit;
                 end;
         end;
-        ShowMessage('ResultURL is ' + #13 + resultURL);
+        ShowMessage('URL :  ' + #13 + resultURL);
 end;
 
 procedure TfrmExample.btnGetUnitCost_FTSClick(Sender: TObject);
@@ -1431,7 +1431,7 @@ begin
                         Exit;
                 end;
         end;
-        ShowMessage('ResultURL is ' + #13 + resultURL);
+        ShowMessage('URL :  ' + #13 + resultURL);
 end;
 
 procedure TfrmExample.btnListPlusFriendIDClick(Sender: TObject);
@@ -1479,7 +1479,7 @@ begin
                         Exit;
                 end;
         end;
-        ShowMessage('ResultURL is ' + #13 + resultURL);
+        ShowMessage('URL :  ' + #13 + resultURL);
 end;
 
 procedure TfrmExample.btnListATSTemplateClick(Sender: TObject);
@@ -1567,7 +1567,7 @@ begin
                         Exit;
                 end;
         end;
-        ShowMessage('ResultURL is ' + #13 + resultURL);
+        ShowMessage('URL :  ' + #13 + resultURL);
 end;
 
 procedure TfrmExample.btnCancelReserveClick(Sender: TObject);
@@ -1607,7 +1607,7 @@ begin
                         Exit;
                 end;
         end;
-        ShowMessage('ResultURL is ' + #13 + resultURL);
+        ShowMessage('URL :  ' + #13 + resultURL);
 end;
 
 procedure TfrmExample.btnSearchClick(Sender: TObject);
@@ -1692,7 +1692,7 @@ begin
                 stringgrid1.Cells[2,i+1] := IntToStr(SearchInfos.list[i].result);
                 // 전송결과 수신일시
                 stringgrid1.Cells[3,i+1] := SearchInfos.list[i].resultDT;
-                // 대체문자 전송타입, 4-단문, 6-장문
+                // 카카오톡 유형, 1-알림톡, 2-친구톡텍스트, 3-친구톡이미지
                 stringgrid1.Cells[4,i+1] := SearchInfos.list[i].contentType;
                 // 수신번호
                 stringgrid1.Cells[5,i+1] := SearchInfos.list[i].receiveNum;
@@ -1700,7 +1700,7 @@ begin
                 stringgrid1.Cells[6,i+1] := SearchInfos.list[i].receiveName;
                 // 알림톡/친구톡 내용
                 stringgrid1.Cells[7,i+1] := SearchInfos.list[i].content;
-                // 대체문자 전송유형
+                // 대체문자 전송유형, 4-단문, 6-장문
                 stringgrid1.Cells[8,i+1] := IntToStr(SearchInfos.list[i].altContentType);
                 // 대체문자 전송일시
                 stringgrid1.Cells[9,i+1] := SearchInfos.list[i].altSendDT;
@@ -1773,7 +1773,7 @@ begin
                 stringgrid1.Cells[2,i+1] := IntToStr(MessageInfo.msgs[i].result);
                 // 전송결과 수신일시
                 stringgrid1.Cells[3,i+1] := MessageInfo.msgs[i].resultDT;
-                // 대체문자 전송타입, 4-단문, 6-장문
+                // 카카오톡 유형, 1-알림톡, 2-친구톡텍스트, 3-친구톡이미지
                 stringgrid1.Cells[4,i+1] := MessageInfo.msgs[i].contentType;
                 // 수신번호
                 stringgrid1.Cells[5,i+1] := MessageInfo.msgs[i].receiveNum;
@@ -1852,7 +1852,7 @@ begin
                 stringgrid1.Cells[2,i+1] := IntToStr(MessageInfo.msgs[i].result);
                 // 전송결과 수신일시
                 stringgrid1.Cells[3,i+1] := MessageInfo.msgs[i].resultDT;
-                // 대체문자 전송타입, 4-단문, 6-장문
+                // 카카오톡 유형, 1-알림톡, 2-친구톡텍스트, 3-친구톡이미지
                 stringgrid1.Cells[4,i+1] := MessageInfo.msgs[i].contentType;
                 // 수신번호
                 stringgrid1.Cells[5,i+1] := MessageInfo.msgs[i].receiveNum;
@@ -1894,6 +1894,7 @@ begin
         end;
         ShowMessage('응답코드 : ' + IntToStr(response.code) + #10#13 + '응답메지시 : '+ response.Message);
 end;
+
 
 end.
 
