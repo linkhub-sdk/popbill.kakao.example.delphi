@@ -387,9 +387,9 @@ object frmExample: TfrmExample
       TabOrder = 3
       object btnSendFMS_one: TButton
         Left = 14
-        Top = 25
+        Top = 24
         Width = 116
-        Height = 25
+        Height = 26
         Caption = '1°Ç Àü¼Û'
         TabOrder = 0
         OnClick = btnSendFMS_oneClick
