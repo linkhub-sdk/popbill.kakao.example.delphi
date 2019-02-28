@@ -426,6 +426,7 @@ procedure TfrmExample.btnSendATS_oneClick(Sender: TObject);
 var
         receiptNum, templateCode, senderNum, altSendType, receiverNum,
         receiverName, content, altContent, requestNum : String;
+        Buttons : TSendKakaoButtonList;        
 begin
         {***************************************************************************}
         { 알림톡 전송을 요청합니다.                                                 }
@@ -462,6 +463,17 @@ begin
 
                 // 대체문자 전송유형, 공백-미전송, C-알림톡전송, A-대체문자 전송
                 altSendType := 'A';
+                
+                // 알림톡 버튼정보를 템플릿 신청시 기재한 버튼정보와 동일하게 전송하는경우 길이를 0으로 처리
+                SetLength(Buttons, 0);
+
+                // 알림톡 버튼 URL에 #{템플릿변수}를 기재한 경우 버튼정보추가 - 템플릿 변수만 변경하여 구성
+                //SetLength(Buttons, 1);
+                //Buttons[0] := TSendKakaoButton.Create;
+                //Buttons[0].buttonName := '버튼명'; // 버튼명
+                //Buttons[0].buttonType := 'WL';     // 버튼 DS-배송조회 WL-웹링크 AL-앱링크 MD-메시지전달 BK-봇키워드
+                //Buttons[0].buttonURL1 := 'http://www.weblink1.com'; // 버튼링크1  [앱링크] Android / [웹링크] Mobile
+                //Buttons[0].buttonURL2 := 'http://www.weblink2.com'; // 버튼링크2  [앱링크] IOS / [웹링크] PC URL
 
                 // 전송요청번호
                 // 파트너가 전송 건에 대해 관리번호를 구성하여 관리하는 경우 사용.
@@ -470,7 +482,7 @@ begin
 
                 receiptNum := kakaoService.SendATS(txtCorpNum.Text, templateCode, senderNum, altSendType,
                                                    txtReserveDT.Text, receiverNum, receiverName, content,
-                                                   altContent, txtUserID.text, requestNum);
+                                                   altContent, Buttons, txtUserID.text, requestNum);
         except
                 on le : EPopbillException do begin
                         ShowMessage('응답코드 : ' + IntToStr(le.code) + #10#13 +'응답메시지 : '+ le.Message);
@@ -488,6 +500,7 @@ var
         requestNum : String;
         Receivers : TSendKakaoReceiverList;
         i : Integer;
+        Buttons : TSendKakaoButtonList;        
 begin
         {***************************************************************************}
         { [동보전송] 알림톡 전송을 요청합니다.                                      }
@@ -532,8 +545,19 @@ begin
                     Receivers[i].rcvnm := '수신자명'; // 수신자명
                 end;
 
+                // 알림톡 버튼정보를 템플릿 신청시 기재한 버튼정보와 동일하게 전송하는경우 길이를 0으로 처리
+                SetLength(Buttons, 0);
+
+                // 알림톡 버튼 URL에 #{템플릿변수}를 기재한 경우 버튼정보추가 - 템플릿 변수만 변경하여 구성
+                //SetLength(Buttons, 1);
+                //Buttons[0] := TSendKakaoButton.Create;
+                //Buttons[0].buttonName := '버튼명'; // 버튼명
+                //Buttons[0].buttonType := 'WL';     // 버튼 DS-배송조회 WL-웹링크 AL-앱링크 MD-메시지전달 BK-봇키워드
+                //Buttons[0].buttonURL1 := 'http://www.weblink1.com'; // 버튼링크1  [앱링크] Android / [웹링크] Mobile
+                //Buttons[0].buttonURL2 := 'http://www.weblink2.com'; // 버튼링크2  [앱링크] IOS / [웹링크] PC URL                
+
                 receiptNum := kakaoService.SendATS(txtCorpNum.Text, templateCode, senderNum, content,
-                                                   altContent, altSendType, txtReserveDT.Text, Receivers,
+                                                   altContent, altSendType, txtReserveDT.Text, Receivers, Buttons,
                                                    txtUserID.text, requestNum);
 
         except
@@ -553,6 +577,7 @@ var
         requestNum : String;
         Receivers : TSendKakaoReceiverList;
         i : Integer;
+        Buttons : TSendKakaoButtonList;        
 begin
         {***************************************************************************}
         { [대량전송] 알림톡 전송을 요청합니다.                                      }
@@ -602,8 +627,19 @@ begin
                         Receivers[i].altmsg := '대체문자 내용';
                 end;
 
+                // 알림톡 버튼정보를 템플릿 신청시 기재한 버튼정보와 동일하게 전송하는경우 길이를 0으로 처리
+                SetLength(Buttons, 0);
+
+                // 알림톡 버튼 URL에 #{템플릿변수}를 기재한 경우 버튼정보추가 - 템플릿 변수만 변경하여 구성
+                //SetLength(Buttons, 1);
+                //Buttons[0] := TSendKakaoButton.Create;
+                //Buttons[0].buttonName := '버튼명'; // 버튼명
+                //Buttons[0].buttonType := 'WL';     // 버튼 DS-배송조회 WL-웹링크 AL-앱링크 MD-메시지전달 BK-봇키워드
+                //Buttons[0].buttonURL1 := 'http://www.weblink1.com'; // 버튼링크1  [앱링크] Android / [웹링크] Mobile
+                //Buttons[0].buttonURL2 := 'http://www.weblink2.com'; // 버튼링크2  [앱링크] IOS / [웹링크] PC URL
+                                
                 receiptNum := kakaoService.SendATS(txtCorpNum.Text, templateCode, senderNum, content,
-                                                   altContent, altSendType, txtReserveDT.Text, Receivers,
+                                                   altContent, altSendType, txtReserveDT.Text, Receivers, Buttons,
                                                    txtUserID.text, requestNum);
 
         except
