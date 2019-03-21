@@ -3,7 +3,7 @@
 { 팝빌 카카오톡 API Delphi SDK Example                                                                            }
 {                                                                                                                 }
 { - 델파이 SDK 적용방법 안내 : http://blog.linkhub.co.kr/572                                                      }
-{ - 업데이트 일자 : 2019-02-07                                                                                    }
+{ - 업데이트 일자 : 2019-03-21                                                                                    }
 { - 연동 기술지원 연락처 : 1600-9854 / 070-4304-2991                                                              }
 { - 연동 기술지원 이메일 : code@linkhub.co.kr                                                                     }
 {                                                                                                                 }
@@ -179,7 +179,7 @@ begin
         kakaoService.IsTest := true;
 
         //Exception 처리 설정값. 미기재시 true(기본값)
-        kakaoService.IsThrowException := true;
+        kakaoService.IsThrowException := false;
 
         //그리드 초기화
         stringgrid1.Cells[0 ,0] := 'state';
@@ -418,7 +418,15 @@ begin
                         Exit;
                 end;
         end;
-        ShowMessage('알림톡 전송단가 : '+ FloatToStr(unitcost));
+
+        if kakaoService.LastErrCode <> 0 then
+        begin
+                ShowMessage('응답코드 : ' + IntToStr(kakaoService.LastErrCode) + #10#13 +'응답메시지 : '+ kakaoService.LastErrMessage);
+        end
+        else
+        begin
+                ShowMessage('알림톡 전송단가 : '+ FloatToStr(unitcost));
+        end;
 end;
 
 
@@ -490,8 +498,15 @@ begin
                 end;
         end;
 
-        txtReceiptNum.Text := receiptNum;
-        ShowMessage('접수번호 (receiptNum) : ' + receiptNum);
+        if kakaoService.LastErrCode <> 0 then
+        begin
+                ShowMessage('응답코드 : ' + IntToStr(kakaoService.LastErrCode) + #10#13 +'응답메시지 : '+ kakaoService.LastErrMessage);
+        end
+        else
+        begin
+                txtReceiptNum.Text := receiptNum;
+                ShowMessage('접수번호 (receiptNum) : ' + receiptNum);
+        end;
 end;
 
 procedure TfrmExample.btnSendATS_sameClick(Sender: TObject);
@@ -567,8 +582,15 @@ begin
                 end;
         end;
 
-        txtReceiptNum.Text := receiptNum;
-        ShowMessage('접수번호 (receiptNum) : ' + receiptNum);
+        if kakaoService.LastErrCode <> 0 then
+        begin
+                ShowMessage('응답코드 : ' + IntToStr(kakaoService.LastErrCode) + #10#13 +'응답메시지 : '+ kakaoService.LastErrMessage);
+        end
+        else
+        begin
+                txtReceiptNum.Text := receiptNum;
+                ShowMessage('접수번호 (receiptNum) : ' + receiptNum);
+        end;
 end;
 
 procedure TfrmExample.btnSendATS_multiClick(Sender: TObject);
@@ -649,8 +671,15 @@ begin
                 end;
         end;
 
-        txtReceiptNum.Text := receiptNum;
-        ShowMessage('접수번호 (receiptNum) : ' + receiptNum);
+        if kakaoService.LastErrCode <> 0 then
+        begin
+                ShowMessage('응답코드 : ' + IntToStr(kakaoService.LastErrCode) + #10#13 +'응답메시지 : '+ kakaoService.LastErrMessage);
+        end
+        else
+        begin
+                txtReceiptNum.Text := receiptNum;
+                ShowMessage('접수번호 (receiptNum) : ' + receiptNum);
+        end;
 
 end;
 
@@ -725,11 +754,15 @@ begin
                 end;
         end;
 
-        txtReceiptNum.Text := receiptNum;
-
-        ShowMessage('접수번호 (receiptNum) : ' + receiptNum);
-
-
+        if kakaoService.LastErrCode <> 0 then
+        begin
+                ShowMessage('응답코드 : ' + IntToStr(kakaoService.LastErrCode) + #10#13 +'응답메시지 : '+ kakaoService.LastErrMessage);
+        end
+        else
+        begin
+                txtReceiptNum.Text := receiptNum;
+                ShowMessage('접수번호 (receiptNum) : ' + receiptNum);
+        end;
 end;
 
 procedure TfrmExample.btnSendFTS_SameClick(Sender: TObject);
@@ -803,8 +836,15 @@ begin
                 end;
         end;
 
-        txtReceiptNum.Text := receiptNum;
-        ShowMessage('접수번호 (receiptNum) : ' + receiptNum);
+        if kakaoService.LastErrCode <> 0 then
+        begin
+                ShowMessage('응답코드 : ' + IntToStr(kakaoService.LastErrCode) + #10#13 +'응답메시지 : '+ kakaoService.LastErrMessage);
+        end
+        else
+        begin
+                txtReceiptNum.Text := receiptNum;
+                ShowMessage('접수번호 (receiptNum) : ' + receiptNum);
+        end;
 end;
 
 procedure TfrmExample.btnSendFTS_multiClick(Sender: TObject);
@@ -881,8 +921,15 @@ begin
                 end;
         end;
 
-        txtReceiptNum.Text := receiptNum;
-        ShowMessage('접수번호 (receiptNum) : ' + receiptNum);
+        if kakaoService.LastErrCode <> 0 then
+        begin
+                ShowMessage('응답코드 : ' + IntToStr(kakaoService.LastErrCode) + #10#13 +'응답메시지 : '+ kakaoService.LastErrMessage);
+        end
+        else
+        begin
+                txtReceiptNum.Text := receiptNum;
+                ShowMessage('접수번호 (receiptNum) : ' + receiptNum);
+        end;
 end;
 
 procedure TfrmExample.btnSendFMS_oneClick(Sender: TObject);
@@ -961,9 +1008,16 @@ begin
                         Exit;
                 end;
         end;
-
-        txtReceiptNum.Text := receiptNum;
-        ShowMessage('접수번호 (receiptNum) : ' + receiptNum);
+        
+        if kakaoService.LastErrCode <> 0 then
+        begin
+                ShowMessage('응답코드 : ' + IntToStr(kakaoService.LastErrCode) + #10#13 +'응답메시지 : '+ kakaoService.LastErrMessage);
+        end
+        else
+        begin
+                txtReceiptNum.Text := receiptNum;
+                ShowMessage('접수번호 (receiptNum) : ' + receiptNum);
+        end;
 end;
 
 procedure TfrmExample.btnSendFMS_SameClick(Sender: TObject);
@@ -1063,8 +1117,15 @@ begin
                 end;
         end;
 
-        txtReceiptNum.Text := receiptNum;
-        ShowMessage('접수번호 (receiptNum) : ' + receiptNum);
+        if kakaoService.LastErrCode <> 0 then
+        begin
+                ShowMessage('응답코드 : ' + IntToStr(kakaoService.LastErrCode) + #10#13 +'응답메시지 : '+ kakaoService.LastErrMessage);
+        end
+        else
+        begin
+                txtReceiptNum.Text := receiptNum;
+                ShowMessage('접수번호 (receiptNum) : ' + receiptNum);
+        end;
 end;
 
 procedure TfrmExample.btnSendFMS_MultiClick(Sender: TObject);
@@ -1164,8 +1225,15 @@ begin
                 end;
         end;
 
-        txtReceiptNum.Text := receiptNum;
-        ShowMessage('접수번호 (receiptNum) : ' + receiptNum);
+        if kakaoService.LastErrCode <> 0 then
+        begin
+                ShowMessage('응답코드 : ' + IntToStr(kakaoService.LastErrCode) + #10#13 +'응답메시지 : '+ kakaoService.LastErrMessage);
+        end
+        else
+        begin
+                txtReceiptNum.Text := receiptNum;
+                ShowMessage('접수번호 (receiptNum) : ' + receiptNum);
+        end;
 end;
 
 procedure TfrmExample.btnGetAccessURLClick(Sender: TObject);
@@ -1285,7 +1353,15 @@ begin
                         Exit;
                 end;
         end;
-        ShowMessage('친구톡 텍스트 전송단가 : '+ FloatToStr(unitcost));
+
+        if kakaoService.LastErrCode <> 0 then
+        begin
+                ShowMessage('응답코드 : ' + IntToStr(kakaoService.LastErrCode) + #10#13 +'응답메시지 : '+ kakaoService.LastErrMessage);
+        end
+        else
+        begin
+                ShowMessage('친구톡 텍스트 전송단가 : '+ FloatToStr(unitcost));
+        end;        
 end;
 
 procedure TfrmExample.btnGetUnitCost_FMSClick(Sender: TObject);
@@ -1305,7 +1381,15 @@ begin
                         Exit;
                 end;
         end;
-        ShowMessage('친구톡 이미지 전송단가 : '+ FloatToStr(unitcost));
+
+        if kakaoService.LastErrCode <> 0 then
+        begin
+                ShowMessage('응답코드 : ' + IntToStr(kakaoService.LastErrCode) + #10#13 +'응답메시지 : '+ kakaoService.LastErrMessage);
+        end
+        else
+        begin
+                ShowMessage('친구톡 이미지 전송단가 : '+ FloatToStr(unitcost));
+        end;        
 end;
 
 procedure TfrmExample.btnRegistContactClick(Sender: TObject);
@@ -1521,7 +1605,16 @@ begin
                         Exit;
                 end;
         end;
-        ShowMessage('URL :  ' + #13 + resultURL);
+
+        if kakaoService.LastErrCode <> 0 then
+        begin
+                ShowMessage('응답코드 : ' + IntToStr(kakaoService.LastErrCode) + #10#13 +'응답메시지 : '+ kakaoService.LastErrMessage);
+        end
+        else
+        begin
+                ShowMessage('URL :  ' + #13 + resultURL);
+        end;
+
 end;
 
 procedure TfrmExample.btnListPlusFriendIDClick(Sender: TObject);
@@ -1542,14 +1635,23 @@ begin
                         Exit;
                 end;
         end;
-        tmp := 'plusFriendID(플러스친구 아이디) | plusFriendName(플러스친구 이름) | regDT(등록일시) ' + #13;
-        for i := 0 to Length(InfoList) -1 do
+
+        if kakaoService.LastErrCode <> 0 then
         begin
-            tmp := tmp + InfoList[i].plusFriendID + ' | ';
-            tmp := tmp + InfoList[i].plusFriendName + ' | ';
-            tmp := tmp + InfoList[i].regDT +#13;
+                ShowMessage('응답코드 : ' + IntToStr(kakaoService.LastErrCode) + #10#13 +'응답메시지 : '+ kakaoService.LastErrMessage);
+                exit;
+        end
+        else
+        begin
+                tmp := 'plusFriendID(플러스친구 아이디) | plusFriendName(플러스친구 이름) | regDT(등록일시) ' + #13;
+                for i := 0 to Length(InfoList) -1 do
+                begin
+                    tmp := tmp + InfoList[i].plusFriendID + ' | ';
+                    tmp := tmp + InfoList[i].plusFriendName + ' | ';
+                    tmp := tmp + InfoList[i].regDT +#13;
+                end;
+                ShowMessage(tmp);
         end;
-        ShowMessage(tmp);
 end;
 
 procedure TfrmExample.btnGetATSTemplateMgtURLClick(Sender: TObject);
@@ -1569,7 +1671,16 @@ begin
                         Exit;
                 end;
         end;
-        ShowMessage('URL :  ' + #13 + resultURL);
+
+        if kakaoService.LastErrCode <> 0 then
+        begin
+                ShowMessage('응답코드 : ' + IntToStr(kakaoService.LastErrCode) + #10#13 +'응답메시지 : '+ kakaoService.LastErrMessage);
+        end
+        else
+        begin
+                ShowMessage('URL :  ' + #13 + resultURL);
+        end;
+
 end;
 
 procedure TfrmExample.btnListATSTemplateClick(Sender: TObject);
@@ -1591,25 +1702,34 @@ begin
                         Exit;
                 end;
         end;
-        tmp := 'templateCode(템플릿코드) | templateName(템플릿 제목) | template(템플릿내용) | plusFriendID(플러스친구 아이디) ' + #13;
-        tmp := tmp + '---------------------------------------------------------------------------------------------------' + #13;
-        for i := 0 to Length(InfoList) -1 do
-        begin
-            tmp := tmp + InfoList[i].templateCode + ' | ';
-            tmp := tmp + InfoList[i].templateName + ' | ';
-            tmp := tmp + InfoList[i].template + ' | ';
-            tmp := tmp + InfoList[i].plusFriendID +#13#13;
 
-            for j := 0 to Length(InfoList[i].btns) -1 do begin
-                tmp := tmp + '======버튼정보======' + #13;
-                tmp := tmp + 'n (버튼명) : ' + InfoList[i].btns[j].buttonName + #13;
-                tmp := tmp + 't (버튼유형) : ' + InfoList[i].btns[j].buttonType + #13;
-                tmp := tmp + 'u1 (버튼링크1) : ' + InfoList[i].btns[j].buttonURL1 + #13;
-                tmp := tmp + 'u2 (버튼링크2) : ' + InfoList[i].btns[j].buttonURL2 + #13;
-            end;
-            tmp := tmp + '-----------------------------------------------------' + #13;
+        if kakaoService.LastErrCode <> 0 then
+        begin
+                ShowMessage('응답코드 : ' + IntToStr(kakaoService.LastErrCode) + #10#13 +'응답메시지 : '+ kakaoService.LastErrMessage);
+                exit;
+        end
+        else
+        begin
+                tmp := 'templateCode(템플릿코드) | templateName(템플릿 제목) | template(템플릿내용) | plusFriendID(플러스친구 아이디) ' + #13;
+                tmp := tmp + '---------------------------------------------------------------------------------------------------' + #13;
+                for i := 0 to Length(InfoList) -1 do
+                begin
+                    tmp := tmp + InfoList[i].templateCode + ' | ';
+                    tmp := tmp + InfoList[i].templateName + ' | ';
+                    tmp := tmp + InfoList[i].template + ' | ';
+                    tmp := tmp + InfoList[i].plusFriendID +#13#13;
+
+                    for j := 0 to Length(InfoList[i].btns) -1 do begin
+                        tmp := tmp + '======버튼정보======' + #13;
+                        tmp := tmp + 'n (버튼명) : ' + InfoList[i].btns[j].buttonName + #13;
+                        tmp := tmp + 't (버튼유형) : ' + InfoList[i].btns[j].buttonType + #13;
+                        tmp := tmp + 'u1 (버튼링크1) : ' + InfoList[i].btns[j].buttonURL1 + #13;
+                        tmp := tmp + 'u2 (버튼링크2) : ' + InfoList[i].btns[j].buttonURL2 + #13;
+                    end;
+                    tmp := tmp + '-----------------------------------------------------' + #13;
+                end;
+                ShowMessage(tmp);
         end;
-        ShowMessage(tmp);
 end;
 
 procedure TfrmExample.btnGetSenderNumberListClick(Sender: TObject);
@@ -1630,14 +1750,23 @@ begin
                         Exit;
                 end;
         end;
-        tmp := 'number(발신번호) | state(등록상태) | representYN(대표번호 지정여부) ' + #13;
-        for i := 0 to Length(InfoList) -1 do
+
+        if kakaoService.LastErrCode <> 0 then
         begin
-            tmp := tmp + InfoList[i].number + ' | ';
-            tmp := tmp + IntToStr(InfoList[i].state) + ' | ';
-            tmp := tmp + BoolToStr(InfoList[i].representYN) +#13;
+                ShowMessage('응답코드 : ' + IntToStr(kakaoService.LastErrCode) + #10#13 +'응답메시지 : '+ kakaoService.LastErrMessage);
+        end
+        else
+        begin
+                tmp := 'number(발신번호) | state(등록상태) | representYN(대표번호 지정여부) ' + #13;
+                for i := 0 to Length(InfoList) -1 do
+                begin
+                    tmp := tmp + InfoList[i].number + ' | ';
+                    tmp := tmp + IntToStr(InfoList[i].state) + ' | ';
+                    tmp := tmp + BoolToStr(InfoList[i].representYN) +#13;
+                end;
+                ShowMessage(tmp);
         end;
-        ShowMessage(tmp);
+
 end;
 
 procedure TfrmExample.btnGetSenderNumberMgtURLClick(Sender: TObject);
@@ -1657,7 +1786,15 @@ begin
                         Exit;
                 end;
         end;
-        ShowMessage('URL :  ' + #13 + resultURL);
+
+        if kakaoService.LastErrCode <> 0 then
+        begin
+                ShowMessage('응답코드 : ' + IntToStr(kakaoService.LastErrCode) + #10#13 +'응답메시지 : '+ kakaoService.LastErrMessage);
+        end
+        else
+        begin
+                ShowMessage('URL :  ' + #13 + resultURL);
+        end;
 end;
 
 procedure TfrmExample.btnCancelReserveClick(Sender: TObject);
@@ -1677,6 +1814,7 @@ begin
                         Exit;
                 end;
         end;
+
         ShowMessage('응답코드 : ' + IntToStr(response.code) + #10#13 + '응답메지시 : '+ response.Message);
 end;
 
@@ -1697,7 +1835,16 @@ begin
                         Exit;
                 end;
         end;
-        ShowMessage('URL :  ' + #13 + resultURL);
+
+        if kakaoService.LastErrCode <> 0 then
+        begin
+                ShowMessage('응답코드 : ' + IntToStr(kakaoService.LastErrCode) + #10#13 +'응답메시지 : '+ kakaoService.LastErrMessage);
+        end
+        else
+        begin
+                ShowMessage('URL :  ' + #13 + resultURL);
+        end;
+
 end;
 
 procedure TfrmExample.btnSearchClick(Sender: TObject);
@@ -1827,6 +1974,13 @@ begin
                 end;
         end;
 
+        if kakaoService.LastErrCode <> 0 then
+        begin
+                ShowMessage('응답코드 : ' + IntToStr(kakaoService.LastErrCode) + #10#13 +'응답메시지 : '+ kakaoService.LastErrMessage);
+        end
+        else
+        begin
+        
         tmp := 'contentType (카카오톡 유형) : '+ MessageInfo.contentType + #13;
         tmp := tmp + 'templateCode (알림톡 템플릿 코드) : '+ MessageInfo.templateCode + #13;
         tmp := tmp + 'plusFriendID (친구톡 플리스친구 아이디) : '+ MessageInfo.plusFriendID + #13;
@@ -1884,6 +2038,10 @@ begin
                 // 요청번호
                 stringgrid1.Cells[13,i+1] := MessageInfo.msgs[i].requestNum;
         end;
+        
+        end;
+
+
 end;
 
 procedure TfrmExample.btnGetMessagesRNClick(Sender: TObject);
@@ -1906,6 +2064,14 @@ begin
                 end;
         end;
 
+        if kakaoService.LastErrCode <> 0 then
+        begin
+                ShowMessage('응답코드 : ' + IntToStr(kakaoService.LastErrCode) + #10#13 +'응답메시지 : '+ kakaoService.LastErrMessage);
+                exit;
+        end
+        else
+        begin
+        
         tmp := 'contentType (카카오톡 유형) : '+ MessageInfo.contentType + #13;
         tmp := tmp + 'templateCode (알림톡 템플릿 코드) : '+ MessageInfo.templateCode + #13;
         tmp := tmp + 'plusFriendID (친구톡 플리스친구 아이디) : '+ MessageInfo.plusFriendID + #13;
@@ -1962,6 +2128,7 @@ begin
                 stringgrid1.Cells[12,i+1] := MessageInfo.msgs[i].receiptNum;
                 // 요청번호
                 stringgrid1.Cells[13,i+1] := MessageInfo.msgs[i].requestNum;
+        end;
         end;
 end;
 
