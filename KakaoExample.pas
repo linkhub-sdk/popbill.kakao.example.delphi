@@ -182,7 +182,7 @@ begin
         kakaoService.IsThrowException := true;
 
         //인증토큰 IP제한기능 사용여부, true(권장)
-        kakaoService.IPRestrictOnOff := false;
+        kakaoService.IPRestrictOnOff := true;
 
         //그리드 초기화
         stringgrid1.Cells[0 ,0] := 'state';
