@@ -2,8 +2,8 @@
 {*****************************************************************************************************************}
 { 팝빌 카카오톡 API Delphi SDK Example                                                                            }
 {                                                                                                                 }
-{ - 델파이 SDK 적용방법 안내 : http://blog.linkhub.co.kr/572                                                      }
-{ - 업데이트 일자 : 2019-09-25                                                                                    }
+{ - 델파이 SDK 적용방법 안내 : https://docs.popbill.com/kakao/tutorial/delphi                                     }
+{ - 업데이트 일자 : 2019-11-28                                                                                    }
 { - 연동 기술지원 연락처 : 1600-9854 / 070-4304-2991                                                              }
 { - 연동 기술지원 이메일 : code@linkhub.co.kr                                                                     }
 {                                                                                                                 }
@@ -483,8 +483,8 @@ begin
                 //Buttons[0] := TSendKakaoButton.Create;
                 //Buttons[0].buttonName := '버튼명'; // 버튼명
                 //Buttons[0].buttonType := 'WL';     // 버튼 DS-배송조회 WL-웹링크 AL-앱링크 MD-메시지전달 BK-봇키워드
-                //Buttons[0].buttonURL1 := 'http://www.weblink1.com'; // 버튼링크1  [앱링크] Android / [웹링크] Mobile
-                //Buttons[0].buttonURL2 := 'http://www.weblink2.com'; // 버튼링크2  [앱링크] IOS / [웹링크] PC URL
+                //Buttons[0].buttonURL1 := 'http://www.weblink1.com'; // 버튼링크1  [앱링크] iOS / [웹링크] Mobile
+                //Buttons[0].buttonURL2 := 'http://www.weblink2.com'; // 버튼링크2  [앱링크] Android / [웹링크] PC URL
 
                 // 전송요청번호
                 // 파트너가 전송 건에 대해 관리번호를 구성하여 관리하는 경우 사용.
@@ -571,8 +571,8 @@ begin
                 //Buttons[0] := TSendKakaoButton.Create;
                 //Buttons[0].buttonName := '버튼명'; // 버튼명
                 //Buttons[0].buttonType := 'WL';     // 버튼 DS-배송조회 WL-웹링크 AL-앱링크 MD-메시지전달 BK-봇키워드
-                //Buttons[0].buttonURL1 := 'http://www.weblink1.com'; // 버튼링크1  [앱링크] Android / [웹링크] Mobile
-                //Buttons[0].buttonURL2 := 'http://www.weblink2.com'; // 버튼링크2  [앱링크] IOS / [웹링크] PC URL                
+                //Buttons[0].buttonURL1 := 'http://www.weblink1.com'; // 버튼링크1  [앱링크] iOS / [웹링크] Mobile
+                //Buttons[0].buttonURL2 := 'http://www.weblink2.com'; // 버튼링크2  [앱링크] Android / [웹링크] PC URL                
 
                 receiptNum := kakaoService.SendATS(txtCorpNum.Text, templateCode, senderNum, content,
                                                    altContent, altSendType, txtReserveDT.Text, Receivers, Buttons,
@@ -660,8 +660,8 @@ begin
                 //Buttons[0] := TSendKakaoButton.Create;
                 //Buttons[0].buttonName := '버튼명'; // 버튼명
                 //Buttons[0].buttonType := 'WL';     // 버튼 DS-배송조회 WL-웹링크 AL-앱링크 MD-메시지전달 BK-봇키워드
-                //Buttons[0].buttonURL1 := 'http://www.weblink1.com'; // 버튼링크1  [앱링크] Android / [웹링크] Mobile
-                //Buttons[0].buttonURL2 := 'http://www.weblink2.com'; // 버튼링크2  [앱링크] IOS / [웹링크] PC URL
+                //Buttons[0].buttonURL1 := 'http://www.weblink1.com'; // 버튼링크1  [앱링크] iOS / [웹링크] Mobile
+                //Buttons[0].buttonURL2 := 'http://www.weblink2.com'; // 버튼링크2  [앱링크] Android / [웹링크] PC URL
                                 
                 receiptNum := kakaoService.SendATS(txtCorpNum.Text, templateCode, senderNum, content,
                                                    altContent, altSendType, txtReserveDT.Text, Receivers, Buttons,
@@ -739,8 +739,8 @@ begin
                 Buttons[0] := TSendKakaoButton.Create;
                 Buttons[0].buttonName := '버튼명'; // 버튼명
                 Buttons[0].buttonType := 'WL';     // 버튼 DS-배송조회 WL-웹링크 AL-앱링크 MD-메시지전달 BK-봇키워드
-                Buttons[0].buttonURL1 := 'http://www.weblink1.com'; // 버튼링크1  [앱링크] Android / [웹링크] Mobile
-                Buttons[0].buttonURL2 := 'http://www.weblink2.com'; // 버튼링크2  [앱링크] IOS / [웹링크] PC URL
+                Buttons[0].buttonURL1 := 'http://www.weblink1.com'; // 버튼링크1  [앱링크] iOS / [웹링크] Mobile
+                Buttons[0].buttonURL2 := 'http://www.weblink2.com'; // 버튼링크2  [앱링크] Android / [웹링크] PC URL
 
                 receiptNum := kakaoService.SendFTS(txtCorpNum.Text, plusFriendID,
                                                    senderNum, altSendType,
@@ -826,8 +826,8 @@ begin
                 Buttons[0] := TSendKakaoButton.Create;
                 Buttons[0].buttonName := '버튼명'; // 버튼명
                 Buttons[0].buttonType := 'WL';     // 버튼 DS-배송조회 WL-웹링크 AL-앱링크 MD-메시지전달 BK-봇키워드
-                Buttons[0].buttonURL1 := 'http://www.weblink1.com'; // 버튼링크1  [앱링크] Android / [웹링크] Mobile
-                Buttons[0].buttonURL2 := 'http://www.weblink2.com'; // 버튼링크2  [앱링크] IOS / [웹링크] PC URL
+                Buttons[0].buttonURL1 := 'http://www.weblink1.com'; // 버튼링크1  [앱링크] iOS / [웹링크] Mobile
+                Buttons[0].buttonURL2 := 'http://www.weblink2.com'; // 버튼링크2  [앱링크] Android / [웹링크] PC URL
 
                 receiptNum := kakaoService.SendFTS(txtCorpNum.Text, plusFriendID,senderNum, content,
                                                    altContent, altSendType, txtReserveDT.Text, adsYN,
@@ -912,8 +912,8 @@ begin
                 Buttons[0] := TSendKakaoButton.Create;
                 Buttons[0].buttonName := '버튼명'; // 버튼명
                 Buttons[0].buttonType := 'WL';     // 버튼 DS-배송조회 WL-웹링크 AL-앱링크 MD-메시지전달 BK-봇키워드
-                Buttons[0].buttonURL1 := 'http://www.weblink1.com'; // 버튼링크1  [앱링크] Android / [웹링크] Mobile
-                Buttons[0].buttonURL2 := 'http://www.weblink2.com'; // 버튼링크2  [앱링크] IOS / [웹링크] PC URL
+                Buttons[0].buttonURL1 := 'http://www.weblink1.com'; // 버튼링크1  [앱링크] iOS / [웹링크] Mobile
+                Buttons[0].buttonURL2 := 'http://www.weblink2.com'; // 버튼링크2  [앱링크] Android / [웹링크] PC URL
 
                 receiptNum := kakaoService.SendFTS(txtCorpNum.Text, plusFriendID, senderNum, content,altContent, altSendType,
                                                    txtReserveDT.Text, adsYN,Receivers, Buttons, txtUserID.text, requestNum);
@@ -998,8 +998,8 @@ begin
                 Buttons[0] := TSendKakaoButton.Create;
                 Buttons[0].buttonName := '버튼명'; // 버튼명
                 Buttons[0].buttonType := 'WL';     // 버튼 DS-배송조회 WL-웹링크 AL-앱링크 MD-메시지전달 BK-봇키워드
-                Buttons[0].buttonURL1 := 'http://www.weblink1.com'; // 버튼링크1  [앱링크] Android / [웹링크] Mobile
-                Buttons[0].buttonURL2 := 'http://www.weblink2.com'; // 버튼링크2  [앱링크] IOS / [웹링크] PC URL
+                Buttons[0].buttonURL1 := 'http://www.weblink1.com'; // 버튼링크1  [앱링크] iOS / [웹링크] Mobile
+                Buttons[0].buttonURL2 := 'http://www.weblink2.com'; // 버튼링크2  [앱링크] Android / [웹링크] PC URL
 
                 receiptNum := kakaoService.SendFMS(txtCorpNum.Text, plusFriendID, senderNum, altSendType,
                                                    txtReserveDT.Text, adsYN, receiverNum, receiverName,
@@ -1096,8 +1096,8 @@ begin
                 Buttons[0] := TSendKakaoButton.Create;
                 Buttons[0].buttonName := '버튼명'; // 버튼명
                 Buttons[0].buttonType := 'WL';     // 버튼 DS-배송조회 WL-웹링크 AL-앱링크 MD-메시지전달 BK-봇키워드
-                Buttons[0].buttonURL1 := 'http://www.weblink1.com'; // 버튼링크1  [앱링크] Android / [웹링크] Mobile
-                Buttons[0].buttonURL2 := 'http://www.weblink2.com'; // 버튼링크2  [앱링크] IOS / [웹링크] PC URL
+                Buttons[0].buttonURL1 := 'http://www.weblink1.com'; // 버튼링크1  [앱링크] iOS / [웹링크] Mobile
+                Buttons[0].buttonURL2 := 'http://www.weblink2.com'; // 버튼링크2  [앱링크] Android / [웹링크] PC URL
 
                 Buttons[1] := TSendKakaoButton.Create;
                 Buttons[1].buttonName := '버튼명';
@@ -1209,8 +1209,8 @@ begin
                 Buttons[0] := TSendKakaoButton.Create;
                 Buttons[0].buttonName := '버튼명'; // 버튼명
                 Buttons[0].buttonType := 'WL';     // 버튼 DS-배송조회 WL-웹링크 AL-앱링크 MD-메시지전달 BK-봇키워드
-                Buttons[0].buttonURL1 := 'http://www.weblink1.com'; // 버튼링크1  [앱링크] Android / [웹링크] Mobile
-                Buttons[0].buttonURL2 := 'http://www.weblink2.com'; // 버튼링크2  [앱링크] IOS / [웹링크] PC URL
+                Buttons[0].buttonURL1 := 'http://www.weblink1.com'; // 버튼링크1  [앱링크] iOS / [웹링크] Mobile
+                Buttons[0].buttonURL2 := 'http://www.weblink2.com'; // 버튼링크2  [앱링크] Android / [웹링크] PC URL
 
                 Buttons[1] := TSendKakaoButton.Create;
                 Buttons[1].buttonName := '버튼명';
