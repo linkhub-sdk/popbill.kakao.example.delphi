@@ -425,7 +425,7 @@ object frmExample: TfrmExample
         Top = 25
         Width = 194
         Height = 25
-        Caption = '플러스친구 계정관리 팝업 URL'
+        Caption = '카카오톡 채널 관리  팝업 URL'
         TabOrder = 0
         OnClick = btnGetPlusFriendMgtURLClick
       end
@@ -443,7 +443,7 @@ object frmExample: TfrmExample
         Top = 57
         Width = 194
         Height = 25
-        Caption = '플러스친구 목록 확인'
+        Caption = '카카오톡 채널  목록 확인'
         TabOrder = 2
         OnClick = btnListPlusFriendIDClick
       end
