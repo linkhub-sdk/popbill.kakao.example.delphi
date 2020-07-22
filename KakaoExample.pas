@@ -519,7 +519,7 @@ begin
         try
                 // 알림톡 템플릿코드, ListATSTemplate API 반환항목중 templateCode로 확인
                 // GetATSTemplateMgtURL API (알림톡 템플릿 관리 팝업)을 통해서 확인
-                templateCode := '018080000066';
+                templateCode := '018120000044';
 
                 // 팝빌에 사전 등록된 발신번호
                 senderNum := '01043245117';
@@ -546,6 +546,14 @@ begin
                     Receivers[i].rcv := '010111222';  // 수신번호
                     Receivers[i].rcvnm := '수신자명'; // 수신자명
                     Receivers[i].interOPRefKey := '20200722-01';  // 파트너 지정키
+
+                    // 수신자마다 다른내용의 버튼전송시 아래코드 참고.
+                    // SetLength(Receivers[i].buttonList, 1);
+                    // Receivers[i].buttonList[0] := TSendKakaoButton.Create;
+                    // Receivers[i].buttonList[0].buttonName := '버튼명'; // 버튼명
+                    // Receivers[i].buttonList[0].buttonType := 'WL';     // 버튼 DS-배송조회 WL-웹링크 AL-앱링크 MD-메시지전달 BK-봇키워드
+                    // Receivers[i].buttonList[0].buttonURL1 := 'http://www.webliddnk1.com'; // 버튼링크1  [앱링크] iOS / [웹링크] Mobile
+                    // Receivers[i].buttonList[0].buttonURL2 := 'http://www.weblddink2.com'; // 버튼링크2  [앱링크] Android / [웹링크] PC URL
                 end;
 
                 // 알림톡 버튼정보를 템플릿 신청시 기재한 버튼정보와 동일하게 전송하는경우 길이를 0으로 처리
