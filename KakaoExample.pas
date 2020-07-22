@@ -3,7 +3,7 @@
 { 팝빌 카카오톡 API Delphi SDK Example
 {
 { - SDK 튜토리얼 : https://docs.popbill.com/kakao/tutorial/delphi
-{ - 업데이트 일자 : 2019-11-28
+{ - 업데이트 일자 : 2020-07-22
 { - 연동 기술지원 연락처 : 1600-9854 / 070-4304-2991
 { - 연동 기술지원 이메일 : code@linkhub.co.kr
 {
@@ -181,6 +181,7 @@ begin
         stringgrid1.Cells[11,0] := 'altResultDT';
         stringgrid1.Cells[12,0] := 'receiptNum';
         stringgrid1.Cells[13,0] := 'requestNum';
+        stringgrid1.Cells[14,0] := 'interOPRefKey';
 
         stringgrid1.ColWidths[1] := 100;
         stringgrid1.ColWidths[3] := 100;
@@ -518,10 +519,10 @@ begin
         try
                 // 알림톡 템플릿코드, ListATSTemplate API 반환항목중 templateCode로 확인
                 // GetATSTemplateMgtURL API (알림톡 템플릿 관리 팝업)을 통해서 확인
-                templateCode := '018110000047';
+                templateCode := '018080000066';
 
                 // 팝빌에 사전 등록된 발신번호
-                senderNum := '07043042991';
+                senderNum := '01043245117';
 
                 // [동보] 알림톡 메시지 내용 (최대 1000자)
                 // 템플릿의 내용과 일치하지 않은 경우 전송실패
@@ -544,6 +545,7 @@ begin
                     Receivers[i] := TSendKakaoReceiver.Create;
                     Receivers[i].rcv := '010111222';  // 수신번호
                     Receivers[i].rcvnm := '수신자명'; // 수신자명
+                    Receivers[i].interOPRefKey := '20200722-01';  // 파트너 지정키
                 end;
 
                 // 알림톡 버튼정보를 템플릿 신청시 기재한 버튼정보와 동일하게 전송하는경우 길이를 0으로 처리
@@ -2022,6 +2024,8 @@ begin
                 stringgrid1.Cells[12,i+1] := MessageInfo.msgs[i].receiptNum;
                 // 요청번호
                 stringgrid1.Cells[13,i+1] := MessageInfo.msgs[i].requestNum;
+                // 파트너 지정키
+                stringgrid1.Cells[14,i+1] := MessageInfo.msgs[i].interOPRefKey;
         end;
         
         end;
