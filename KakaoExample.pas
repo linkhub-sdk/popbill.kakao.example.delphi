@@ -97,6 +97,8 @@ type
     btnGetMessagesRN: TButton;
     btnCancelReserveRN: TButton;
     btnGetATSTemplate: TButton;
+    btnGetPaymentURL: TButton;
+    btnGetUseHistoryURL: TButton;
     procedure FormCreate(Sender: TObject);
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
     procedure btnCheckIsMemberClick(Sender: TObject);
@@ -140,6 +142,8 @@ type
     procedure btnGetMessagesRNClick(Sender: TObject);
     procedure btnCancelReserveRNClick(Sender: TObject);
     procedure btnGetATSTemplateClick(Sender: TObject);
+    procedure btnGetPaymentURLClick(Sender: TObject);
+    procedure btnGetUseHistoryURLClick(Sender: TObject);
 
   private
     kakaoService : TKakaoService;
@@ -2201,6 +2205,49 @@ begin
                 tmp := tmp + '-----------------------------------------------------' + #13;
                 ShowMessage(tmp);
         end;
+end;
+
+procedure TfrmExample.btnGetPaymentURLClick(Sender: TObject);
+var
+        resultURL : String;
+begin
+        {**********************************************************************}
+        { 연동회원 포인트 결제내역 팝업 URL을 반환한다.
+        { - 보안정책으로 인해 반환된 URL의 유효시간은 30초이다.
+        { - https://docs.popbill.com/kakao/delphi/api#GetPaymentURL
+        {**********************************************************************}
+        
+        try
+                resultURL := kakaoService.getPaymentURL(txtCorpNum.Text);
+        except
+                on le : EPopbillException do begin
+                        ShowMessage('응답코드 : ' + IntToStr(le.code) + #10#13 +'응답메시지 : '+ le.Message);
+                        Exit;
+                end;
+        end;
+        ShowMessage('URL :  ' + #13 + resultURL);
+end;
+
+procedure TfrmExample.btnGetUseHistoryURLClick(Sender: TObject);
+var
+        resultURL : String;
+begin
+        {**********************************************************************}
+        { 연동회원 포인트 사용내역 팝업 URL을 반환한다.
+        { - 보안정책으로 인해 반환된 URL의 유효시간은 30초이다.
+        { - https://docs.popbill.com/kakao/delphi/api#GetUseHistoryURL
+        {**********************************************************************}
+
+        try
+                resultURL := kakaoService.getUseHistoryURL(txtCorpNum.Text);
+        except
+                on le : EPopbillException do begin
+                        ShowMessage('응답코드 : ' + IntToStr(le.code) + #10#13 +'응답메시지 : '+ le.Message);
+                        Exit;
+                end;
+        end;
+        ShowMessage('URL :  ' + #13 + resultURL);
+
 end;
 
 end.

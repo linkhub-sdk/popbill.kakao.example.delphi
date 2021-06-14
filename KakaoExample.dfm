@@ -1,6 +1,6 @@
 object frmExample: TfrmExample
-  Left = 485
-  Top = 145
+  Left = 623
+  Top = 151
   Width = 1355
   Height = 865
   Caption = '팝빌 카카오톡 API SDK Delphi Example'
@@ -262,7 +262,7 @@ object frmExample: TfrmExample
       Left = 523
       Top = 24
       Width = 145
-      Height = 130
+      Height = 145
       Caption = '연동과금 포인트'
       TabOrder = 6
       object btnGetBalance: TButton
@@ -282,6 +282,24 @@ object frmExample: TfrmExample
         Caption = '포인트 충전 URL'
         TabOrder = 1
         OnClick = btnGetChargeURLClick
+      end
+      object btnGetPaymentURL: TButton
+        Left = 8
+        Top = 88
+        Width = 125
+        Height = 25
+        Caption = '결제내역 URL'
+        TabOrder = 2
+        OnClick = btnGetPaymentURLClick
+      end
+      object btnGetUseHistoryURL: TButton
+        Left = 8
+        Top = 120
+        Width = 125
+        Height = 25
+        Caption = '사용내역 URL'
+        TabOrder = 3
+        OnClick = btnGetUseHistoryURLClick
       end
     end
   end
