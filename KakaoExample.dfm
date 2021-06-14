@@ -1,6 +1,6 @@
 object frmExample: TfrmExample
-  Left = 278
-  Top = 135
+  Left = 485
+  Top = 145
   Width = 1355
   Height = 865
   Caption = '팝빌 카카오톡 API SDK Delphi Example'
@@ -417,7 +417,7 @@ object frmExample: TfrmExample
       Left = 860
       Top = 24
       Width = 213
-      Height = 225
+      Height = 273
       Caption = '카카오톡 관리'
       TabOrder = 4
       object btnGetPlusFriendMgtURL: TButton
@@ -449,7 +449,7 @@ object frmExample: TfrmExample
       end
       object btnListATSTemplate: TButton
         Left = 8
-        Top = 121
+        Top = 153
         Width = 194
         Height = 25
         Caption = '알림톡 템플릿 목록 확인'
@@ -458,7 +458,7 @@ object frmExample: TfrmExample
       end
       object btnGetSentListURL: TButton
         Left = 8
-        Top = 153
+        Top = 185
         Width = 194
         Height = 25
         Caption = '전송내역조회 팝업'
@@ -467,12 +467,21 @@ object frmExample: TfrmExample
       end
       object btnSearch: TButton
         Left = 8
-        Top = 185
+        Top = 225
         Width = 194
         Height = 25
         Caption = '전송내역 목록조회'
         TabOrder = 5
         OnClick = btnSearchClick
+      end
+      object btnGetATSTemplate: TButton
+        Left = 8
+        Top = 120
+        Width = 194
+        Height = 25
+        Caption = '알림톡 정보 확인'
+        TabOrder = 6
+        OnClick = btnGetATSTemplateClick
       end
     end
     object GroupBox10: TGroupBox

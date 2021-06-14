@@ -3,7 +3,7 @@
 { 팝빌 카카오톡 API Delphi SDK Example
 {
 { - SDK 튜토리얼 : https://docs.popbill.com/kakao/tutorial/delphi
-{ - 업데이트 일자 : 2020-07-22
+{ - 업데이트 일자 : 2021-06-14
 { - 연동 기술지원 연락처 : 1600-9854 / 070-4304-2991
 { - 연동 기술지원 이메일 : code@linkhub.co.kr
 {
@@ -96,6 +96,7 @@ type
     txtRequestNum: TEdit;
     btnGetMessagesRN: TButton;
     btnCancelReserveRN: TButton;
+    btnGetATSTemplate: TButton;
     procedure FormCreate(Sender: TObject);
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
     procedure btnCheckIsMemberClick(Sender: TObject);
@@ -138,6 +139,7 @@ type
     procedure btnGetMessagesClick(Sender: TObject);
     procedure btnGetMessagesRNClick(Sender: TObject);
     procedure btnCancelReserveRNClick(Sender: TObject);
+    procedure btnGetATSTemplateClick(Sender: TObject);
 
   private
     kakaoService : TKakaoService;
@@ -2151,6 +2153,55 @@ begin
         ShowMessage('응답코드 : ' + IntToStr(response.code) + #10#13 + '응답메지시 : '+ response.Message);
 end;
 
+
+procedure TfrmExample.btnGetATSTemplateClick(Sender: TObject);
+var
+        templateCode :  string;
+        Info : TATSTemplate;
+        tmp : string;
+        i : Integer;
+begin
+        {**********************************************************************}
+        { (주)카카오로부터 심사후 승인된 알림톡 템플릿 정보을 반환합니다.
+        { - https://docs.popbill.com/kakao/delphi/api#GetATSTemplate
+        {**********************************************************************}
+
+        templateCode := '020090000086';
+        try
+                Info := kakaoService.GetATSTemplate(txtCorpNum.text, templateCode);
+        except
+                on le : EPopbillException do begin
+                        ShowMessage('응답코드 : ' + IntToStr(le.code) + #10#13 +'응답메시지 : '+ le.Message);
+                        Exit;
+                end;
+        end;
+
+        if kakaoService.LastErrCode <> 0 then
+        begin
+                ShowMessage('응답코드 : ' + IntToStr(kakaoService.LastErrCode) + #10#13 +'응답메시지 : '+ kakaoService.LastErrMessage);
+                exit;
+        end
+        else
+        begin
+                tmp := 'templateCode(템플릿코드) | templateName(템플릿 제목) | template(템플릿내용) | plusFriendID(플러스친구 아이디) ' + #13;
+                tmp := tmp + '---------------------------------------------------------------------------------------------------' + #13;
+
+                tmp := tmp + Info.templateCode + ' | ';
+                tmp := tmp + Info.templateName + ' | ';
+                tmp := tmp + Info.template + ' | ';
+                tmp := tmp + Info.plusFriendID +#13#13;
+
+                for i := 0 to Length(Info.btns) -1 do begin
+                    tmp := tmp + '======버튼정보======' + #13;
+                    tmp := tmp + 'n (버튼명) : ' + Info.btns[i].buttonName + #13;
+                    tmp := tmp + 't (버튼유형) : ' + Info.btns[i].buttonType + #13;
+                    tmp := tmp + 'u1 (버튼링크1) : ' + Info.btns[i].buttonURL1 + #13;
+                    tmp := tmp + 'u2 (버튼링크2) : ' + Info.btns[i].buttonURL2 + #13;
+                end;
+                tmp := tmp + '-----------------------------------------------------' + #13;
+                ShowMessage(tmp);
+        end;
+end;
 
 end.
 
