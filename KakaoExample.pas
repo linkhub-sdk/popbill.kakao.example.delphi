@@ -292,10 +292,10 @@ begin
         joinInfo.BizClass := '종목';
 
         // 아이디, 6자이상 50자 미만
-        joinInfo.ID     := 'userid';
+        joinInfo.ID     := 'delphi_test001';
 
-        // 비밀번호, 6자이상 20자 미만
-        joinInfo.PWD    := 'pwd_must_be_long_enough';
+        // 비밀번호 (8자 이상 20자 미만) 영문, 숫자 ,특수문자 조합
+        joinInfo.Password := 'asdf123!@';
 
         // 담당자명, 최대 100자
         joinInfo.ContactName := '담당자명';
@@ -1392,11 +1392,11 @@ begin
         {**********************************************************************}
 
         // [필수] 담당자 아이디 (6자 이상 50자 미만)
-        joinInfo.id := 'delphitest_001';
-
-        // [필수] 비밀번호 (6자 이상 20자 미만)
-        joinInfo.pwd := 'thisispassword';
-
+        joinInfo.id := 'delphitest_102';
+        
+        // 비밀번호 (8자 이상 20자 미만) 영문, 숫자 ,특수문자 조합
+        joinInfo.Password := 'asdf123!@';
+        
         // [필수] 담당자명(한글이나 영문 100자 이내)
         joinInfo.personName := '담당자성명';
 
@@ -1414,10 +1414,6 @@ begin
 
         // 담당자 조회권한, 1-개인권한 / 2-읽기권한 / 3-회사권한
         joinInfo.searchRole := '3';
-
-        // 관리자 권한여부, true-관리자 / false-사용자
-        joinInfo.mgrYN := false;
-
 
         try
                 response := kakaoService.RegistContact(txtCorpNum.text, joinInfo);
@@ -1502,7 +1498,6 @@ begin
         // 담당자 조회권한, 1-개인권한 / 2-읽기권한 / 3-회사권한
         contactInfo.searchRole := '3';
 
-        // 관리자권한 설정여부, true-관리자 / false-사용자
         contactInfo.mgrYN := false;
 
         try
@@ -2255,6 +2250,7 @@ end;
 procedure TfrmExample.btnGetContactInfoClick(Sender: TObject);
 var
         contactInfo : TContactInfo;
+        contactID : string;
         tmp : string;
 begin
         {**********************************************************************}
@@ -2262,8 +2258,10 @@ begin
         { - https://docs.popbill.com/kakao/delphi/api#GetContactInfo
         {**********************************************************************}
 
+        contactID := 'testkorea';
+        
         try
-                contactInfo := kakaoService.getContactInfo(txtCorpNum.Text, 'testkorea');
+                contactInfo := kakaoService.getContactInfo(txtCorpNum.Text, contactID);
         except
                 on le : EPopbillException do begin
                         ShowMessage('응답코드 : ' + IntToStr(le.code) + #10#13 +'응답메시지 : '+ le.Message);
