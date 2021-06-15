@@ -1413,7 +1413,7 @@ begin
         joinInfo.email := 'test@test.com';
 
         // 담당자 조회권한, 1-개인권한 / 2-읽기권한 / 3-회사권한
-        joinInfo.searchRole := '';
+        joinInfo.searchRole := '3';
 
         // 관리자 권한여부, true-관리자 / false-사용자
         joinInfo.mgrYN := false;
@@ -1500,7 +1500,7 @@ begin
         contactInfo.fax := '02-6442-9799';
 
         // 담당자 조회권한, 1-개인권한 / 2-읽기권한 / 3-회사권한
-        //contactInfo.searchRole := '3';
+        contactInfo.searchRole := '3';
 
         // 관리자권한 설정여부, true-관리자 / false-사용자
         contactInfo.mgrYN := false;
