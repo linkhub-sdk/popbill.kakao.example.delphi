@@ -1,5 +1,5 @@
 object frmExample: TfrmExample
-  Left = 623
+  Left = 565
   Top = 151
   Width = 1355
   Height = 865
@@ -54,7 +54,7 @@ object frmExample: TfrmExample
     Left = 16
     Top = 48
     Width = 1313
-    Height = 169
+    Height = 185
     Caption = '팝빌 기본 API'
     TabOrder = 2
     object GroupBox9: TGroupBox
@@ -175,7 +175,7 @@ object frmExample: TfrmExample
       Left = 995
       Top = 24
       Width = 145
-      Height = 129
+      Height = 153
       Caption = '담당자 관련'
       TabOrder = 3
       object btnRegistContact: TButton
@@ -189,7 +189,7 @@ object frmExample: TfrmExample
       end
       object btnListContact: TButton
         Left = 8
-        Top = 56
+        Top = 88
         Width = 125
         Height = 25
         Caption = '담당자 목록 조회'
@@ -198,12 +198,21 @@ object frmExample: TfrmExample
       end
       object btnUpdateContact: TButton
         Left = 8
-        Top = 88
+        Top = 120
         Width = 125
         Height = 25
         Caption = '담당자 정보 수정'
         TabOrder = 2
         OnClick = btnUpdateContactClick
+      end
+      object btnGetContactInfo: TButton
+        Left = 8
+        Top = 56
+        Width = 125
+        Height = 25
+        Caption = '담당자 정보확인'
+        TabOrder = 3
+        OnClick = btnGetContactInfoClick
       end
     end
     object GroupBox7: TGroupBox
@@ -262,7 +271,7 @@ object frmExample: TfrmExample
       Left = 523
       Top = 24
       Width = 145
-      Height = 145
+      Height = 153
       Caption = '연동과금 포인트'
       TabOrder = 6
       object btnGetBalance: TButton
@@ -305,9 +314,9 @@ object frmExample: TfrmExample
   end
   object GroupBox1: TGroupBox
     Left = 16
-    Top = 232
+    Top = 240
     Width = 1313
-    Height = 577
+    Height = 569
     Caption = '카카오톡 관련 기능'
     TabOrder = 3
     object Label3: TLabel
@@ -435,7 +444,7 @@ object frmExample: TfrmExample
       Left = 860
       Top = 24
       Width = 213
-      Height = 273
+      Height = 305
       Caption = '카카오톡 관리'
       TabOrder = 4
       object btnGetPlusFriendMgtURL: TButton
