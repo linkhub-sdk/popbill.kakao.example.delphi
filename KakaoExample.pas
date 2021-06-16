@@ -174,6 +174,9 @@ begin
         // 인증토큰 IP제한기능 사용여부, true(권장)
         kakaoService.IPRestrictOnOff := true;
 
+        //로컬시스템 시간 사용여부, true(사용), false(미사용) - 기본값
+        kakaoService.UseLocalTimeYN := false;
+        
         // 그리드 초기화
         stringgrid1.Cells[0 ,0] := 'state';
         stringgrid1.Cells[1 ,0] := 'sendDT';
