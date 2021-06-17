@@ -2170,7 +2170,9 @@ begin
         { - https://docs.popbill.com/kakao/delphi/api#GetATSTemplate
         {**********************************************************************}
 
+        //템플릿 코드
         templateCode := '020090000086';
+        
         try
                 Info := kakaoService.GetATSTemplate(txtCorpNum.text, templateCode);
         except
