@@ -606,7 +606,8 @@ var
         requestNum : String;
         Receivers : TSendKakaoReceiverList;
         i : Integer;
-        Buttons : TSendKakaoButtonList;        
+        Buttons : TSendKakaoButtonList;
+
 begin
         {**********************************************************************}
         { [대량전송] 알림톡 전송을 요청합니다.                                      
@@ -620,7 +621,7 @@ begin
         try
                 // 알림톡 템플릿코드, ListATSTemplate API 반환항목중 templateCode로 확인
                 // GetATSTemplateMgtURL API (알림톡 템플릿 관리 팝업)을 통해서 확인
-                templateCode := '018110000047';
+                templateCode := '021030000716';
 
                 // 팝빌에 사전 등록된 발신번호
                 senderNum := '070-4304-2991';
@@ -651,9 +652,28 @@ begin
 
                         // 대체문자 내용 (최대 2000byte)
                         Receivers[i].altmsg := '대체문자 내용';
+
+                        //수신자별 개별버튼 내용 전송시 사용.
+                        //템플릿 신청시 기재한 버튼의 개수 만큼 사용가능.
+                        //SetLength(Buttons, 2);
+
+                        //Buttons[0] := TSendKakaoButton.Create;
+                        //Buttons[0].buttonName := '버튼명'; // 버튼명
+                        //Buttons[0].buttonType := 'WL';     // 버튼 DS-배송조회 WL-웹링크 AL-앱링크 MD-메시지전달 BK-봇키워드
+                        //Buttons[0].buttonURL1 := 'http://www.weblink1.com'; // 버튼링크1  [앱링크] iOS / [웹링크] Mobile
+                        //Buttons[0].buttonURL2 := 'http://www.weblink2.com'; // 버튼링크2  [앱링크] Android / [웹링크] PC URL
+
+                        //Buttons[1] := TSendKakaoButton.Create;
+                        //Buttons[1].buttonName := '버튼명'; // 버튼명
+                        //Buttons[1].buttonType := 'WL';     // 버튼 DS-배송조회 WL-웹링크 AL-앱링크 MD-메시지전달 BK-봇키워드
+                        //Buttons[1].buttonURL1 := 'http://www.test1.com'; // 버튼링크1  [앱링크] iOS / [웹링크] Mobile
+                        //Buttons[1].buttonURL2 := 'http://www.test2.com'; // 버튼링크2  [앱링크] Android / [웹링크] PC URL
+
+                        //Receivers[i].buttonList := Buttons;
                 end;
 
-                // 알림톡 버튼정보를 템플릿 신청시 기재한 버튼정보와 동일하게 전송하는경우 길이를 0으로 처리
+                // 알림톡 버튼정보를 템플릿 신청시 기재한 버튼정보와 동일하게 전송하거나,
+                // 수신자별 개별 버튼 사용하는 경우 길이를 0으로 처리
                 SetLength(Buttons, 0);
 
                 // 알림톡 버튼 URL에 #{템플릿변수}를 기재한 경우 버튼정보추가 - 템플릿 변수만 변경하여 구성
@@ -897,15 +917,36 @@ begin
 
                     // 대체문자 내용 (최대 2000byte)
                     Receivers[i].altmsg := '친구톡 대체문자 내용';
+
+                    //수신자별 개별버튼 내용 전송시 사용.
+                    //최대 5개 사용 가능.
+                    //SetLength(Buttons, 2);
+
+                    //Buttons[0] := TSendKakaoButton.Create;
+                    //Buttons[0].buttonName := '버튼명'; // 버튼명
+                    //Buttons[0].buttonType := 'WL';     // 버튼 DS-배송조회 WL-웹링크 AL-앱링크 MD-메시지전달 BK-봇키워드
+                    //Buttons[0].buttonURL1 := 'http://www.weblink1.com'; // 버튼링크1  [앱링크] iOS / [웹링크] Mobile
+                    //Buttons[0].buttonURL2 := 'http://www.weblink2.com'; // 버튼링크2  [앱링크] Android / [웹링크] PC URL
+
+                    //Buttons[1] := TSendKakaoButton.Create;
+                    //Buttons[1].buttonName := '버튼명'; // 버튼명
+                    //Buttons[1].buttonType := 'WL';     // 버튼 DS-배송조회 WL-웹링크 AL-앱링크 MD-메시지전달 BK-봇키워드
+                    //Buttons[1].buttonURL1 := 'http://www.test1.com'; // 버튼링크1  [앱링크] iOS / [웹링크] Mobile
+                    //Buttons[1].buttonURL2 := 'http://www.test2.com'; // 버튼링크2  [앱링크] Android / [웹링크] PC URL
+
+                    //Receivers[i].buttonList := Buttons;
                 end;
 
+                // 친구톡 버튼 정보
+                // 수신자별 개별 버튼 사용하거나 버튼을 사용하지 않을경우 길이를 0으로 처리
+                SetLength(Buttons, 0);
                 // 버튼 배열, 최대 5개
-                SetLength(Buttons, 1);
-                Buttons[0] := TSendKakaoButton.Create;
-                Buttons[0].buttonName := '버튼명'; // 버튼명
-                Buttons[0].buttonType := 'WL';     // 버튼 DS-배송조회 WL-웹링크 AL-앱링크 MD-메시지전달 BK-봇키워드
-                Buttons[0].buttonURL1 := 'http://www.weblink1.com'; // 버튼링크1  [앱링크] iOS / [웹링크] Mobile
-                Buttons[0].buttonURL2 := 'http://www.weblink2.com'; // 버튼링크2  [앱링크] Android / [웹링크] PC URL
+                //SetLength(Buttons, 1);
+                //Buttons[0] := TSendKakaoButton.Create;
+                //Buttons[0].buttonName := '버튼명'; // 버튼명
+                //Buttons[0].buttonType := 'WL';     // 버튼 DS-배송조회 WL-웹링크 AL-앱링크 MD-메시지전달 BK-봇키워드
+                //Buttons[0].buttonURL1 := 'http://www.weblink1.com'; // 버튼링크1  [앱링크] iOS / [웹링크] Mobile
+                //Buttons[0].buttonURL2 := 'http://www.weblink2.com'; // 버튼링크2  [앱링크] Android / [웹링크] PC URL
 
                 receiptNum := kakaoService.SendFTS(txtCorpNum.Text, plusFriendID, senderNum, content,altContent, altSendType,
                                                    txtReserveDT.Text, adsYN,Receivers, Buttons, txtUserID.text, requestNum);
@@ -1185,21 +1226,36 @@ begin
 
                     // 대체문자 내용 (최대 2000byte)
                     Receivers[i].altmsg := '개별 대체문자 내용';
+
+                    //수신자별 개별버튼 내용 전송시 사용.
+                    //최대 5개 사용 가능.
+                    //SetLength(Buttons, 2);
+
+                    //Buttons[0] := TSendKakaoButton.Create;
+                    //Buttons[0].buttonName := '버튼명'; // 버튼명
+                    //Buttons[0].buttonType := 'WL';     // 버튼 DS-배송조회 WL-웹링크 AL-앱링크 MD-메시지전달 BK-봇키워드
+                    //Buttons[0].buttonURL1 := 'http://www.weblink1.com'; // 버튼링크1  [앱링크] iOS / [웹링크] Mobile
+                    //Buttons[0].buttonURL2 := 'http://www.weblink2.com'; // 버튼링크2  [앱링크] Android / [웹링크] PC URL
+
+                    //Buttons[1] := TSendKakaoButton.Create;
+                    //Buttons[1].buttonName := '버튼명'; // 버튼명
+                    //Buttons[1].buttonType := 'WL';     // 버튼 DS-배송조회 WL-웹링크 AL-앱링크 MD-메시지전달 BK-봇키워드
+                    //Buttons[1].buttonURL1 := 'http://www.test1.com'; // 버튼링크1  [앱링크] iOS / [웹링크] Mobile
+                    //Buttons[1].buttonURL2 := 'http://www.test2.com'; // 버튼링크2  [앱링크] Android / [웹링크] PC URL
+
+                    //Receivers[i].buttonList := Buttons;
                 end;
 
+                // 친구톡 버튼 정보
+                // 수신자별 개별 버튼 사용하거나 버튼을 사용하지 않을경우 길이를 0으로 처리
+                SetLength(Buttons, 0);
                 // 버튼 배열, 최대 5개
-                SetLength(Buttons, 2);
+                SetLength(Buttons, 1);
                 Buttons[0] := TSendKakaoButton.Create;
                 Buttons[0].buttonName := '버튼명'; // 버튼명
                 Buttons[0].buttonType := 'WL';     // 버튼 DS-배송조회 WL-웹링크 AL-앱링크 MD-메시지전달 BK-봇키워드
                 Buttons[0].buttonURL1 := 'http://www.weblink1.com'; // 버튼링크1  [앱링크] iOS / [웹링크] Mobile
                 Buttons[0].buttonURL2 := 'http://www.weblink2.com'; // 버튼링크2  [앱링크] Android / [웹링크] PC URL
-
-                Buttons[1] := TSendKakaoButton.Create;
-                Buttons[1].buttonName := '버튼명';
-                Buttons[1].buttonType := 'WL';
-                Buttons[1].buttonURL1 := 'http://www.weblink1.com';
-                Buttons[1].buttonURL2 := 'http://www.weblink2.com';
 
                 receiptNum := kakaoService.SendFMS(txtCorpNum.Text, plusFriendID, senderNum, content,
                                                    altContent, altSendType, txtReserveDT.Text, adsYN,
