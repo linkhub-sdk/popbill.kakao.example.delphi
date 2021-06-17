@@ -506,7 +506,7 @@ object frmExample: TfrmExample
         Top = 120
         Width = 194
         Height = 25
-        Caption = '알림톡 정보 확인'
+        Caption = '알림톡 템플릿 정보 확인'
         TabOrder = 6
         OnClick = btnGetATSTemplateClick
       end
