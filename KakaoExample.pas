@@ -766,7 +766,7 @@ begin
         {**********************************************************************}
         
         try
-                // 플러스친구 아이디, ListPlusFriendID API의 plusFriendID 확인 
+                // 카카오톡 채널 검색용 아이디, ListPlusFriendID API의 plusFriendID 확인 
                 plusFriendID := '@팝빌';
 
                 // 팝빌에 사전 등록된 발신번호
@@ -847,7 +847,7 @@ begin
         {**********************************************************************}
 
         try
-                // 플러스친구 아이디, ListPlusFriendID API의 plusFriendID 확인
+                // 카카오톡 채널 검색용 아이디, ListPlusFriendID API의 plusFriendID 확인
                 plusFriendID := '@팝빌';
 
                 // 팝빌에 사전 등록된 발신번호
@@ -926,7 +926,7 @@ begin
         {**********************************************************************}
 
         try
-                // 플러스친구 아이디, ListPlusFriendID API의 plusFriendID 확인
+                // 카카오톡 채널 검색용 아이디, ListPlusFriendID API의 plusFriendID 확인
                 plusFriendID := '@팝빌';
 
                 // 팝빌에 사전 등록된 발신번호
@@ -1034,7 +1034,7 @@ begin
                         Exit;
                 end;
 
-                // 플러스친구 아이디, ListPlusFriendID API의 plusFriendID 확인
+                // 카카오톡 채널 검색용 아이디, ListPlusFriendID API의 plusFriendID 확인
                 plusFriendID := '@팝빌';
 
                 // 팝빌에 사전 등록된 발신번호
@@ -1121,7 +1121,7 @@ begin
                         Exit;
                 end;
 
-                // 플러스친구 아이디, ListPlusFriendID API의 plusFriendID 확인
+                // 카카오톡 채널 검색용 아이디, ListPlusFriendID API의 plusFriendID 확인
                 plusFriendID := '@팝빌';
 
                 // 팝빌에 사전 등록된 발신번호
@@ -1226,7 +1226,7 @@ begin
                         Exit;
                 end;
 
-                // 플러스친구 아이디, ListPlusFriendID API의 plusFriendID 확인
+                // 카카오톡 채널 검색용 아이디, ListPlusFriendID API의 plusFriendID 확인
                 plusFriendID := '@팝빌';
 
                 // 팝빌에 사전 등록된 발신번호
@@ -1811,7 +1811,7 @@ begin
         end
         else
         begin
-                tmp := 'plusFriendID(플러스친구 아이디) | plusFriendName(플러스친구 이름) | regDT(등록일시) ' + #13;
+                tmp := 'plusFriendID(카카오톡 채널 검색용 아이디) | plusFriendName(카카오톡 채널 이름) | regDT(등록일시) ' + #13;
                 for i := 0 to Length(InfoList) -1 do
                 begin
                     tmp := tmp + InfoList[i].plusFriendID + ' | ';
@@ -1880,7 +1880,7 @@ begin
         end
         else
         begin
-                tmp := 'templateCode(템플릿코드) | templateName(템플릿 제목) | template(템플릿내용) | plusFriendID(플러스친구 아이디) ' + #13;
+                tmp := 'templateCode(템플릿코드) | templateName(템플릿 제목) | template(템플릿내용) | plusFriendID(카카오톡 채널 검색용 아이디) ' + #13;
                 tmp := tmp + '---------------------------------------------------------------------------------------------------' + #13;
                 for i := 0 to Length(InfoList) -1 do
                 begin
@@ -2386,7 +2386,7 @@ begin
         end
         else
         begin
-                tmp := 'templateCode(템플릿코드) | templateName(템플릿 제목) | template(템플릿내용) | plusFriendID(플러스친구 아이디) ' + #13;
+                tmp := 'templateCode(템플릿코드) | templateName(템플릿 제목) | template(템플릿내용) | plusFriendID(카카오톡 채널 검색용 아이디) ' + #13;
                 tmp := tmp + '---------------------------------------------------------------------------------------------------' + #13;
 
                 tmp := tmp + Info.templateCode + ' | ';
