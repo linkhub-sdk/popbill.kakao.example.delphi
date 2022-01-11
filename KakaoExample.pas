@@ -4,8 +4,8 @@
 {
 { - SDK 튜토리얼 : https://docs.popbill.com/kakao/tutorial/delphi
 { - 업데이트 일자 : 2021-01-10
-{ - 연동 기술지원 연락처 : 1600-9854 / 070-4304-2991
-{ - 연동 기술지원 이메일 : code@linkhub.co.kr
+{ - 연동 기술지원 연락처 : 1600-9854
+{ - 연동 기술지원 이메일 : code@linkhubcorp.com
 {
 {*****************************************************************************************************************}
 *)
@@ -599,7 +599,7 @@ begin
                     Receivers[i] := TSendKakaoReceiver.Create;
                     Receivers[i].rcv := '010111222';  // 수신번호
                     Receivers[i].rcvnm := '수신자명'; // 수신자명
-                    Receivers[i].interOPRefKey := '20210722-01';  // 파트너 지정키
+                    Receivers[i].interOPRefKey := '20220101-01';  // 파트너 지정키
 
                     // 수신자마다 다른내용의 버튼전송시 아래코드 참고.
                     // SetLength(Receivers[i].buttonList, 1);
@@ -2047,10 +2047,10 @@ begin
         {**********************************************************************}
 
         // 시작일자, 표시형식 (yyyyMMdd)
-        SDate := '20210601';
+        SDate := '20220101';
 
         // 종료일자, 표시형식 (yyyyMMdd)
-        EDate := '20210615';
+        EDate := '20220110';
 
         // 전송상태 배열, 0-대기, 1-전송중, 2-성공, 3-대체, 4-실패, 5-취소
         SetLength(State, 6);
