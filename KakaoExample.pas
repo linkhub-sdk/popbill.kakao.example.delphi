@@ -843,7 +843,7 @@ begin
         { - 친구톡은 심야 전송(20:00~08:00)이 제한된다.
         { - 팝빌에 등록되지 않은 발신번호로 친구톡 메시지를 전송하는 경우 발신
         {   번호 미등록 오류로 처리된다.
-        { - ㅍhttps://docs.popbill.com/kakao/delphi/api#SendFTS
+        { - ㅍhttps://docs.popbill.com/kakao/delphi/api#SendFTS_multi
         {**********************************************************************}
 
         try
@@ -1326,8 +1326,9 @@ var
         resultURL : String;
 begin
         {**********************************************************************}
-        {    팝빌(www.popbill.com)에 로그인된 팝업 URL을 반환합니다.
-        {    URL 보안정책에 따라 반환된 URL은 30초의 유효시간을 갖습니다.      
+        { 팝빌(www.popbill.com)에 로그인된 팝업 URL을 반환합니다.
+        { - URL 보안정책에 따라 반환된 URL은 30초의 유효시간을 갖습니다.
+        { -https://docs.popbill.com/kakao/delphi/api#GetAccessURL      
         {**********************************************************************}
         try
                 resultURL := kakaoService.getAccessURL(txtCorpNum.Text, txtUserID.Text);
@@ -1976,8 +1977,7 @@ var
         response : TResponse;
 begin
         {**********************************************************************}
-        { 알림톡/친구톡 전송시 발급받은 접수번호(receiptNum)로 예약전송건을 취소합니다.
-        { - 예약전송 취소는 예약시간 10분전까지만 가능하다.
+        { 알림톡/친구톡 전송시 발급받은 접수번호(receiptNum)로 예약전송건을 취소합니다. (예약시간 10분 전까지 가능)
         { - https://docs.popbill.com/kakao/delphi/api#CancelReserve
         {**********************************************************************}
 
@@ -2332,8 +2332,7 @@ var
         response : TResponse;
 begin
         {**********************************************************************}
-        { 전송요청번호(requestNum)를 할당한 알림톡/친구톡 예약전송건을 취소합니다.
-        { - 예약전송 취소는 예약시간 10분전까지만 가능하다.
+        { 전송요청번호(requestNum)를 할당한 알림톡/친구톡 예약전송건을 취소합니다. (예약시간 10분 전까지 가능)
         { - https://docs.popbill.com/kakao/delphi/api#CancelReserveRN
         {**********************************************************************}
 
