@@ -1856,12 +1856,14 @@ begin
         end
         else
         begin
-                tmp := 'plusFriendID(카카오톡 채널 검색용 아이디) | plusFriendName(카카오톡 채널 이름) | regDT(등록일시) ' + #13;
+                tmp := 'plusFriendID(카카오톡 채널 검색용 아이디) | plusFriendName(카카오톡 채널 이름) | regDT(등록일시) | state(채널 상태) | stateDT(채널 상태 일시)' + #13;
                 for i := 0 to Length(InfoList) -1 do
                 begin
                     tmp := tmp + InfoList[i].plusFriendID + ' | ';
                     tmp := tmp + InfoList[i].plusFriendName + ' | ';
-                    tmp := tmp + InfoList[i].regDT +#13;
+                    tmp := tmp + InfoList[i].regDT + ' | ';
+                    tmp := tmp + InfoList[i].state + ' | ';
+                    tmp := tmp + InfoList[i].stateDT +#13;
                 end;
                 ShowMessage(tmp);
         end;
