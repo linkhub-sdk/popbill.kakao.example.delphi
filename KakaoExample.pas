@@ -100,6 +100,7 @@ type
     btnGetPaymentURL: TButton;
     btnGetUseHistoryURL: TButton;
     btnGetContactInfo: TButton;
+    Button1: TButton;
     procedure FormCreate(Sender: TObject);
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
     procedure btnCheckIsMemberClick(Sender: TObject);
@@ -146,6 +147,7 @@ type
     procedure btnGetPaymentURLClick(Sender: TObject);
     procedure btnGetUseHistoryURLClick(Sender: TObject);
     procedure btnGetContactInfoClick(Sender: TObject);
+    procedure btnCheckSenderNumberClick(Sender: TObject);
 
   private
     kakaoService : TKakaoService;
@@ -1949,6 +1951,40 @@ begin
                 end;
                 ShowMessage(tmp);
         end;
+end;
+
+procedure TfrmExample.btnCheckSenderNumberClick(Sender: TObject);
+var
+        response : TResponse;
+        senderNumber : String;
+begin
+        {**********************************************************************}
+        { 카카오톡 발신번호 등록여부를 확인합니다.
+        { - 발신번호 상태가 '승인'인 경우에만 리턴값 'Response'의 변수 'code'가 1로 반환됩니다.
+        { - https://docs.popbill.com/kakao/delphi/api#CheckSenderNumber
+        {**********************************************************************}
+
+        //확인할 발신번호
+        senderNumber := '07079987110';
+
+        try
+                response := kakaoService.CheckSenderNumber(txtCorpNum.Text, senderNumber, txtUserID.Text);
+        except
+                on le : EPopbillException do begin
+                        ShowMessage('응답코드 : ' + IntToStr(le.code) + #10#13 +'응답메시지 : '+ le.Message);
+                        Exit;
+                end;
+        end;
+
+        if kakaoService.LastErrCode <> 0 then
+        begin
+                ShowMessage('응답코드 : ' + IntToStr(kakaoService.LastErrCode) + #10#13 +'응답메시지 : '+ kakaoService.LastErrMessage);
+        end
+        else
+        begin
+                ShowMessage('응답코드 : ' + IntToStr(response.code) + #10#13 + '응답메지시 : '+ response.Message);
+        end;
+
 end;
 
 procedure TfrmExample.btnGetSenderNumberListClick(Sender: TObject);

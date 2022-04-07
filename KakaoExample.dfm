@@ -515,12 +515,12 @@ object frmExample: TfrmExample
       Left = 1084
       Top = 24
       Width = 213
-      Height = 97
+      Height = 145
       Caption = '발신번호 관리'
       TabOrder = 5
       object btnGetSenderNumberMgtURL: TButton
         Left = 7
-        Top = 25
+        Top = 57
         Width = 194
         Height = 25
         Caption = '발신번호 관리 팝업 URL'
@@ -529,12 +529,21 @@ object frmExample: TfrmExample
       end
       object btnGetSenderNumberList: TButton
         Left = 7
-        Top = 57
+        Top = 88
         Width = 194
         Height = 25
         Caption = '발신번호 목록 확인'
         TabOrder = 1
         OnClick = btnGetSenderNumberListClick
+      end
+      object Button1: TButton
+        Left = 8
+        Top = 24
+        Width = 193
+        Height = 25
+        Caption = '발신번호 등록 여부 확인'
+        TabOrder = 2
+        OnClick = btnCheckSenderNumberClick
       end
     end
     object GroupBox13: TGroupBox
