@@ -3,7 +3,7 @@
 { 팝빌 카카오톡 API Delphi SDK Example
 {
 { - SDK 튜토리얼 : https://docs.popbill.com/kakao/tutorial/delphi
-{ - 업데이트 일자 : 2021-01-10
+{ - 업데이트 일자 : 2022-04-07
 { - 연동 기술지원 연락처 : 1600-9854
 { - 연동 기술지원 이메일 : code@linkhubcorp.com
 {
