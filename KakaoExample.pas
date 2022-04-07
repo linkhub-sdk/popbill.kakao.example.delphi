@@ -190,9 +190,11 @@ begin
         stringgrid1.Cells[9 ,0] := 'altSendDT';
         stringgrid1.Cells[10,0] := 'altResult';
         stringgrid1.Cells[11,0] := 'altResultDT';
-        stringgrid1.Cells[12,0] := 'receiptNum';
-        stringgrid1.Cells[13,0] := 'requestNum';
-        stringgrid1.Cells[14,0] := 'interOPRefKey';
+        stringgrid1.Cells[12,0] := 'altSubject';
+        stringgrid1.Cells[13,0] := 'altContent';
+        stringgrid1.Cells[14,0] := 'receiptNum';
+        stringgrid1.Cells[15,0] := 'requestNum';
+        stringgrid1.Cells[16,0] := 'interOPRefKey';
 
         stringgrid1.ColWidths[1] := 100;
         stringgrid1.ColWidths[3] := 100;
@@ -480,7 +482,7 @@ end;
 procedure TfrmExample.btnSendATS_oneClick(Sender: TObject);
 var
         receiptNum, templateCode, senderNum, altSendType, receiverNum,
-        receiverName, content, altContent, requestNum : String;
+        receiverName, content, altSubject, altContent, requestNum : String;
         Buttons : TSendKakaoButtonList;        
 begin
         {**********************************************************************}
@@ -495,7 +497,7 @@ begin
         try
                 // 알림톡 템플릿코드, ListATSTemplate API 반환항목중 templateCode로 확인
                 // GetATSTemplateMgtURL API (알림톡 템플릿 관리 팝업)을 통해서 확인
-                templateCode := '018110000047';
+                templateCode := '022040000005 ';
 
                 // 팝빌에 사전 등록된 발신번호
                 senderNum := '070-4304-2991';
@@ -509,6 +511,10 @@ begin
                 // 알림톡 메시지 내용 (최대 1000자)
                 // 템플릿의 내용과 일치하지 않은 경우 전송실패
                 content := '테스트 알림톡';
+
+                // 대체문자 제목 (최대 40byte)
+                // 대체문자 길이(90byte)에 따라 장문(LMS)인 경우 적용
+                altSubject := '대체문자 제목';
 
                 // 대체문자 내용  (최대 2000byte)
                 altContent := '대체문자 내용';
@@ -534,7 +540,7 @@ begin
 
                 receiptNum := kakaoService.SendATS(txtCorpNum.Text, templateCode, senderNum, altSendType,
                                                    txtReserveDT.Text, receiverNum, receiverName, content,
-                                                   altContent, Buttons, txtUserID.text, requestNum);
+                                                   altSubject, altContent, Buttons, txtUserID.text, requestNum);
         except
                 on le : EPopbillException do begin
                         ShowMessage('응답코드 : ' + IntToStr(le.code) + #10#13 +'응답메시지 : '+ le.Message);
@@ -555,7 +561,7 @@ end;
 
 procedure TfrmExample.btnSendATS_sameClick(Sender: TObject);
 var
-        receiptNum, templateCode, content, altContent, senderNum, altSendType,
+        receiptNum, templateCode, content, altSubject, altContent, senderNum, altSendType,
         requestNum : String;
         Receivers : TSendKakaoReceiverList;
         i : Integer;
@@ -573,17 +579,21 @@ begin
         try
                 // 알림톡 템플릿코드, ListATSTemplate API 반환항목중 templateCode로 확인
                 // GetATSTemplateMgtURL API (알림톡 템플릿 관리 팝업)을 통해서 확인
-                templateCode := '018120000044';
+                templateCode := '022040000005';
 
                 // 팝빌에 사전 등록된 발신번호
-                senderNum := '01043245117';
+                senderNum := '070-4304-2991';
 
                 // [동보] 알림톡 메시지 내용 (최대 1000자)
                 // 템플릿의 내용과 일치하지 않은 경우 전송실패
                 content := '테스트 템플릿.';
 
+                // 대체문자 제목 (최대 40byte)
+                // 대체문자 길이(90byte)에 따라 장문(LMS)인 경우 적용
+                altSubject := '동보 대체문자 제목';
+
                 // [동보] 대체문자 내용 (최대 2000byte)
-                altContent := '대체문자 내용';
+                altContent := '동보 대체문자 내용';
 
                 // 대체문자 전송유형, 공백-미전송, C-알림톡 전송, A-대체문자 전송
                 altSendType := 'A';
@@ -622,7 +632,7 @@ begin
                 //Buttons[0].buttonURL2 := 'http://www.weblink2.com'; // 버튼링크2  [앱링크] Android / [웹링크] PC URL                
 
                 receiptNum := kakaoService.SendATS(txtCorpNum.Text, templateCode, senderNum, content,
-                                                   altContent, altSendType, txtReserveDT.Text, Receivers, Buttons,
+                                                   altSubject, altContent, altSendType, txtReserveDT.Text, Receivers, Buttons,
                                                    txtUserID.text, requestNum);
 
         except
@@ -645,7 +655,7 @@ end;
 
 procedure TfrmExample.btnSendATS_multiClick(Sender: TObject);
 var
-        receiptNum, templateCode, content, altContent, senderNum, altSendType,
+        receiptNum, templateCode, content, altSubject, altContent, senderNum, altSendType,
         requestNum : String;
         Receivers : TSendKakaoReceiverList;
         i : Integer;
@@ -664,7 +674,7 @@ begin
         try
                 // 알림톡 템플릿코드, ListATSTemplate API 반환항목중 templateCode로 확인
                 // GetATSTemplateMgtURL API (알림톡 템플릿 관리 팝업)을 통해서 확인
-                templateCode := '021030000716';
+                templateCode := '022040000005';
 
                 // 팝빌에 사전 등록된 발신번호
                 senderNum := '070-4304-2991';
@@ -686,12 +696,22 @@ begin
                         // 수신번호
                         Receivers[i].rcv := '010111123';
 
+                        
+                        if i =2 then
+                        begin
+                                Receivers[i].rcv := '01068444508';  // 수신번호
+                        end;
+
                         // 수신자명
                         Receivers[i].rcvnm := '수신자명';
 
                         // 알림톡 메시지 내용 (최대 1000자)
                         // 템플릿의 내용과 일치하지 않은 경우 전송실패
                         Receivers[i].msg := '테스트 템플릿 입니다.';
+
+                        // 대체문자 제목 (최대 40byte)
+                        // 대체문자 길이(90byte)에 따라 장문(LMS)인 경우 적용
+                        Receivers[i].altsjt := '대량 대체문자 제목';
 
                         // 대체문자 내용 (최대 2000byte)
                         Receivers[i].altmsg := '대체문자 내용';
@@ -728,7 +748,7 @@ begin
                 //Buttons[0].buttonURL2 := 'http://www.weblink2.com'; // 버튼링크2  [앱링크] Android / [웹링크] PC URL
                                 
                 receiptNum := kakaoService.SendATS(txtCorpNum.Text, templateCode, senderNum, content,
-                                                   altContent, altSendType, txtReserveDT.Text, Receivers, Buttons,
+                                                   altSubject, altContent, altSendType, txtReserveDT.Text, Receivers, Buttons,
                                                    txtUserID.text, requestNum);
 
         except
@@ -753,7 +773,7 @@ end;
 procedure TfrmExample.btnSendFTS_oneClick(Sender: TObject);
 var
         receiptNum, plusFriendID, senderNum, altSendType, receiverNum,
-        receiverName, altContent, content, requestNum : String;
+        receiverName, altSubject, altContent, content, requestNum : String;
         adsYN : boolean;
         Buttons : TSendKakaoButtonList;
 begin
@@ -773,7 +793,7 @@ begin
                 senderNum := '070-4304-2991';
 
                 // 대체문자 전송유형, 공백-미전송, C-친구톡전송, A-대체문자전송
-                altSendType := 'C';
+                altSendType := 'A';
 
                 // 광고전송 여부
                 adsYN := True;
@@ -787,8 +807,12 @@ begin
                 // 친구톡 내용, 최대 1000자
                 content := '친구톡 메시지 내용';
 
+                // 대체문자 제목 (최대 40byte)
+                // 대체문자 길이(90byte)에 따라 장문(LMS)인 경우 적용
+                altSubject := '대체문자 제목';
+
                 // 대체문자 내용 (최대 2000byte)
-                altContent := '대체문자 내용';
+                altContent := '대체문자 내용 ';
 
                 // 전송요청번호
                 // 파트너가 전송 건에 대해 관리번호를 구성하여 관리하는 경우 사용.
@@ -807,9 +831,9 @@ begin
                                                    senderNum, altSendType,
                                                    txtReserveDT.Text, adsYN,
                                                    receiverNum, receiverName,
-                                                   content, altContent,
-                                                   Buttons, txtUserID.text,
-                                                   requestNum);
+                                                   content, altSubject, 
+                                                   altContent, Buttons, 
+                                                   txtUserID.text, requestNum);
 
         except
                 on le : EPopbillException do begin
@@ -831,7 +855,7 @@ end;
 
 procedure TfrmExample.btnSendFTS_SameClick(Sender: TObject);
 var
-        receiptNum, plusFriendID, senderNum, content, altContent, altSendType,
+        receiptNum, plusFriendID, senderNum, content, altSubject, altContent, altSendType,
         requestNum : String;
         adsYN : boolean;
         Receivers : TSendKakaoReceiverList;
@@ -856,11 +880,15 @@ begin
                 // [동보] 친구톡 내용 (최대 1000자)
                 content := '친구톡 내용';
 
+                // 대체문자 제목 (최대 40byte)
+                // 대체문자 길이(90byte)에 따라 장문(LMS)인 경우 적용
+                altSubject := '동보 대체문자 제목';
+
                 // [동보] 대체문자 내용 (최대 2000byte)
-                altContent := '대체문자 내용';
+                altContent := '동보 대체문자 내용';
 
                 // 대체문자 전송유형, 공백-미전송, C-친구톡 전송, A-대체문자 전송
-                altSendType := 'C';
+                altSendType := 'A';
 
                 // 전송요청번호
                 // 파트너가 전송 건에 대해 관리번호를 구성하여 관리하는 경우 사용.
@@ -888,7 +916,7 @@ begin
                 Buttons[0].buttonURL2 := 'http://www.weblink2.com'; // 버튼링크2  [앱링크] Android / [웹링크] PC URL
 
                 receiptNum := kakaoService.SendFTS(txtCorpNum.Text, plusFriendID,senderNum, content,
-                                                   altContent, altSendType, txtReserveDT.Text, adsYN,
+                                                   altSubject, altContent, altSendType, txtReserveDT.Text, adsYN,
                                                    Receivers, Buttons, txtUserID.text, requestNum);
         except
                 on le : EPopbillException do begin
@@ -910,7 +938,7 @@ end;
 
 procedure TfrmExample.btnSendFTS_multiClick(Sender: TObject);
 var
-        receiptNum, plusFriendID, senderNum, content, altContent, altSendType,
+        receiptNum, plusFriendID, senderNum, content, altSubject, altContent, altSendType,
         requestNum : String;
         adsYN : boolean;
         Receivers : TSendKakaoReceiverList;
@@ -958,6 +986,10 @@ begin
                     // 친구톡 내용, 최대 1000자
                     Receivers[i].msg := '친구톡 메시지 내용';
 
+                    // 대체문자 제목 (최대 40byte)
+                    // 대체문자 길이(90byte)에 따라 장문(LMS)인 경우 적용
+                    Receivers[i].altsjt := '친구톡 대체문자 제목';
+
                     // 대체문자 내용 (최대 2000byte)
                     Receivers[i].altmsg := '친구톡 대체문자 내용';
 
@@ -991,7 +1023,7 @@ begin
                 //Buttons[0].buttonURL1 := 'http://www.weblink1.com'; // 버튼링크1  [앱링크] iOS / [웹링크] Mobile
                 //Buttons[0].buttonURL2 := 'http://www.weblink2.com'; // 버튼링크2  [앱링크] Android / [웹링크] PC URL
 
-                receiptNum := kakaoService.SendFTS(txtCorpNum.Text, plusFriendID, senderNum, content,altContent, altSendType,
+                receiptNum := kakaoService.SendFTS(txtCorpNum.Text, plusFriendID, senderNum, content, altSubject, altContent, altSendType,
                                                    txtReserveDT.Text, adsYN,Receivers, Buttons, txtUserID.text, requestNum);
         except
                 on le : EPopbillException do begin
@@ -1014,7 +1046,7 @@ end;
 procedure TfrmExample.btnSendFMS_oneClick(Sender: TObject);
 var
         filePath, imageURl, receiptNum, plusFriendID, senderNum, altSendType, receiverNum,
-        receiverName, content, altContent, requestNum : String;
+        receiverName, content, altSubject, altContent, requestNum : String;
         adsYN : boolean;
         Buttons : TSendKakaoButtonList;
 begin
@@ -1047,13 +1079,17 @@ begin
                 adsYN := True;
 
                 // 수신번호
-                receiverNum := '010111222';
+                receiverNum := '01068444508';
 
                 // 수신자명
                 receiverName := '수신자명';
 
                 // 친구톡 메시지 내용, 최대 400자
                 content := '친구톡 메시지 내용';
+
+                // 대체문자 제목 (최대 40byte)
+                // 대체문자 길이(90byte)에 따라 장문(LMS)인 경우 적용
+                altSubject := '대체문자 제목';
 
                 // 대체문자 내용 (최대 2000byte)
                 altContent := '친구톡 대체문자 내용';
@@ -1076,7 +1112,7 @@ begin
 
                 receiptNum := kakaoService.SendFMS(txtCorpNum.Text, plusFriendID, senderNum, altSendType,
                                                    txtReserveDT.Text, adsYN, receiverNum, receiverName,
-                                                   content, altContent, filePath, imageURl, Buttons, txtUserID.text, requestNum);
+                                                   content, altSubject, altContent, filePath, imageURl, Buttons, txtUserID.text, requestNum);
 
         except
                 on le : EPopbillException do begin
@@ -1099,7 +1135,7 @@ end;
 procedure TfrmExample.btnSendFMS_SameClick(Sender: TObject);
 var
         filePath, imageURl, receiptNum, plusFriendID, senderNum, altSendType, receiverNum,
-        receiverName, content, altContent, requestNum : String;
+        receiverName, content, altSubject, altContent, requestNum : String;
         adsYN : boolean;
         Buttons : TSendKakaoButtonList;
         Receivers : TSendKakaoReceiverList;
@@ -1128,7 +1164,7 @@ begin
                 senderNum := '070-4304-2991';
 
                 // 대체문자 전송유형, 공백-미전송, C-친구톡전송, A-대체문자전송
-                altSendType := 'C';
+                altSendType := 'A';
 
                 // 광고전송여부
                 adsYN := True;
@@ -1141,6 +1177,10 @@ begin
 
                 // (동보) 친구톡 내용 (최대 400자)
                 content := '친구톡 메시지 내용';
+
+                // 대체문자 제목 (최대 40byte)
+                // 대체문자 길이(90byte)에 따라 장문(LMS)인 경우 적용
+                altSubject := '대체문자 제목';
 
                 // (동보) 대체문자 내용 (최대 2000byte)
                 altContent := '대체문자 내용';
@@ -1177,7 +1217,7 @@ begin
 
                 receiptNum := kakaoService.SendFMS(txtCorpNum.Text, plusFriendID,
                                                    senderNum, content,
-                                                   altContent, altSendType,
+                                                   altSubject, altContent, altSendType,
                                                    txtReserveDT.Text, adsYN,
                                                    Receivers, filePath,
                                                    imageURl, Buttons,
@@ -1204,7 +1244,7 @@ end;
 procedure TfrmExample.btnSendFMS_MultiClick(Sender: TObject);
 var
         filePath, imageURl, receiptNum, plusFriendID, senderNum, altSendType, receiverNum,
-        receiverName, content, altContent, requestNum : String;
+        receiverName, content, altSubject, altContent, requestNum : String;
         adsYN : boolean;
         Buttons : TSendKakaoButtonList;
         Receivers : TSendKakaoReceiverList;
@@ -1233,7 +1273,7 @@ begin
                 senderNum := '070-4304-2991';
 
                 // 대체문자 전송유형, 공백-미전송, C-친구톡전송, A-대체문자전송
-                altSendType := 'C';
+                altSendType := 'A';
 
                 // 광고전송여부
                 adsYN := True;
@@ -1266,6 +1306,10 @@ begin
 
                     // 친구톡 내용 (최대 400자)
                     Receivers[i].msg := '개별메시지 내용';
+
+                    // 대체문자 제목 (최대 40byte)
+                    // 대체문자 길이(90byte)에 따라 장문(LMS)인 경우 적용
+                    Receivers[i].altsjt := '친구톡 대체문자 제목';
 
                     // 대체문자 내용 (최대 2000byte)
                     Receivers[i].altmsg := '개별 대체문자 내용';
@@ -1301,7 +1345,7 @@ begin
                 Buttons[0].buttonURL2 := 'http://www.weblink2.com'; // 버튼링크2  [앱링크] Android / [웹링크] PC URL
 
                 receiptNum := kakaoService.SendFMS(txtCorpNum.Text, plusFriendID, senderNum, content,
-                                                   altContent, altSendType, txtReserveDT.Text, adsYN,
+                                                   altSubject, altContent, altSendType, txtReserveDT.Text, adsYN,
                                                    Receivers, filePath,imageURl, Buttons, txtUserID.text, requestNum);
         except
                 on le : EPopbillException do begin
@@ -2047,10 +2091,10 @@ begin
         {**********************************************************************}
 
         // 시작일자, 표시형식 (yyyyMMdd)
-        SDate := '20220101';
+        SDate := '20220407';
 
         // 종료일자, 표시형식 (yyyyMMdd)
-        EDate := '20220110';
+        EDate := '20220407';
 
         // 전송상태 배열, 0-대기, 1-전송중, 2-성공, 3-대체, 4-실패, 5-취소
         SetLength(State, 6);
@@ -2135,10 +2179,14 @@ begin
                         stringgrid1.Cells[10,i+1] := IntToStr(SearchInfos.list[i].altResult);
                         // 대체문자 전송결과 수신일시
                         stringgrid1.Cells[11,i+1] := SearchInfos.list[i].altResultDT;
+                        // 대체문자 제목
+                        stringgrid1.Cells[12,i+1] := SearchInfos.list[i].altSubject;
+                        // 대체문자 내용
+                        stringgrid1.Cells[13,i+1] := SearchInfos.list[i].altContent;
                         // 접수번호
-                        stringgrid1.Cells[12,i+1] := SearchInfos.list[i].receiptNum;
+                        stringgrid1.Cells[14,i+1] := SearchInfos.list[i].receiptNum;
                         // 요청번호
-                        stringgrid1.Cells[13,i+1] := SearchInfos.list[i].requestNum;
+                        stringgrid1.Cells[15,i+1] := SearchInfos.list[i].requestNum;
                 end;
                 SearchInfos.Free;
                 ShowMessage(tmp);
@@ -2177,6 +2225,7 @@ begin
         tmp := tmp + 'templateCode (알림톡 템플릿 코드) : '+ MessageInfo.templateCode + #13;
         tmp := tmp + 'plusFriendID (친구톡 플리스친구 아이디) : '+ MessageInfo.plusFriendID + #13;
         tmp := tmp + 'sendNum (발신번호) : '+ MessageInfo.sendNum + #13;
+        tmp := tmp + 'altSubject (대체문자제목) : '+ MessageInfo.altSubject + #13;
         tmp := tmp + 'altContent (대체문자내용) : '+ MessageInfo.altContent + #13;
         tmp := tmp + 'altSendType (대체문자유형) : '+ MessageInfo.altSendType + #13;
         tmp := tmp + 'reserveDT (예약일시) : '+ MessageInfo.reserveDT + #13;
@@ -2225,12 +2274,16 @@ begin
                 stringgrid1.Cells[10,i+1] := IntToStr(MessageInfo.msgs[i].altResult);
                 // 대체문자 전송결과 수신일시
                 stringgrid1.Cells[11,i+1] := MessageInfo.msgs[i].altResultDT;
+                // 대체문자 제목
+                stringgrid1.Cells[12,i+1] := MessageInfo.msgs[i].altSubject;
+                // 대체문자 내용
+                stringgrid1.Cells[13,i+1] := MessageInfo.msgs[i].altContent;
                 // 접수번호
-                stringgrid1.Cells[12,i+1] := MessageInfo.msgs[i].receiptNum;
+                stringgrid1.Cells[14,i+1] := MessageInfo.msgs[i].receiptNum;
                 // 요청번호
-                stringgrid1.Cells[13,i+1] := MessageInfo.msgs[i].requestNum;
+                stringgrid1.Cells[15,i+1] := MessageInfo.msgs[i].requestNum;
                 // 파트너 지정키
-                stringgrid1.Cells[14,i+1] := MessageInfo.msgs[i].interOPRefKey;
+                stringgrid1.Cells[16,i+1] := MessageInfo.msgs[i].interOPRefKey;
         end;
         
         end;
@@ -2271,6 +2324,7 @@ begin
         tmp := tmp + 'templateCode (알림톡 템플릿 코드) : '+ MessageInfo.templateCode + #13;
         tmp := tmp + 'plusFriendID (친구톡 플리스친구 아이디) : '+ MessageInfo.plusFriendID + #13;
         tmp := tmp + 'sendNum (발신번호) : '+ MessageInfo.sendNum + #13;
+        tmp := tmp + 'altSubject (대체문자제목) : '+ MessageInfo.altSubject + #13;
         tmp := tmp + 'altContent (대체문자내용) : '+ MessageInfo.altContent + #13;
         tmp := tmp + 'altSendType (대체문자유형) : '+ MessageInfo.altSendType + #13;
         tmp := tmp + 'reserveDT (예약일시) : '+ MessageInfo.reserveDT + #13;
@@ -2319,10 +2373,16 @@ begin
                 stringgrid1.Cells[10,i+1] := IntToStr(MessageInfo.msgs[i].altResult);
                 // 대체문자 전송결과 수신일시
                 stringgrid1.Cells[11,i+1] := MessageInfo.msgs[i].altResultDT;
+                // 대체문자 제목
+                stringgrid1.Cells[12,i+1] := MessageInfo.msgs[i].altSubject;
+                // 대체문자 내용
+                stringgrid1.Cells[13,i+1] := MessageInfo.msgs[i].altContent;
                 // 접수번호
-                stringgrid1.Cells[12,i+1] := MessageInfo.msgs[i].receiptNum;
+                stringgrid1.Cells[14,i+1] := MessageInfo.msgs[i].receiptNum;
                 // 요청번호
-                stringgrid1.Cells[13,i+1] := MessageInfo.msgs[i].requestNum;
+                stringgrid1.Cells[15,i+1] := MessageInfo.msgs[i].requestNum;
+                // 파트너 지정키
+                stringgrid1.Cells[16,i+1] := MessageInfo.msgs[i].interOPRefKey;
         end;
         end;
 end;
