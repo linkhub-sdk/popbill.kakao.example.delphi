@@ -1,6 +1,6 @@
 object frmExample: TfrmExample
-  Left = 565
-  Top = 151
+  Left = 370
+  Top = 129
   Width = 1355
   Height = 865
   Caption = 'ÆËºô Ä«Ä«¿ÀÅå API SDK Delphi Example'
@@ -598,7 +598,7 @@ object frmExample: TfrmExample
       object Label5: TLabel
         Left = 32
         Top = 36
-        Width = 57
+        Width = 53
         Height = 13
         Caption = '¿äÃ»¹øÈ£ : '
       end

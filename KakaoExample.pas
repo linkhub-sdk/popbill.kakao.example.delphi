@@ -3,7 +3,7 @@
 { 팝빌 카카오톡 API Delphi SDK Example
 {
 { - SDK 튜토리얼 : https://docs.popbill.com/kakao/tutorial/delphi
-{ - 업데이트 일자 : 2022-04-07
+{ - 업데이트 일자 : 2022-07-25
 { - 연동 기술지원 연락처 : 1600-9854
 { - 연동 기술지원 이메일 : code@linkhubcorp.com
 {
@@ -1886,7 +1886,7 @@ begin
         end
         else
         begin
-                tmp := 'templateCode(템플릿코드) | templateName(템플릿 제목) | template(템플릿내용) | plusFriendID(카카오톡 채널 검색용 아이디) | ads(광고 메시지) | appendix(부가메시지) ' + #13;
+                tmp := 'templateCode(템플릿코드) | templateName(템플릿 제목) | template(템플릿내용) | plusFriendID(카카오톡 채널 검색용 아이디) | ads(광고 메시지) | appendix(부가메시지) | secureYN(보안템플릿 여부) | state(상태) | stateDT(상태 변경일시) ' + #13;
                 tmp := tmp + '---------------------------------------------------------------------------------------------------' + #13;
                 for i := 0 to Length(InfoList) -1 do
                 begin
@@ -1895,7 +1895,10 @@ begin
                     tmp := tmp + InfoList[i].template + ' | ';
                     tmp := tmp + InfoList[i].plusFriendID + ' | ';
                     tmp := tmp + InfoList[i].ads + ' | ';
-                    tmp := tmp + InfoList[i].appendix +#13#13;
+                    tmp := tmp + InfoList[i].appendix + ' | ';
+                    tmp := tmp + BoolToStr(InfoList[i].secureYN) + ' | ';
+                    tmp := tmp + IntToStr(InfoList[i].state) + ' | ';
+                    tmp := tmp + InfoList[i].stateDT +#13#13;
 
                     for j := 0 to Length(InfoList[i].btns) -1 do begin
                         tmp := tmp + '======버튼정보======' + #13;
@@ -2442,7 +2445,7 @@ begin
         end
         else
         begin
-                tmp := 'templateCode(템플릿코드) | templateName(템플릿 제목) | template(템플릿내용) | plusFriendID(카카오톡 채널 검색용 아이디) | ads(광고 메시지) | appendix(부가메시지) ' + #13;
+                tmp := 'templateCode(템플릿코드) | templateName(템플릿 제목) | template(템플릿내용) | plusFriendID(카카오톡 채널 검색용 아이디) | ads(광고 메시지) | appendix(부가메시지) | secureYN(보안템플릿 여부) | state(상태) | stateDT(상태 변경일시) ' + #13;
                 tmp := tmp + '---------------------------------------------------------------------------------------------------' + #13;
 
                 tmp := tmp + Info.templateCode + ' | ';
@@ -2450,7 +2453,10 @@ begin
                 tmp := tmp + Info.template + ' | ';
                 tmp := tmp + Info.plusFriendID + ' | ';
                 tmp := tmp + Info.ads + ' | ';
-                tmp := tmp + Info.appendix + #13#13;
+                tmp := tmp + Info.appendix + ' | ';
+                tmp := tmp + BoolToStr(Info.secureYN) + ' | ';
+                tmp := tmp + IntToStr(Info.state) + ' | ';
+                tmp := tmp + Info.stateDT + #13#13;
 
                 for i := 0 to Length(Info.btns) -1 do begin
                     tmp := tmp + '======버튼정보======' + #13;
