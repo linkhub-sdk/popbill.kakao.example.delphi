@@ -2194,6 +2194,8 @@ begin
                         stringgrid1.Cells[14,i+1] := SearchInfos.list[i].receiptNum;
                         // 요청번호
                         stringgrid1.Cells[15,i+1] := SearchInfos.list[i].requestNum;
+                        // 파트너 지정 키
+                        stringgrid1.Cells[16,i+1] := SearchInfos.list[i].interOPRefKey;
                 end;
                 SearchInfos.Free;
                 ShowMessage(tmp);

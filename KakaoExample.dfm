@@ -643,13 +643,15 @@ object frmExample: TfrmExample
     Top = 580
     Width = 1281
     Height = 213
-    ColCount = 15
+    ColCount = 17
     DefaultRowHeight = 18
     FixedCols = 0
     RowCount = 2
     Options = [goFixedVertLine, goFixedHorzLine, goVertLine, goHorzLine, goRangeSelect, goColSizing, goRowSelect]
     TabOrder = 4
     ColWidths = (
+      64
+      64
       64
       64
       64
