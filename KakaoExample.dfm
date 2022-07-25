@@ -32,6 +32,14 @@ object frmExample: TfrmExample
     AutoSize = False
     Caption = '팝빌회원 아이디 : '
   end
+  object Label6: TLabel
+    Left = 930
+    Top = 18
+    Width = 41
+    Height = 13
+    AutoSize = False
+    Caption = 'URL : '
+  end
   object txtCorpNum: TEdit
     Left = 152
     Top = 12
@@ -657,6 +665,14 @@ object frmExample: TfrmExample
       64
       64
       64)
+  end
+  object txtURL: TEdit
+    Left = 968
+    Top = 12
+    Width = 361
+    Height = 21
+    ImeName = '한국어 입력 시스템 (IME 2000)'
+    TabOrder = 5
   end
   object OpenDialog1: TOpenDialog
     Left = 536

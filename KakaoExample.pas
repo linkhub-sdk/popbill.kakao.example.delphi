@@ -101,6 +101,8 @@ type
     btnGetUseHistoryURL: TButton;
     btnGetContactInfo: TButton;
     Button1: TButton;
+    txtURL: TEdit;
+    Label6: TLabel;
     procedure FormCreate(Sender: TObject);
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
     procedure btnCheckIsMemberClick(Sender: TObject);
@@ -1354,6 +1356,7 @@ begin
         {**********************************************************************}
         try
                 resultURL := kakaoService.getAccessURL(txtCorpNum.Text, txtUserID.Text);
+                txtURL.TEXT := resultURL;
         except
                 on le : EPopbillException do begin
                         ShowMessage('응답코드 : ' + IntToStr(le.code) + #10#13 +'응답메시지 : '+ le.Message);
@@ -1410,6 +1413,7 @@ begin
         
         try
                 resultURL := kakaoService.getPartnerURL(txtCorpNum.Text, 'CHRG');
+                txtURL.TEXT := resultURL;
         except
                 on le : EPopbillException do begin
                         ShowMessage('응답코드 : ' + IntToStr(le.code) + #10#13 +'응답메시지 : '+ le.Message);
@@ -1467,6 +1471,7 @@ begin
 
         try
                 resultURL := kakaoService.getChargeURL(txtCorpNum.Text, txtUserID.Text);
+                txtURL.TEXT := resultURL;
         except
                 on le : EPopbillException do begin
                         ShowMessage('응답코드 : ' + IntToStr(le.code) + #10#13 +'응답메시지 : '+ le.Message);
@@ -1688,7 +1693,7 @@ begin
         {**********************************************************************}
 
         try
-                corpInfo := kakaoService.GetCorpInfo(txtCorpNum.text, 'ddddsf');
+                corpInfo := kakaoService.GetCorpInfo(txtCorpNum.text);
         except
                 on le : EPopbillException do begin
                         ShowMessage('응답코드 : ' + IntToStr(le.code) + #10#13 +'응답메시지 : '+ le.Message);
@@ -1769,6 +1774,7 @@ begin
 
         try
                 resultURL := kakaoService.getPlusFriendMgtURL(txtCorpNum.Text, txtUserID.Text);
+                txtURL.TEXT := resultURL;
         except
                 on le : EPopbillException do begin
                         ShowMessage('응답코드 : ' + IntToStr(le.code) + #10#13 +'응답메시지 : '+ le.Message);
@@ -1839,6 +1845,7 @@ begin
         
         try
                 resultURL := kakaoService.getATSTemplateMgtURL(txtCorpNum.Text, txtUserID.Text);
+                txtURL.TEXT := resultURL;
         except
                 on le : EPopbillException do begin
                         ShowMessage('응답코드 : ' + IntToStr(le.code) + #10#13 +'응답메시지 : '+ le.Message);
@@ -1928,7 +1935,7 @@ begin
         senderNumber := '07079987110';
 
         try
-                response := kakaoService.CheckSenderNumber(txtCorpNum.Text, senderNumber, txtUserID.Text);
+                response := kakaoService.CheckSenderNumber(txtCorpNum.Text, senderNumber);
         except
                 on le : EPopbillException do begin
                         ShowMessage('응답코드 : ' + IntToStr(le.code) + #10#13 +'응답메시지 : '+ le.Message);
@@ -1997,6 +2004,7 @@ begin
         
         try
                 resultURL := kakaoService.getSenderNumberMgtURL(txtCorpNum.Text, txtUserID.Text);
+                txtURL.TEXT := resultURL;
         except
                 on le : EPopbillException do begin
                         ShowMessage('응답코드 : ' + IntToStr(le.code) + #10#13 +'응답메시지 : '+ le.Message);
@@ -2055,6 +2063,7 @@ begin
         
         try
                 resultURL := kakaoService.getSentListURL(txtCorpNum.Text, txtUserID.Text);
+                txtURL.TEXT := resultURL;
         except
                 on le : EPopbillException do begin
                         ShowMessage('응답코드 : ' + IntToStr(le.code) + #10#13 +'응답메시지 : '+ le.Message);
@@ -2129,7 +2138,7 @@ begin
 
         try
                 SearchInfos := kakaoService.search(txtCorpNum.text, SDate, EDate, State,
-                                 Item, ReserveYN, SenderYN, Page, PerPage, Order, QString, txtUserID.text);
+                                 Item, ReserveYN, SenderYN, Page, PerPage, Order, QString);
         except
                 on le : EPopbillException do begin
                         ShowMessage('응답코드 : ' + IntToStr(le.code) + #10#13 +'응답메지시 : '+ le.Message);
@@ -2481,7 +2490,8 @@ begin
         {**********************************************************************}
         
         try
-                resultURL := kakaoService.getPaymentURL(txtCorpNum.Text);
+                resultURL := kakaoService.getPaymentURL(txtCorpNum.Text, txtUserID.Text);
+                txtURL.TEXT := resultURL;
         except
                 on le : EPopbillException do begin
                         ShowMessage('응답코드 : ' + IntToStr(le.code) + #10#13 +'응답메시지 : '+ le.Message);
@@ -2509,7 +2519,8 @@ begin
         {**********************************************************************}
 
         try
-                resultURL := kakaoService.getUseHistoryURL(txtCorpNum.Text);
+                resultURL := kakaoService.getUseHistoryURL(txtCorpNum.Text, txtUserID.Text);
+                txtURL.TEXT := resultURL;
         except
                 on le : EPopbillException do begin
                         ShowMessage('응답코드 : ' + IntToStr(le.code) + #10#13 +'응답메시지 : '+ le.Message);
