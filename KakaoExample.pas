@@ -3,7 +3,7 @@
 { 팝빌 카카오톡 API Delphi SDK Example
 {
 { - SDK 튜토리얼 : https://developers.popbill.com/guide/kakaotalk/delphi/getting-started/tutorial
-{ - 업데이트 일자 : 2022-07-25
+{ - 업데이트 일자 : 2025-02-24
 { - 연동 기술지원 연락처 : 1600-9854
 { - 연동 기술지원 이메일 : code@linkhubcorp.com
 {
@@ -525,6 +525,7 @@ begin
                 //Buttons[0].buttonType := 'WL';     // 버튼 DS-배송조회 WL-웹링크 AL-앱링크 MD-메시지전달 BK-봇키워드
                 //Buttons[0].buttonURL1 := 'http://www.weblink1.com'; // 버튼링크1  [앱링크] iOS / [웹링크] Mobile
                 //Buttons[0].buttonURL2 := 'http://www.weblink2.com'; // 버튼링크2  [앱링크] Android / [웹링크] PC URL
+                //Buttons[0].buttonTG := 'out'; // 아웃링크, out - 디바이스 기본 브라우저, 미입력 - 카카오톡 인앱 브라우저
 
                 // 전송요청번호
                 // 파트너가 전송 건에 대해 관리번호를 구성하여 관리하는 경우 사용.
@@ -603,7 +604,7 @@ begin
                     Receivers[i] := TSendKakaoReceiver.Create;
                     Receivers[i].rcv := '010111222';  // 수신번호
                     Receivers[i].rcvnm := '수신자명'; // 수신자명
-                    Receivers[i].interOPRefKey := '20220101-01';  // 파트너 지정키
+                    Receivers[i].interOPRefKey := '20250224-01';  // 파트너 지정키
 
                     // 수신자마다 다른내용의 버튼전송시 아래코드 참고.
                     // SetLength(Receivers[i].buttonList, 1);
@@ -612,6 +613,7 @@ begin
                     // Receivers[i].buttonList[0].buttonType := 'WL';     // 버튼 DS-배송조회 WL-웹링크 AL-앱링크 MD-메시지전달 BK-봇키워드
                     // Receivers[i].buttonList[0].buttonURL1 := 'http://www.webliddnk1.com'; // 버튼링크1  [앱링크] iOS / [웹링크] Mobile
                     // Receivers[i].buttonList[0].buttonURL2 := 'http://www.weblddink2.com'; // 버튼링크2  [앱링크] Android / [웹링크] PC URL
+                    // Receivers[i].buttonList[0].buttonTG := 'out'; // 아웃링크, out - 디바이스 기본 브라우저, 미입력 - 카카오톡 인앱 브라우저
                 end;
 
                 // 알림톡 버튼정보를 템플릿 신청시 기재한 버튼정보와 동일하게 전송하는경우 길이를 0으로 처리
@@ -623,7 +625,8 @@ begin
                 //Buttons[0].buttonName := '버튼명'; // 버튼명
                 //Buttons[0].buttonType := 'WL';     // 버튼 DS-배송조회 WL-웹링크 AL-앱링크 MD-메시지전달 BK-봇키워드
                 //Buttons[0].buttonURL1 := 'http://www.weblink1.com'; // 버튼링크1  [앱링크] iOS / [웹링크] Mobile
-                //Buttons[0].buttonURL2 := 'http://www.weblink2.com'; // 버튼링크2  [앱링크] Android / [웹링크] PC URL                
+                //Buttons[0].buttonURL2 := 'http://www.weblink2.com'; // 버튼링크2  [앱링크] Android / [웹링크] PC URL
+                //Buttons[0].buttonTG := 'out'; // 아웃링크, out - 디바이스 기본 브라우저, 미입력 - 카카오톡 인앱 브라우저
 
                 receiptNum := kakaoService.SendATS(txtCorpNum.Text, templateCode, senderNum, content,
                                                    altSubject, altContent, altSendType, txtReserveDT.Text, Receivers, Buttons,
@@ -694,7 +697,7 @@ begin
                         
                         if i =2 then
                         begin
-                                Receivers[i].rcv := '01068444508';  // 수신번호
+                                Receivers[i].rcv := '010111123';  // 수신번호
                         end;
 
                         // 수신자명
@@ -720,12 +723,14 @@ begin
                         //Buttons[0].buttonType := 'WL';     // 버튼 DS-배송조회 WL-웹링크 AL-앱링크 MD-메시지전달 BK-봇키워드
                         //Buttons[0].buttonURL1 := 'http://www.weblink1.com'; // 버튼링크1  [앱링크] iOS / [웹링크] Mobile
                         //Buttons[0].buttonURL2 := 'http://www.weblink2.com'; // 버튼링크2  [앱링크] Android / [웹링크] PC URL
+                        //Buttons[0].buttonTG := 'out'; // 아웃링크, out - 디바이스 기본 브라우저, 미입력 - 카카오톡 인앱 브라우저
 
                         //Buttons[1] := TSendKakaoButton.Create;
                         //Buttons[1].buttonName := '버튼명'; // 버튼명
                         //Buttons[1].buttonType := 'WL';     // 버튼 DS-배송조회 WL-웹링크 AL-앱링크 MD-메시지전달 BK-봇키워드
                         //Buttons[1].buttonURL1 := 'http://www.test1.com'; // 버튼링크1  [앱링크] iOS / [웹링크] Mobile
                         //Buttons[1].buttonURL2 := 'http://www.test2.com'; // 버튼링크2  [앱링크] Android / [웹링크] PC URL
+                        //Buttons[1].buttonTG := 'out'; // 아웃링크, out - 디바이스 기본 브라우저, 미입력 - 카카오톡 인앱 브라우저
 
                         //Receivers[i].buttonList := Buttons;
                 end;
@@ -741,6 +746,7 @@ begin
                 //Buttons[0].buttonType := 'WL';     // 버튼 DS-배송조회 WL-웹링크 AL-앱링크 MD-메시지전달 BK-봇키워드
                 //Buttons[0].buttonURL1 := 'http://www.weblink1.com'; // 버튼링크1  [앱링크] iOS / [웹링크] Mobile
                 //Buttons[0].buttonURL2 := 'http://www.weblink2.com'; // 버튼링크2  [앱링크] Android / [웹링크] PC URL
+                //Buttons[0].buttonTG := 'out'; // 아웃링크, out - 디바이스 기본 브라우저, 미입력 - 카카오톡 인앱 브라우저
                                 
                 receiptNum := kakaoService.SendATS(txtCorpNum.Text, templateCode, senderNum, content,
                                                    altSubject, altContent, altSendType, txtReserveDT.Text, Receivers, Buttons,
@@ -1082,7 +1088,7 @@ begin
                 adsYN := True;
 
                 // 수신번호
-                receiverNum := '01068444508';
+                receiverNum := '010111123';
 
                 // 수신자명
                 receiverName := '수신자명';
