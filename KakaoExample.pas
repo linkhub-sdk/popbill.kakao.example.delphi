@@ -475,6 +475,7 @@ procedure TfrmExample.btnSendATS_oneClick(Sender: TObject);
 var
         receiptNum, templateCode, senderNum, altSendType, receiverNum,
         receiverName, content, altSubject, altContent, requestNum : String;
+        i : Integer;
         Buttons : TSendKakaoButtonList;        
 begin
         {**********************************************************************}
@@ -550,6 +551,10 @@ begin
         begin
                 txtReceiptNum.Text := receiptNum;
                 ShowMessage('접수번호 (receiptNum) : ' + receiptNum);
+        end;
+
+        for i := 0 to Length(Buttons) -1 do begin
+            Buttons[i].free;
         end;
 end;
 
@@ -631,7 +636,6 @@ begin
                 receiptNum := kakaoService.SendATS(txtCorpNum.Text, templateCode, senderNum, content,
                                                    altSubject, altContent, altSendType, txtReserveDT.Text, Receivers, Buttons,
                                                    txtUserID.text, requestNum);
-
         except
                 on le : EPopbillException do begin
                         ShowMessage('응답코드 : ' + IntToStr(le.code) + #10#13 +'응답메시지 : '+ le.Message);
@@ -647,6 +651,13 @@ begin
         begin
                 txtReceiptNum.Text := receiptNum;
                 ShowMessage('접수번호 (receiptNum) : ' + receiptNum);
+        end;
+
+        for i := 0 to Length(Receivers) -1 do begin
+            Receivers[i].free;
+        end;
+        for i := 0 to Length(Buttons) -1 do begin
+            Buttons[i].free;
         end;
 end;
 
@@ -751,7 +762,6 @@ begin
                 receiptNum := kakaoService.SendATS(txtCorpNum.Text, templateCode, senderNum, content,
                                                    altSubject, altContent, altSendType, txtReserveDT.Text, Receivers, Buttons,
                                                    txtUserID.text, requestNum);
-
         except
                 on le : EPopbillException do begin
                         ShowMessage('응답코드 : ' + IntToStr(le.code) + #10#13 +'응답메시지 : '+ le.Message);
@@ -769,6 +779,12 @@ begin
                 ShowMessage('접수번호 (receiptNum) : ' + receiptNum);
         end;
 
+        for i := 0 to Length(Receivers) -1 do begin
+            Receivers[i].free;
+        end;
+        for i := 0 to Length(Buttons) -1 do begin
+            Buttons[i].free;
+        end;
 end;
 
 procedure TfrmExample.btnSendFTS_oneClick(Sender: TObject);
@@ -776,6 +792,7 @@ var
         receiptNum, plusFriendID, senderNum, altSendType, receiverNum,
         receiverName, altSubject, altContent, content, requestNum : String;
         adsYN : boolean;
+        i : Integer;
         Buttons : TSendKakaoButtonList;
 begin
         {**********************************************************************}
@@ -834,10 +851,9 @@ begin
                                                    senderNum, altSendType,
                                                    txtReserveDT.Text, adsYN,
                                                    receiverNum, receiverName,
-                                                   content, altSubject, 
-                                                   altContent, Buttons, 
+                                                   content, altSubject,
+                                                   altContent, Buttons,
                                                    txtUserID.text, requestNum);
-
         except
                 on le : EPopbillException do begin
                         ShowMessage('응답코드 : ' + IntToStr(le.code) + #10#13 +'응답메시지 : '+ le.Message);
@@ -853,6 +869,10 @@ begin
         begin
                 txtReceiptNum.Text := receiptNum;
                 ShowMessage('접수번호 (receiptNum) : ' + receiptNum);
+        end;
+
+        for i := 0 to Length(Buttons) -1 do begin
+            Buttons[i].free;
         end;
 end;
 
@@ -939,6 +959,13 @@ begin
                 txtReceiptNum.Text := receiptNum;
                 ShowMessage('접수번호 (receiptNum) : ' + receiptNum);
         end;
+
+        for i := 0 to Length(Receivers) -1 do begin
+            Receivers[i].free;
+        end;
+        for i := 0 to Length(Buttons) -1 do begin
+            Buttons[i].free;
+        end;
 end;
 
 procedure TfrmExample.btnSendFTS_multiClick(Sender: TObject);
@@ -1023,12 +1050,12 @@ begin
                 // 수신자별 개별 버튼 사용하거나 버튼을 사용하지 않을경우 길이를 0으로 처리
                 SetLength(Buttons, 0);
                 // 버튼 배열, 최대 5개
-                //SetLength(Buttons, 1);
-                //Buttons[0] := TSendKakaoButton.Create;
-                //Buttons[0].buttonName := '버튼명'; // 버튼명
-                //Buttons[0].buttonType := 'WL';     // 버튼 DS-배송조회 WL-웹링크 AL-앱링크 MD-메시지전달 BK-봇키워드
-                //Buttons[0].buttonURL1 := 'http://www.weblink1.com'; // 버튼링크1  [앱링크] iOS / [웹링크] Mobile
-                //Buttons[0].buttonURL2 := 'http://www.weblink2.com'; // 버튼링크2  [앱링크] Android / [웹링크] PC URL
+                // SetLength(Buttons, 1);
+                // Buttons[0] := TSendKakaoButton.Create;
+                // Buttons[0].buttonName := '버튼명'; // 버튼명
+                // Buttons[0].buttonType := 'WL';     // 버튼 DS-배송조회 WL-웹링크 AL-앱링크 MD-메시지전달 BK-봇키워드
+                // Buttons[0].buttonURL1 := 'http://www.weblink1.com'; // 버튼링크1  [앱링크] iOS / [웹링크] Mobile
+                // Buttons[0].buttonURL2 := 'http://www.weblink2.com'; // 버튼링크2  [앱링크] Android / [웹링크] PC URL
 
                 receiptNum := kakaoService.SendFTS(txtCorpNum.Text, plusFriendID, senderNum, content, altSubject, altContent, altSendType,
                                                    txtReserveDT.Text, adsYN,Receivers, Buttons, txtUserID.text, requestNum);
@@ -1048,6 +1075,13 @@ begin
                 txtReceiptNum.Text := receiptNum;
                 ShowMessage('접수번호 (receiptNum) : ' + receiptNum);
         end;
+
+        for i := 0 to Length(Receivers) -1 do begin
+            Receivers[i].free;
+        end;
+        for i := 0 to Length(Buttons) -1 do begin
+            Buttons[i].free;
+        end;
 end;
 
 procedure TfrmExample.btnSendFMS_oneClick(Sender: TObject);
@@ -1055,6 +1089,7 @@ var
         filePath, imageURl, receiptNum, plusFriendID, senderNum, altSendType, receiverNum,
         receiverName, content, altSubject, altContent, requestNum : String;
         adsYN : boolean;
+        i : Integer;
         Buttons : TSendKakaoButtonList;
 begin
         {***************************************************************************}
@@ -1122,7 +1157,6 @@ begin
                 receiptNum := kakaoService.SendFMS(txtCorpNum.Text, plusFriendID, senderNum, altSendType,
                                                    txtReserveDT.Text, adsYN, receiverNum, receiverName,
                                                    content, altSubject, altContent, filePath, imageURl, Buttons, txtUserID.text, requestNum);
-
         except
                 on le : EPopbillException do begin
                         ShowMessage('응답코드 : ' + IntToStr(le.code) + #10#13 +'응답메시지 : '+ le.Message);
@@ -1138,6 +1172,10 @@ begin
         begin
                 txtReceiptNum.Text := receiptNum;
                 ShowMessage('접수번호 (receiptNum) : ' + receiptNum);
+        end;
+
+        for i := 0 to Length(Buttons) -1 do begin
+            Buttons[i].free;
         end;
 end;
 
@@ -1233,7 +1271,6 @@ begin
                                                    Receivers, filePath,
                                                    imageURl, Buttons,
                                                    txtUserID.text, requestNum);
-
         except
                 on le : EPopbillException do begin
                         ShowMessage('응답코드 : ' + IntToStr(le.code) + #10#13 +'응답메시지 : '+ le.Message);
@@ -1249,6 +1286,13 @@ begin
         begin
                 txtReceiptNum.Text := receiptNum;
                 ShowMessage('접수번호 (receiptNum) : ' + receiptNum);
+        end;
+
+        for i := 0 to Length(Receivers) -1 do begin
+            Receivers[i].free;
+        end;
+        for i := 0 to Length(Buttons) -1 do begin
+            Buttons[i].free;
         end;
 end;
 
@@ -1350,12 +1394,12 @@ begin
                 // 수신자별 개별 버튼 사용하거나 버튼을 사용하지 않을경우 길이를 0으로 처리
                 SetLength(Buttons, 0);
                 // 버튼 배열, 최대 5개
-                SetLength(Buttons, 1);
-                Buttons[0] := TSendKakaoButton.Create;
-                Buttons[0].buttonName := '버튼명'; // 버튼명
-                Buttons[0].buttonType := 'WL';     // 버튼 DS-배송조회 WL-웹링크 AL-앱링크 MD-메시지전달 BK-봇키워드
-                Buttons[0].buttonURL1 := 'http://www.weblink1.com'; // 버튼링크1  [앱링크] iOS / [웹링크] Mobile
-                Buttons[0].buttonURL2 := 'http://www.weblink2.com'; // 버튼링크2  [앱링크] Android / [웹링크] PC URL
+                // SetLength(Buttons, 1);
+                // Buttons[0] := TSendKakaoButton.Create;
+                // Buttons[0].buttonName := '버튼명'; // 버튼명
+                // Buttons[0].buttonType := 'WL';     // 버튼 DS-배송조회 WL-웹링크 AL-앱링크 MD-메시지전달 BK-봇키워드
+                // Buttons[0].buttonURL1 := 'http://www.weblink1.com'; // 버튼링크1  [앱링크] iOS / [웹링크] Mobile
+                // Buttons[0].buttonURL2 := 'http://www.weblink2.com'; // 버튼링크2  [앱링크] Android / [웹링크] PC URL
 
                 receiptNum := kakaoService.SendFMS(txtCorpNum.Text, plusFriendID, senderNum, content,
                                                    altSubject, altContent, altSendType, txtReserveDT.Text, adsYN,
@@ -1375,6 +1419,13 @@ begin
         begin
                 txtReceiptNum.Text := receiptNum;
                 ShowMessage('접수번호 (receiptNum) : ' + receiptNum);
+        end;
+
+        for i := 0 to Length(Receivers) -1 do begin
+            Receivers[i].free;
+        end;
+        for i := 0 to Length(Buttons) -1 do begin
+            Buttons[i].free;
         end;
 end;
 
@@ -1713,6 +1764,8 @@ begin
         begin
                 ShowMessage('응답코드 : ' + IntToStr(response.code) + #10#13 + '응답메시지 : '+ response.Message);
         end;
+
+        contactInfo.Free;
 end;
 
 procedure TfrmExample.btnGetCorpInfoClick(Sender: TObject);
@@ -1792,6 +1845,8 @@ begin
         begin
                 ShowMessage('응답코드 : ' + IntToStr(response.code) + #10#13 + '응답메지시 : '+ response.Message);
         end;
+
+        corpInfo.Free;
 end;
 
 
